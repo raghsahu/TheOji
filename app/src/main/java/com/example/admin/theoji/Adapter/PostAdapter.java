@@ -29,7 +29,6 @@ import com.example.admin.theoji.PostActivity;
 import com.example.admin.theoji.R;
 import com.example.admin.theoji.Shared_prefrence.AppPreference;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
