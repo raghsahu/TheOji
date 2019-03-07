@@ -78,7 +78,6 @@ public class  PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         public ImageView img_person;
-       // ZoomageView img2;
         ImageView img2;
         public ImageView btn1, btn2, btn3, dis_like,send_comment,img_close;
         public TextView txt1, txt2, txt3,txt_nm;
@@ -93,9 +92,6 @@ public class  PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             super(view);
             viewlike = view;
             img_person = (ImageView)viewlike.findViewById(R.id.img_person);
-           // img2 = (ImageView) viewlike.findViewById(R.id.img2);
-           // img2 = (ZoomageView) viewlike.findViewById(R.id.img2);
-
 
             txt1 = (TextView) viewlike.findViewById(R.id.txt1);
             txt2 = (TextView) viewlike.findViewById(R.id.txt2);
