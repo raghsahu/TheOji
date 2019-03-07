@@ -1,0 +1,507 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".View_User_Profile_Activity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme3">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FF3360DC">
+
+            <LinearLayout
+                android:weightSum="1"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_weight="0.20"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:gravity="start|center"
+                    android:text="View Profile"
+                    android:textColor="#fff"
+                    android:textSize="15dp"
+                    android:typeface="serif" />
+            </LinearLayout>
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+    <LinearLayout
+        android:weightSum="1"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.15"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:padding="5dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/post0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    app:cardCornerRadius="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="5dp">
+
+                        <RelativeLayout
+                            android:id="@+id/badge_layout1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:gravity="center">
+
+                        <RelativeLayout
+                            android:id="@+id/relative_layout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center">
+
+                        <ImageView
+                            android:id="@+id/bannere_image"
+                            android:scaleType="fitXY"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:padding="2dp"
+                            android:src="@drawable/post" />
+                        </RelativeLayout>
+
+                        <ImageView
+                            android:id="@+id/Edit_banner_foto"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignRight="@id/relative_layout"
+                            android:src="@drawable/camera" />
+                    </RelativeLayout>
+
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+                <LinearLayout
+                    android:padding="5dp"
+                    android:gravity="center"
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="1"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="School Code"
+                        android:textStyle="bold"
+                        android:layout_weight="0.2"
+                        android:textSize="15dp"
+                        />
+
+                    <TextView
+                        android:id="@+id/sch_code"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.7"
+                        android:text=""
+                        android:textColor="@color/colorPrimary"
+                        android:textAlignment="gravity"
+                        android:textSize="18dp" />
+
+                    <Button
+                        android:id="@+id/edit_profile"
+                        android:layout_weight="0.1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="26dp"
+                        android:layout_gravity="left"
+                        android:background="@color/colorPrimary"
+                        android:text="Edit Profile"
+                        android:textAllCaps="false"
+                        android:textColor="#fff" />
+                </LinearLayout>
+
+
+                <LinearLayout
+            android:padding="5dp"
+            android:gravity="center"
+            android:layout_margin="5dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Profile Statistics"
+           android:textStyle="bold"
+            android:textSize="20dp"
+             />
+        </LinearLayout>
+
+        <LinearLayout
+
+            android:padding="5dp"
+            android:gravity="center"
+            android:layout_margin="5dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/home"
+                android:layout_weight="1"
+                app:cardCornerRadius="4dp"
+                android:layout_margin="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <!--<ImageView-->
+                        <!--android:src="@drawable/home"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="60dp" />-->
+                    <TextView
+                        android:id="@+id/tv_total_std"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:text=""
+                        android:textAlignment="center"
+                        android:gravity="center"
+                        android:textColor="#FF3360DC"
+                        android:textSize="20dp"
+                        />
+
+                    <TextView
+                        android:text="TOTAL STUDENTS"
+                        android:gravity="center"
+                        android:typeface="serif"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/post"
+                android:layout_weight="1"
+                app:cardCornerRadius="4dp"
+                android:layout_margin="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <!--<ImageView-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="60dp"-->
+                        <!--android:src="@drawable/post" />-->
+                    <TextView
+                        android:id="@+id/tv_request_std"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:text=""
+                        android:textAlignment="center"
+                        android:gravity="center"
+                        android:textColor="#FF3360DC"
+                        android:textSize="20dp"
+                        />
+                    <TextView
+                        android:text="REQUEST STUDENTS"
+                        android:gravity="center"
+                        android:typeface="serif"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:gravity="center"
+            android:padding="5dp"
+            android:layout_margin="5dp"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/post1"
+                android:layout_width="170dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="4dp">
+
+                <LinearLayout
+                    android:layout_width="178dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="5dp">
+
+                    <!--<ImageView-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="60dp"-->
+                    <!--android:src="@drawable/post" />-->
+                    <TextView
+                        android:id="@+id/tv_conferm_std"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:gravity="center"
+                        android:text=""
+                        android:textAlignment="center"
+                        android:textColor="#FF3360DC"
+                        android:textSize="20dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="CONFIRM STUDENT"
+                        android:typeface="serif" />
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+          android:weightSum="1"
+            android:padding="5dp"
+            android:gravity="center"
+            android:layout_margin="5dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/about_us"
+           android:layout_weight="0.5"
+            android:padding="5dp"
+            android:gravity="center"
+            android:layout_margin="5dp"
+            android:orientation="horizontal"
+            android:background="@color/colorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="About Us"
+                android:textColor="#fff"
+                android:textAlignment="center"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/sch_album"
+              android:layout_weight="0.5"
+            android:padding="5dp"
+            android:gravity="center"
+            android:layout_margin="5dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:background="#FF3360DC"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="School Album"
+                android:textStyle="bold"
+                android:textColor="#fff"
+                android:textAlignment="center"
+                android:textSize="18dp"
+                />
+        </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/llview_about_us"
+            android:padding="5dp"
+            android:gravity="center"
+            android:layout_margin="5dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <LinearLayout
+
+            android:padding="5dp"
+            android:gravity="center"
+            android:layout_margin="5dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="We follow fun and do learn"
+                android:textSize="15dp"
+                android:textColor="#FF3360DC"
+                />
+
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/about_us_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+     <!--<Button-->
+         <!--android:id="@+id/btn_add_about"-->
+         <!--android:layout_width="wrap_content"-->
+         <!--android:layout_height="wrap_content"-->
+         <!--android:text="Add Advertise"-->
+         <!--android:layout_gravity="left"-->
+         <!--android:layout_margin="5dp"-->
+         <!--android:textAllCaps="false"-->
+         <!--android:textColor="#fff"-->
+         <!--android:background="@color/colorPrimary"-->
+         <!--/>-->
+        </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_title_post"
+                    android:padding="5dp"
+                    android:gravity="center"
+                    android:layout_margin="5dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+            <LinearLayout
+                android:padding="5dp"
+                android:gravity="center"
+                android:layout_margin="5dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <android.support.design.widget.TextInputLayout
+                android:textColorHint="#FF3360DC"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp">
+
+                <EditText
+                    android:id="@+id/title_about"
+                    android:hint="Title"
+                    android:textSize="13dp"
+                    android:textColor="#FF3360DC"
+                    android:inputType="text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:textColorHint="#FF3360DC"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp">
+
+                <EditText
+                    android:id="@+id/about_description"
+                    android:hint="Description"
+                    android:textSize="13dp"
+                    android:textColor="#FF3360DC"
+                    android:inputType="textMultiLine"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:id="@+id/btn_advertise"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Advertise"
+                android:layout_gravity="left"
+                android:textColor="#fff"
+                android:layout_margin="5dp"
+                android:textAllCaps="false"
+                android:background="@color/colorPrimary"
+                />
+        </LinearLayout>
+        </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/llview_album"
+                android:padding="5dp"
+                android:gravity="center"
+                android:layout_margin="5dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.v7.widget.RecyclerView
+                    android:orientation="horizontal"
+                    android:id="@+id/album_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            <!--<LinearLayout-->
+
+                <!--android:padding="5dp"-->
+                <!--android:gravity="center"-->
+                <!--android:layout_margin="5dp"-->
+                <!--android:orientation="vertical"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content">-->
+
+
+            <!--</LinearLayout>-->
+            </LinearLayout>
+                <!--</HorizontalScrollView>-->
+
+
+
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+</LinearLayout>

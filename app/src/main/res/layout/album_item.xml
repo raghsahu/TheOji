@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <!--<HorizontalScrollView-->
+        <!--android:id="@+id/hsv"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:fillViewport="true"-->
+        <!--android:measureAllChildren="false"-->
+        <!--android:scrollbars="none">-->
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardeview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        app:cardCornerRadius="5dp">
+
+                <LinearLayout
+                    android:id="@+id/le1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/img_sch_album"
+                        android:scaleType="fitXY"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:padding="2dp"/>
+
+                </LinearLayout>
+    </android.support.v7.widget.CardView>
+    <!--</HorizontalScrollView>-->
+</RelativeLayout>

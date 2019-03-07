@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ThirdStepActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="1">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.15"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:textColorHint="#FF3360DC">
+
+                    <EditText
+                        android:id="@+id/st_school_code"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="School Code"
+                        android:inputType="text"
+                        android:textColor="#FF3360DC"
+                        android:textSize="13dp" />
+                </android.support.design.widget.TextInputLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.70"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Class"
+                        android:textColor="#FF3360DC"
+                        android:layout_marginRight="15dp"
+                        android:textStyle="normal"
+                        android:textSize="15dp"/>
+
+                    <Spinner
+                        android:id="@+id/st_classes"
+                        android:layout_gravity="center"
+                        android:layout_width="match_parent"
+                        android:entries="@array/class_entries"
+                        android:layout_marginLeft="15dp"
+                        android:layout_height="45dp">
+                    </Spinner>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.70"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Section"
+                        android:textColor="#FF3360DC"
+                        android:layout_marginRight="15dp"
+                        android:textStyle="normal"
+                        android:textSize="15dp"/>
+
+                    <Spinner
+                        android:id="@+id/st_section"
+                        android:layout_gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_marginLeft="15dp"
+                        android:entries="@array/class_section"
+                        android:layout_height="45dp">
+                    </Spinner>
+                </LinearLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:textColorHint="#FF3360DC">
+
+                    <EditText
+                        android:id="@+id/st_session"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Session"
+                        android:inputType="text"
+                        android:textColor="#FF3360DC"
+                        android:textSize="13dp" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:textColorHint="#FF3360DC">
+
+                    <EditText
+                        android:id="@+id/st_admission_no"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Admission no"
+                        android:inputType="text"
+                        android:textColor="#FF3360DC"
+                        android:textSize="13dp" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:textColorHint="#FF3360DC">
+
+                    <EditText
+                        android:id="@+id/st_admission_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Admission Date"
+                        android:inputType="text"
+                        android:textColor="#FF3360DC"
+                        android:textSize="13dp" />
+                </android.support.design.widget.TextInputLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.70"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Board Name"
+                        android:textColor="#FF3360DC"
+                        android:layout_marginRight="15dp"
+                        android:textStyle="normal"
+                        android:textSize="15dp"/>
+
+                    <Spinner
+                        android:id="@+id/st_boardname"
+                        android:layout_gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_marginLeft="15dp"
+                        android:entries="@array/board_name"
+                        android:layout_height="45dp">
+                    </Spinner>
+                </LinearLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:textColorHint="#FF3360DC">
+
+                    <EditText
+                        android:id="@+id/st_about"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="About"
+                        android:inputType="textMultiLine"
+                        android:textColor="#FF3360DC"
+                        android:textSize="13dp" />
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+
+        </ScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.85"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/submit_all_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@color/colorPrimary"
+                android:text="Submit Details"
+                android:textAllCaps="false"
+                android:textColor="#fff" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

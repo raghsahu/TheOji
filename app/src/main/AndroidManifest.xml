@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.admin.theoji">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".HomeActivity" />
+        <activity android:name=".PostActivity" />
+        <activity android:name=".NewsActivity" />
+        <activity android:name=".LibraryActivity" />
+        <activity android:name=".ProjectActivity" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".AddNewsEvents" />
+        <activity android:name=".AddHomeWork" />
+        <activity android:name=".AddProjects" />
+        <activity android:name=".TeacherActivity" />
+        <activity android:name=".AddTeacher" />
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".StudentActivity" />
+        <activity android:name=".AddStudentActivity" />
+        <activity android:name=".HomeworkActivity" />
+        <activity android:name=".AddPostActivity" />
+        <activity android:name=".PayFeesActivity" />
+        <activity android:name=".AddPayFeesActivity"/>
+        <activity android:name=".AddLibraryActivity" />
+        <activity android:name=".Update_Student_Profile_Activity" />
+        <activity android:name=".View_User_Profile_Activity" />
+        <activity android:name=".Edit_User_Profile_Activity" />
+        <activity android:name=".Comment_View_Activity" />
+        <activity android:name=".Registration_activity" />
+        <activity android:name=".AttendenceActivity" />
+
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.example.admin.theoji.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+
+
+    </application>
+
+</manifest>

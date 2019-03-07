@@ -1,0 +1,593 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Edit_User_Profile_Activity">
+
+    <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/toolbar_post"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FF3360DC"
+        android:fitsSystemWindows="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edit Profile"
+            android:textColor="#fff"
+            android:textSize="15dp"
+            android:textStyle="normal"
+            android:typeface="serif" />
+
+    </android.support.v7.widget.Toolbar>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="1">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.15"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/post0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    app:cardCornerRadius="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="5dp">
+
+
+                                <ImageView
+                                    android:id="@+id/banner_image"
+                                    android:scaleType="fitXY"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="200dp"
+                                    android:padding="2dp"
+                                    android:src="@drawable/post" />
+
+
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+                <LinearLayout
+                    android:padding="5dp"
+                    android:gravity="center"
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="1"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="School Code"
+                        android:textStyle="bold"
+                        android:layout_weight="0.2"
+                        android:textSize="15dp"
+                        />
+
+                    <TextView
+                        android:id="@+id/sch_code"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.7"
+                        android:text=""
+                        android:textColor="@color/colorPrimary"
+                        android:textAlignment="gravity"
+                        android:textSize="18dp" />
+
+                    <Button
+                        android:id="@+id/view_profile"
+                        android:layout_weight="0.1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="26dp"
+                        android:layout_gravity="left"
+                        android:background="@color/colorPrimary"
+                        android:text="View Profile"
+                        android:textAllCaps="false"
+                        android:textColor="#fff" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:gravity="center"
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Profile Settings"
+                        android:textStyle="bold"
+                        android:textSize="20dp"
+                        />
+                </LinearLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:textColorHint="#FF3360DC">
+
+                    <EditText
+                        android:id="@+id/sch_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="School Name"
+                        android:inputType="text"
+                        android:textColor="#FF3360DC"
+                        android:textSize="13dp" />
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:textColorHint="#FF3360DC">
+
+                    <EditText
+                        android:id="@+id/sch_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Email"
+                        android:inputType="textEmailAddress"
+                        android:textColor="#FF3360DC"
+                        android:textSize="13dp" />
+                </android.support.design.widget.TextInputLayout>
+
+                <LinearLayout
+                    android:padding="5dp"
+                    android:gravity="center"
+                    android:layout_margin="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Information"
+                        android:textStyle="bold"
+                        android:textColor="#FF3360DC"
+                        android:textSize="18dp"
+                        />
+                </LinearLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:textColorHint="#FF3360DC">
+
+                    <EditText
+                        android:id="@+id/sch_mobile"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Mobile number"
+                        android:inputType="textPersonName"
+                        android:textColor="#FF3360DC"
+                        android:textSize="13dp" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:textColorHint="#FF3360DC">
+
+                <EditText
+                    android:id="@+id/sch_tel_no"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Telephone number"
+                android:inputType="text"
+                android:textColor="#FF3360DC"
+                android:textSize="13dp" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:textColorHint="#FF3360DC">
+
+                    <EditText
+                        android:id="@+id/sch_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Address"
+                        android:inputType="text"
+                        android:textColor="#FF3360DC"
+                        android:textSize="13dp" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:textColorHint="#FF3360DC">
+
+                    <EditText
+                        android:id="@+id/sch_address1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Address1"
+                        android:inputType="text"
+                        android:textColor="#FF3360DC"
+                        android:textSize="13dp" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:textColorHint="#FF3360DC">
+
+                    <EditText
+                        android:id="@+id/sch_city"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="City"
+                        android:inputType="text"
+                        android:textColor="#FF3360DC"
+                        android:textSize="13dp" />
+                </android.support.design.widget.TextInputLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.70"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="State"
+                        android:textColor="#FF3360DC"
+                        android:layout_marginRight="15dp"
+                        android:textStyle="normal"
+                        android:textSize="15dp"/>
+
+                    <Spinner
+                        android:id="@+id/state"
+                        android:layout_gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_marginLeft="15dp"
+                        android:layout_height="45dp">
+                    </Spinner>
+                </LinearLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:textColorHint="#FF3360DC">
+
+                    <EditText
+                        android:id="@+id/sch_country"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Country"
+                        android:inputType="text"
+                        android:textColor="#FF3360DC"
+                        android:textSize="13dp" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:textColorHint="#FF3360DC">
+
+                    <EditText
+                        android:id="@+id/sch_sch_code"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="School Code"
+                        android:inputType="number"
+                        android:textColor="#FF3360DC"
+                        android:textSize="13dp" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:textColorHint="#FF3360DC">
+
+                    <EditText
+                        android:id="@+id/sch_website"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Website"
+                        android:inputType="text"
+                        android:textColor="#FF3360DC"
+                        android:textSize="13dp" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:textColorHint="#FF3360DC">
+
+                    <EditText
+                        android:id="@+id/sch_pincode"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Pincode"
+                        android:inputType="text"
+                        android:textColor="#FF3360DC"
+                        android:textSize="13dp" />
+                </android.support.design.widget.TextInputLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.70"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Board Name"
+                        android:textColor="#FF3360DC"
+                        android:layout_marginRight="15dp"
+                        android:textStyle="normal"
+                        android:textSize="15dp"/>
+
+                    <Spinner
+                        android:id="@+id/sch_boardname"
+                        android:layout_gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_marginLeft="15dp"
+                        android:entries="@array/board_name"
+                        android:layout_height="45dp">
+                    </Spinner>
+                </LinearLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:textColorHint="#FF3360DC">
+
+                    <EditText
+                        android:id="@+id/sch_nostaff"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="No Off Staff"
+                        android:inputType="text"
+                        android:textColor="#FF3360DC"
+                        android:textSize="13dp" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:textColorHint="#FF3360DC">
+
+                    <EditText
+                        android:id="@+id/sch_sub_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Subtitle"
+                        android:inputType="textPersonName"
+                        android:textColor="#FF3360DC"
+                        android:textSize="13dp" />
+                </android.support.design.widget.TextInputLayout>
+
+                <LinearLayout
+                    android:padding="5dp"
+                    android:gravity="center"
+                    android:layout_margin="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Banner Image"
+                        android:textStyle="bold"
+                        android:textColor="#FF3360DC"
+                        android:textSize="18dp"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:weightSum="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+                    <Button
+                        android:layout_weight="0.5"
+                        android:id="@+id/btn_img1"
+                        android:layout_width="136dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="#FF3360DC"
+                        android:text="Upload Image"
+                        android:textAllCaps="false"
+                        />
+                    <TextView
+                        android:id="@+id/banner_img_path"
+                        android:layout_weight="0.5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Image name"
+                        android:layout_marginLeft="10dp"
+                        android:textColor="#FF3360DC"
+                        android:textSize="15dp"
+                        />
+                </LinearLayout>
+
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:textColorHint="#FF3360DC">
+
+                    <EditText
+                        android:id="@+id/sch_about"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="About"
+                        android:inputType="textMultiLine"
+                        android:textColor="#FF3360DC"
+                        android:textSize="13dp" />
+                </android.support.design.widget.TextInputLayout>
+
+                <LinearLayout
+                    android:padding="5dp"
+                    android:gravity="center"
+                    android:layout_margin="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Security and Profile change"
+                        android:textStyle="bold"
+                        android:textColor="#FF3360DC"
+                        android:textSize="18dp"
+                        />
+                </LinearLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    app:passwordToggleEnabled="true"
+                    app:passwordToggleTint="@color/colorPrimary"
+                    android:textColorHint="#FF3360DC">
+
+                    <EditText
+                        android:id="@+id/sch_pwwww"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Password"
+                        android:inputType="text"
+                        android:textColor="#FF3360DC"
+                        android:textSize="13dp" />
+                </android.support.design.widget.TextInputLayout>
+                <LinearLayout
+                    android:padding="5dp"
+                    android:gravity="center"
+                    android:layout_margin="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Change profile Image"
+                        android:textStyle="bold"
+                        android:textColor="#FF3360DC"
+                        android:textSize="18dp"
+                        />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+                    <Button
+                        android:layout_weight="0.5"
+                        android:id="@+id/btn_img2"
+                        android:layout_width="136dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="#FF3360DC "
+                        android:text="Upload Image"
+                        android:textAllCaps="false"
+                        />
+                    <TextView
+                        android:id="@+id/profile_img_path"
+                        android:layout_weight="0.5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Image name"
+                        android:layout_marginLeft="10dp"
+                        android:textColor="#FF3360DC"
+                        android:textSize="15dp"
+                        />
+                </LinearLayout>
+
+
+            <LinearLayout
+                android:padding="5dp"
+                android:gravity="center"
+                android:layout_margin="5dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <CheckBox
+                    android:id="@+id/checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true" />
+
+                <TextView
+                    android:id="@+id/text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/colorPrimary"
+                  android:text="I agree to terms and conditions."
+                    android:textAlignment="gravity" />
+            </LinearLayout>
+
+
+
+            </LinearLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.85"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/submit_final"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@color/colorPrimary"
+                android:text="Update Profile"
+                android:textAllCaps="false"
+                android:textColor="#fff" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

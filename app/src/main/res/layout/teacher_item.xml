@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardeview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="2dp"
+        app:cardCornerRadius="5dp">
+
+
+    <LinearLayout
+        android:id="@+id/ln1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="5dp"
+        android:padding="2dp"
+        android:weightSum="1"
+        >
+
+        <LinearLayout
+            android:id="@+id/le1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="Email-  "
+                    android:textStyle="bold"
+                    android:textColor="#000"
+                    android:textSize="14sp" />
+            <TextView
+                android:id="@+id/txt_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                 android:layout_marginLeft="3dp"
+                android:typeface="serif"
+                android:textColor="#000"
+                android:textSize="14sp" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="Teacher-  "
+                    android:typeface="serif"
+                    android:textStyle="bold"
+                    android:textColor="#000"
+                    android:textSize="14sp" />
+            <TextView
+                android:id="@+id/txt_first_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_marginLeft="3dp"
+                android:typeface="serif"
+                android:textColor="#000"
+                android:textSize="14sp" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="Mobile-  "
+                    android:textStyle="bold"
+                    android:typeface="serif"
+                    android:textColor="#000"
+                    android:textSize="14sp" />
+            <TextView
+                android:id="@+id/mobile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+android:layout_marginLeft="3dp"
+                android:typeface="serif"
+                android:textColor="#000"
+                android:textSize="14sp" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="Address-  "
+                    android:textStyle="bold"
+                    android:typeface="serif"
+                    android:textColor="#000"
+                    android:textSize="14sp" />
+            <TextView
+                android:id="@+id/txt_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+android:layout_marginLeft="3dp"
+                android:typeface="serif"
+                android:textColor="#000"
+                android:textSize="14sp" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="Alot Class-  "
+                    android:typeface="serif"
+                    android:textStyle="bold"
+                    android:textColor="#000"
+                    android:textSize="14sp" />
+            <TextView
+                android:id="@+id/txt_class"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+android:layout_marginLeft="3dp"
+                android:typeface="serif"
+                android:textColor="#000"
+                android:textSize="14sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/le11"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+android:layout_marginTop="25dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_weight="0.8"
+            >
+
+            <Button
+                android:id="@+id/delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@color/colorPrimary"
+                android:text="Delete"
+                android:textAllCaps="false"
+                android:textColor="#fff"
+                android:layout_weight="0.0"
+                />
+        </LinearLayout>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+        </LinearLayout>
