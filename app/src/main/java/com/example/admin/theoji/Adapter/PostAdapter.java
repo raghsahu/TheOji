@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -48,8 +50,6 @@ import org.json.JSONObject;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import uk.co.senab.photoview.PhotoViewAttacher;
-
 import static com.androidquery.util.AQUtility.getContext;
 import static com.example.admin.theoji.PostActivity.postStringHashMap;
 
@@ -71,7 +71,7 @@ public class  PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     String id;
     String Comment;
     public static HashMap<Integer , String> CountCheckHashMap = new HashMap<>();
-
+     AlertDialog alertDialog;
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -91,6 +91,7 @@ public class  PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             super(view);
             viewlike = view;
             img_person = (ImageView)viewlike.findViewById(R.id.img_person);
+            img2 = (ImageView)viewlike.findViewById(R.id.img2);
 
             txt1 = (TextView) viewlike.findViewById(R.id.txt1);
             txt2 = (TextView) viewlike.findViewById(R.id.txt2);
@@ -152,12 +153,6 @@ public class  PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 .into(viewHolder.img2);
 
 
-
-//
-//        drawableArrayList.add( Picasso.get()
-//                .load("https://jntrcpl.com/theoji/uploads/"+postListModel.getPostimg())
-//                .placeholder(R.drawable.img).);
-
         viewHolder.cardeview.setTag(viewHolder);
         viewHolder.btn1.setTag(viewHolder);
         viewHolder.btn2.setTag(viewHolder);
@@ -170,12 +165,34 @@ public class  PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         viewHolder.pos = position;
 
         viewHolder.img2.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View view) {
 
-//                viewHolder.img2.isZoomable();
-//                viewHolder.img2.isTranslatable();
-//                viewHolder.img2.getAutoCenter();
+                final AlertDialog.Builder alertadd = new AlertDialog.Builder(context);
+                LayoutInflater factory = LayoutInflater.from(context);
+                final View v = factory.inflate(R.layout.sample, null);
+                ImageView dialogImage=viewlike.findViewById(R.id.dialog_imageview);
+                //dialogImage = new ImageView(context);
+
+
+
+                alertadd.setView(v);
+                alertadd.setNeutralButton("back", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dlg, int sumthin) {
+
+
+                    }
+                });
+                 alertDialog = alertadd.create();
+                alertDialog.show();
+//                alertadd.show();
+                if(alertDialog.isShowing()  )
+                {
+                    Picasso.get().load("https://jntrcpl.com/theoji/uploads/"+postListModel.getPostimg())
+                            .into(dialogImage);
+                }
+
             }
         });
 
