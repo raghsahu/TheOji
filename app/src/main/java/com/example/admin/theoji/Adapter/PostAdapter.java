@@ -173,17 +173,18 @@ public class  PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 LayoutInflater factory = LayoutInflater.from(context);
                 final View v = factory.inflate(R.layout.sample, null);
                 ImageView dialogImage=viewlike.findViewById(R.id.dialog_imageview);
-                //dialogImage = new ImageView(context);
+                dialogImage = new ImageView(context);
 
 
 
-                alertadd.setView(v);
+                alertadd.setView(dialogImage);
                 alertadd.setNeutralButton("back", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dlg, int sumthin) {
 
 
                     }
                 });
+
                  alertDialog = alertadd.create();
                 alertDialog.show();
 //                alertadd.show();
