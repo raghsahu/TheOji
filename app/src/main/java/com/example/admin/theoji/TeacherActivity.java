@@ -26,7 +26,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class TeacherActivity extends AppCompatActivity {
-   ImageView viewTeacher, add_attendence;
+   ImageView viewTeacher;
     RecyclerView recyclerteacher;
     String server_url;
     ArrayList<TeacherListModel> TeacherList;
@@ -39,7 +39,7 @@ public class TeacherActivity extends AppCompatActivity {
         setContentView(R.layout.activity_teacher);
 
         viewTeacher = (ImageView)findViewById(R.id.viewTeacher);
-        add_attendence=(ImageView)findViewById(R.id.add_attendence);
+
 
         viewTeacher.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,14 +50,7 @@ public class TeacherActivity extends AppCompatActivity {
             }
         });
 
-        add_attendence.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(TeacherActivity.this,AttendenceActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
+
 
         recyclerteacher = (RecyclerView)findViewById(R.id.recycler_view_teacher);
 
