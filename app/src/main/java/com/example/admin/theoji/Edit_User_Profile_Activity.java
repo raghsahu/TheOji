@@ -66,6 +66,8 @@ import java.util.regex.Pattern;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 import static android.provider.MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE;
 
 public class Edit_User_Profile_Activity extends AppCompatActivity {
@@ -108,6 +110,7 @@ public class Edit_User_Profile_Activity extends AppCompatActivity {
      public static String user_type;
     private String umeta_value;
     ImageView banner_image;
+    CircleImageView progile_img;
 
 
     @Override
@@ -134,6 +137,7 @@ public class Edit_User_Profile_Activity extends AppCompatActivity {
         FinalSubmit=(Button)findViewById(R.id.submit_final);
         std_board_name=(Spinner)findViewById(R.id.sch_boardname);
         banner_image=(ImageView)findViewById(R.id.banner_image);
+        progile_img=findViewById(R.id.profile_image);
 
         btn_banner_img=(Button)findViewById(R.id.btn_img1);
         btn_profile_img=(Button)findViewById(R.id.btn_img2);
@@ -558,6 +562,9 @@ public class Edit_User_Profile_Activity extends AppCompatActivity {
                         String telno= seperateData[3];
                         schtel_no.setText(telno);
                         String imagename = seperateData[4];
+                        Picasso.get()
+                                .load("https://jntrcpl.com/theoji/uploads/"+imagename)
+                                .into(Edit_User_Profile_Activity.this.progile_img);
 
                         // sch_country.setText(country);
                         String websiteurl = seperateData[5];

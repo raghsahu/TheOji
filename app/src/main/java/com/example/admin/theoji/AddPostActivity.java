@@ -312,7 +312,7 @@ public class AddPostActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             // Log.v("profile",result);
 
-            String result1 = result;
+            //String result1 = result;
             if (result != null) {
 
                 dialog.dismiss();
@@ -465,7 +465,7 @@ public class AddPostActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(AddPostActivity.this, R.style.AlertDialogTheme);
         builder.setIcon(R.drawable.ic_launcher_background)
                 .setTitle("Please Upload Image!")
-                .setPositiveButton("OK", null)
+                //.setPositiveButton("OK", null)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
