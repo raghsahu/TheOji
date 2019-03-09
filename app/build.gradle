@@ -58,6 +58,7 @@ dependencies {
     implementation 'com.karumi:dexter:4.2.0'
     implementation 'com.thomashaertel:multispinner:0.1.1'
     implementation 'com.commit451:PhotoView:1.2.4'
+    implementation 'de.hdodenhof:circleimageview:3.0.0'
 
 }
 

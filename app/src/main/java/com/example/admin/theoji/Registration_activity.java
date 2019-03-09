@@ -13,9 +13,12 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.admin.theoji.Connection.HttpHandler;
 import com.example.admin.theoji.ModelClass.StateModel;
@@ -39,6 +42,8 @@ public class Registration_activity extends AppCompatActivity {
 
     TextInputLayout tv_city,tv_sch_code,tv_fullname,tv_fathername,tv_lead,tv_sch_name;
     CardView card_board;
+    Button btn_register;
+    CheckBox check_box;
 
     private ArrayAdapter<String> typeAdapter;
     private ArrayList<String> typeList;
@@ -80,6 +85,8 @@ public class Registration_activity extends AppCompatActivity {
         tv_sch_name=(TextInputLayout)findViewById(R.id.tv_sch_name);
         tv_lead=(TextInputLayout)findViewById(R.id.tv_saleslead);
         card_board=(CardView)findViewById(R.id.card_views_board);
+        check_box=findViewById(R.id.checkbox);
+        btn_register=findViewById(R.id.cont_reg1);
 
         type = (Spinner)findViewById(R.id.type);
         state=(Spinner)findViewById(R.id.state_type);
@@ -92,7 +99,23 @@ public class Registration_activity extends AppCompatActivity {
         typeList.add("Select your Type");
         typeList.add("School");
         typeList.add("Parent");
+//********************************************************
+        btn_register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+               // Sch_name=sch_name.getText().toString();
+               // Sch_mail=sch_mail.getText().toString();
+
+
+                if (check_box.isChecked())
+                {
+                   // new registerExecuteTask().execute();
+                }else {
+                    Toast.makeText(Registration_activity.this, "please accept terms & conditions", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

@@ -2,6 +2,7 @@ package com.example.admin.theoji.Adapter;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -169,30 +171,42 @@ public class  PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             @Override
             public void onClick(View view) {
 
-                final AlertDialog.Builder alertadd = new AlertDialog.Builder(context);
-                LayoutInflater factory = LayoutInflater.from(context);
-                final View v = factory.inflate(R.layout.sample, null);
-                ImageView dialogImage=viewlike.findViewById(R.id.dialog_imageview);
-                dialogImage = new ImageView(context);
+                final AlertDialog.Builder alertadd = new AlertDialog.Builder(context,AlertDialog.THEME_HOLO_LIGHT);
+               // LayoutInflater factory = LayoutInflater.from(context);
+               // final View v = factory.inflate(R.layout.sample, null);
+                //ImageView dialogImage=viewlike.findViewById(R.id.dialog_imageview);
+                ImageView dialogImage = new ImageView(context);
+                final Dialog d = alertadd.setView(new View(context)).create();
+                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                lp.copyFrom(d.getWindow().getAttributes());
+                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
 
-
-
-                alertadd.setView(dialogImage);
-                alertadd.setNeutralButton("back", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dlg, int sumthin) {
-
-
-                    }
-                });
-
-                 alertDialog = alertadd.create();
-                alertDialog.show();
-//                alertadd.show();
-                if(alertDialog.isShowing()  )
+                if (postListModel.getPostimg().length()!=0)
                 {
                     Picasso.get().load("https://jntrcpl.com/theoji/uploads/"+postListModel.getPostimg())
                             .into(dialogImage);
+                    d.show();
+                    d.getWindow().setAttributes(lp);
+                    d.setContentView(dialogImage);
+                }else {
+                    Toast.makeText(context, "no image found", Toast.LENGTH_SHORT).show();
+
                 }
+                ((AlertDialog) d).setButton("back", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        d.dismiss();
+                    }
+                });
+
+                //alertadd.setView(dialogImage);
+//                alertadd.setNeutralButton("back", new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dlg, int sumthin) {
+//
+//
+//                    }
+//                });
 
             }
         });

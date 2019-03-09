@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    tools:context=".Registration_activity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_undeclear"
@@ -15,7 +15,7 @@
         android:minHeight="?attr/actionBarSize">
 
         <TextView
-            android:text="Login"
+            android:text="Register"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_weight="0.60"
@@ -55,6 +55,7 @@
                 android:layout_height="wrap_content"
                 android:text="Register"
                 android:textSize="20dp"
+                android:layout_marginBottom="20dp"
                 android:textStyle="bold"
                 android:textAlignment="center"
                 android:typeface="serif" />
@@ -238,13 +239,15 @@
             android:textColorHint="#FF3360DC"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/colorPrimary"
             android:layout_marginBottom="20dp">
 
             <EditText
                 android:id="@+id/reg_pw"
                 android:hint="Password"
                 android:textSize="13dp"
-                android:inputType="text"
+                android:inputType="textPassword"
                 android:textColor="#FF3360DC"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />

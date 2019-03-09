@@ -21,6 +21,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -75,8 +76,9 @@ public class Edit_User_Profile_Activity extends AppCompatActivity {
     String[] seperateData ;
 
     private String userChoosenTask;
-    private String imageStoragePath;
+    public  String imageStoragePath;
     private String imageStoragePath1;
+    private String imageStoragePath2;
     int BannerAnInt=0 , ProfileAnInt=0;
     public static final int REQUEST_CAMERA = 0;
     private static final int CAMERA_CAPTURE_IMAGE_REQUEST_CODE = 100;
@@ -92,9 +94,8 @@ public class Edit_User_Profile_Activity extends AppCompatActivity {
 
     Button btn_banner_img, btn_profile_img,btn_viewProfile;
     TextView tv_banner_img, tv_profile_img,sch_code;
-
     Button FinalSubmit;
-   // private String imageStoragePath0;
+   CheckBox check_box;
 
     EditText sch_name, sch_mail,sch_mobile, schtel_no,sch_add1,sch_add2,sch_city,sch_country,sch_schcode,sch_web,
               sch_pincode,sch_staff,sch_subtitle,sch_about,sch_pww;
@@ -107,6 +108,7 @@ public class Edit_User_Profile_Activity extends AppCompatActivity {
      public static String user_type;
     private String umeta_value;
     ImageView banner_image;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -139,6 +141,8 @@ public class Edit_User_Profile_Activity extends AppCompatActivity {
         tv_banner_img=(TextView)findViewById(R.id.banner_img_path);
         tv_profile_img=(TextView)findViewById(R.id.profile_img_path);
         sch_code=(TextView)findViewById(R.id.sch_code);
+
+        check_box=findViewById(R.id.checkbox);
 
         btn_viewProfile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -173,7 +177,13 @@ public class Edit_User_Profile_Activity extends AppCompatActivity {
                 Sch_state=spin_state.getSelectedItem().toString();
                 Sch_board=std_board_name.getSelectedItem().toString();
 
-                new SchoolProfileUpdateExecuteTask().execute();
+                if (check_box.isChecked())
+                {
+                    new SchoolProfileUpdateExecuteTask().execute();
+                }else {
+                    Toast.makeText(Edit_User_Profile_Activity.this, "please accept terms & conditions", Toast.LENGTH_SHORT).show();
+                }
+               // new SchoolProfileUpdateExecuteTask().execute();
             }
         });
 
@@ -389,9 +399,11 @@ public class Edit_User_Profile_Activity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
         // if the result is capturing Image
         if (requestCode == CAMERA_CAPTURE_IMAGE_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
+
                 upflag = true;
                 // Refreshing the gallery
 //                previewCapturedImage();
@@ -399,9 +411,9 @@ public class Edit_User_Profile_Activity extends AppCompatActivity {
                 CameraUtils.refreshGallery(getApplicationContext(), imageStoragePath);
                 if(BannerAnInt ==1)
                 {
-                    imageStoragePath = imageStoragePath;
-                    tv_banner_img.setText(imageStoragePath);
-                    Toast.makeText(this, "banner"+imageStoragePath, Toast.LENGTH_SHORT).show();
+                    imageStoragePath2 = imageStoragePath;
+                    tv_banner_img.setText(imageStoragePath2);
+                    Toast.makeText(this, "banner"+imageStoragePath2, Toast.LENGTH_SHORT).show();
                 }
                 if(ProfileAnInt ==1)
                 {
@@ -435,6 +447,21 @@ public class Edit_User_Profile_Activity extends AppCompatActivity {
           //  postimage.setImageBitmap(BitmapFactory.decodeFile(imageStoragePath));
             upflag = true;
             cursor.close();
+
+            if(BannerAnInt ==1)
+            {
+                imageStoragePath2 = imageStoragePath;
+                tv_banner_img.setText(imageStoragePath2);
+                Toast.makeText(this, "banner"+imageStoragePath2, Toast.LENGTH_SHORT).show();
+            }
+            if(ProfileAnInt ==1)
+            {
+                imageStoragePath1 = imageStoragePath;
+                tv_profile_img.setText(imageStoragePath1);
+                Toast.makeText(this, "profile"+imageStoragePath1, Toast.LENGTH_SHORT).show();
+            }
+
+
         }
 
     }
@@ -509,50 +536,6 @@ public class Edit_User_Profile_Activity extends AppCompatActivity {
                             user_type = c.getString("user_type");
                              umeta_value = c.getString("umeta_value");
 
-
-
-                           // seperateData = umeta_value.split(Pattern.quote(","));
-                          //  Log.e("length", "is"+seperateData.length);
-
-//                            String address1 = seperateData[0];
-//                            sch_add2.setText(address1);
-//                            String state = seperateData[1];
-//                            try {
-//                                if (!state.isEmpty()) {
-//                                    for (int k = 0; k < stateAdapter.getCount(); k++) {
-//                                        if (stateAdapter.getItem(k).equals(state)) {
-//                                            // Toast.makeText(Update_Student_Profile_Activity.this, "xyz"+state, Toast.LENGTH_SHORT).show();
-//                                            spin_state.setSelection((int) stateAdapter.getItemId(k));
-//                                        } else {
-//                                            // Toast.makeText(Update_Student_Profile_Activity.this, "fgdgf", Toast.LENGTH_SHORT).show();
-//                                        }
-//                                    }
-//                                }
-//                            } catch (NullPointerException e) {
-//                            }
-//                            String country = seperateData[2];
-//                            sch_country.setText(country);
-//                            String telno= seperateData[3];
-//                            schtel_no.setText(telno);
-//                            String imagename = seperateData[4];
-//
-//                           // sch_country.setText(country);
-//                            String websiteurl = seperateData[5];
-//                            sch_web.setText(websiteurl);
-//                            String schoolcode = seperateData[6];
-//                           // sch_schcode.setText(schoolcode);
-//                            String affiliation_no = seperateData[7];
-//                            String pin_code = seperateData[8];
-//                           sch_pincode.setText(pin_code);
-//                            String board_name = seperateData[9];
-//
-//                            String no_off_staff = seperateData[10];
-//                            sch_staff.setText(no_off_staff);
-//                            String bannerimage = seperateData[11];
-//
-//                            String subtitle = seperateData[12];
-//                            sch_subtitle.setText(subtitle);
-//                            String established_year = seperateData[13];
 
                         }
                         seperateData = new String[umeta_value.split(",").length];
@@ -635,7 +618,7 @@ public class Edit_User_Profile_Activity extends AppCompatActivity {
                         HttpMultipartMode.BROWSER_COMPATIBLE);
                 String id= AppPreference.getUserid(Edit_User_Profile_Activity.this);
 
-                entity.addPart("bannerimage", new FileBody(new File(imageStoragePath)));
+                entity.addPart("bannerimage", new FileBody(new File(imageStoragePath2)));
                 entity.addPart("profile", new FileBody(new File(imageStoragePath1)));
                 entity.addPart("user_id",new StringBody(id));
                 entity.addPart("user_type",new StringBody(user_type));

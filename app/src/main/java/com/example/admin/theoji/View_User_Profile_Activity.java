@@ -255,7 +255,7 @@ public class View_User_Profile_Activity extends AppCompatActivity {
 
                         String total = dataJsonObject.getString("total");
                         tv_total_std.setText(total);
-                        Toast.makeText(View_User_Profile_Activity.this, "aa"+total, Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(View_User_Profile_Activity.this, "aa"+total, Toast.LENGTH_SHORT).show();
                         String request = dataJsonObject.getString("request");
                         tv_request_std.setText(request);
                         String confirm = dataJsonObject.getString("confirm");
