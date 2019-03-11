@@ -10,7 +10,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.provider.MediaStore;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -67,6 +69,7 @@ import java.util.Locale;
 import java.util.prefs.AbstractPreferences;
 
 import static com.androidquery.util.AQUtility.getContext;
+import static com.example.admin.theoji.Adapter.StudentListAdapter.multiselected;
 import static com.example.admin.theoji.Adapter.StudentListAdapter.present_students;
 
 public class AddHomeWork extends AppCompatActivity {
@@ -104,6 +107,7 @@ public class AddHomeWork extends AppCompatActivity {
         String Spin_Student;
 
     public static HashMap<Integer , String> StudentSpinHashMap = new HashMap<>();
+    String Spin_Students;
 
 
     @Override
@@ -218,24 +222,10 @@ public class AddHomeWork extends AppCompatActivity {
         });
 //****************************************
         btn_post.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
 
-                Title_homework = title.getText().toString();
-                Description_homework = description.getText().toString();
-                Date_homework=homework_date.getText().toString();
-                Participent_homework=participent.getText().toString();
-                Spin_Class=spin_class.getSelectedItem().toString();
-                Spin_Student=present_students;
-
-
-                if (validate()  )  {
-                    Title_homework = title.getText().toString();
-                    Description_homework = description.getText().toString();
-
-
-                    previewCapturedImage();
-                }
 
             }
         });
@@ -514,11 +504,11 @@ public class AddHomeWork extends AppCompatActivity {
 
                 org.apache.http.entity.mime.MultipartEntity entity = new MultipartEntity(
                         HttpMultipartMode.BROWSER_COMPATIBLE);
-               Log.e("students",""+Spin_Student);
+               Log.e("students",""+Spin_Students);
                 String id= AppPreference.getUserid(AddHomeWork.this);
                 entity.addPart("Homework_image", new FileBody(Image));
                 entity.addPart("Student_class_type", new StringBody(Spin_Class));
-                entity.addPart("Student_name", new StringBody(Spin_Student));
+                entity.addPart("Student_name", new StringBody(Spin_Students));
                 entity.addPart("Homework_title", new StringBody(Title_homework));
                 entity.addPart("Homework_date", new StringBody(Date_homework));
                 entity.addPart("Homework_description", new StringBody(Description_homework));

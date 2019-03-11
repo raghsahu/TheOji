@@ -23,9 +23,10 @@ public class StudentListAdapter extends ArrayAdapter<StudentModel> {
         ArrayList<StudentModel> studentList;
         private StudentListAdapter studentListAdapter;
         private boolean isFromView = false;
-      public static String present_students;
+      public static String present_students = "";
 
-    //ArrayList<MultiSelectedItem> selected = new ArrayList<MultiSelectedItem>();
+
+   public static ArrayList<String> multiselected = new ArrayList<String>();
 
         public StudentListAdapter(Context context, int resource, List<StudentModel> objects) {
             super(context, resource, objects);
@@ -89,44 +90,33 @@ public class StudentListAdapter extends ArrayAdapter<StudentModel> {
                         studentList.get(position).setSelected(isChecked);
                     }
 //*****************************************************************
-                    Toast.makeText(mContext, "select+"+studentList.get(position).getFirstname(), Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(mContext, "select+"+studentList.get(position).getFirstname(), Toast.LENGTH_SHORT).show();
 
-//                    ArrayList<String> selectedStdName= new ArrayList<>();
-//
-//                    selectedStdName.add(studentList.get(position).getFirstname());  // add
-
-                   // StringBuilder stu_name = new StringBuilder();
                     try {
 
-                        if (!present_students.isEmpty()){
+                        if (present_students.length() >= 0){
 
                             if (holder.mCheckBox.isChecked()) {
-                                present_students = present_students.concat(studentList.get(position).getFirstname().concat(","));
+                               // present_students =  studentList.get(position).getFirstname();
+                               // present_students = present_students.concat(studentList.get(position).getFirstname().concat(","));
+                               multiselected.add(studentList.get(position).getFirstname());
+                                Toast.makeText(mContext, "multi+ "+multiselected, Toast.LENGTH_SHORT).show();
+
                             }
-//                            else {
-//                                present_students=present_students.replace();
-//                            }
+                            else if (multiselected.contains(studentList.get(position).getFirstname())){
+                                multiselected.remove(studentList.get(position).getFirstname());
+//                                String replce = (",").concat(studentList.get(position).getFirstname().concat(","));
+//                                present_students = present_students.replace(replce,"");
+                                Toast.makeText(mContext, "Removechecked+ "+multiselected, Toast.LENGTH_SHORT).show();
+                            }
+
                         }
                     }catch (Exception e)
                     {
-                      present_students = studentList.get(position).getFirstname().concat(",");
-                      e.printStackTrace();                    }
-
-//                    for (int i = 0; i < selectedStdName.size(); i++) {
-//
-//                        stu_name .append(selectedStdName.get(i));
-//
-//                        if (i == selectedStdName.size() - 1) {
-//
-//                           stu_name = stu_name .append(",");
-//                        }
-//
-//                    }
-                    // to create std_name string
-
-                    //stu_name.toString();
-
-                    Toast.makeText(mContext, "checked+ "+present_students, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, ""+e, Toast.LENGTH_SHORT).show();
+                      e.printStackTrace();
+                    }
+                   // Toast.makeText(mContext, "checked+ "+present_students, Toast.LENGTH_SHORT).show();
 
 
 //**********************************************************
