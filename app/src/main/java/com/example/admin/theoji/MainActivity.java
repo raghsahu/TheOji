@@ -16,7 +16,7 @@ import com.example.admin.theoji.Connection.Connectivity;
 import com.example.admin.theoji.Shared_prefrence.SessionManager;
 
 public class MainActivity extends AppCompatActivity {
-    CardView home,post,news,homework,student,projects,teacher,fees_details,library,attendence;
+    CardView home,post,news,homework,student,projects,teacher,fees_details,library,attendence,showClass;
     Toolbar toolbar;
 
     SessionManager manager;
@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         fees_details = (CardView)findViewById(R.id.feesdetails);
         library = (CardView)findViewById(R.id.library);
         attendence = (CardView)findViewById(R.id.attendence);
+        showClass = (CardView)findViewById(R.id.showclass);
 
         home.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,6 +167,18 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (Connectivity.isNetworkAvailable(MainActivity.this)){
                     Intent intent = new Intent(MainActivity.this,ShowAttendenceActivity.class);
+                    startActivity(intent);
+                }else {
+                    Toast.makeText(MainActivity.this, "No Internet", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        showClass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (Connectivity.isNetworkAvailable(MainActivity.this)){
+                    Intent intent = new Intent(MainActivity.this,ShowClassActivity.class);
                     startActivity(intent);
                 }else {
                     Toast.makeText(MainActivity.this, "No Internet", Toast.LENGTH_SHORT).show();

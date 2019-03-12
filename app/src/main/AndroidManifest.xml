@@ -54,6 +54,8 @@
         <activity android:name=".Registration_activity" />
         <activity android:name=".AttendenceActivity" />
         <activity android:name=".ShowAttendenceActivity" />
+        <activity android:name=".ShowClassActivity" />
+        <activity android:name=".AddClassActivity" />
 
 
         <provider

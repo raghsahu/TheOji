@@ -305,7 +305,7 @@
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
-                android:id="@+id/feesdetails"
+                android:id="@+id/showclass"
                 android:layout_weight="1"
                 app:cardCornerRadius="4dp"
                 android:layout_marginRight="5dp"
@@ -363,8 +363,9 @@
             </android.support.v7.widget.CardView>
         </LinearLayout>
 
+
         <LinearLayout
-            android:layout_width="134dp"
+            android:layout_width="267dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:gravity="center"
@@ -373,31 +374,91 @@
 
             <android.support.v7.widget.CardView
                 android:id="@+id/attendence"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
                 android:layout_weight="1"
                 app:cardCornerRadius="4dp">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:orientation="vertical"
                     android:padding="5dp">
 
                     <ImageView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="60dp"
-                        android:src="@drawable/news" />
+                        android:src="@drawable/library" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Attendence" />
+                        android:text="Attendance" />
 
                 </LinearLayout>
+
             </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/feesdetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="5dp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:src="@drawable/logout" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Class" />
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <!--<android.support.v7.widget.CardView-->
+            <!--android:id="@+id/library"-->
+            <!--android:layout_weight="1"-->
+            <!--app:cardCornerRadius="4dp"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content">-->
+
+            <!--<LinearLayout-->
+            <!--android:gravity="center"-->
+            <!--android:padding="5dp"-->
+            <!--android:orientation="vertical"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content">-->
+
+            <!--<ImageView-->
+            <!--android:src="@drawable/library"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="60dp" />-->
+
+            <!--<TextView-->
+            <!--android:text="Library"-->
+            <!--android:gravity="center"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content" />-->
+
+            <!--</LinearLayout>-->
+            <!--</android.support.v7.widget.CardView>-->
         </LinearLayout>
 
     </LinearLayout>
