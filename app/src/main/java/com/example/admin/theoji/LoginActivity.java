@@ -1,9 +1,13 @@
 package com.example.admin.theoji;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -36,6 +40,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -57,10 +62,16 @@ public class LoginActivity extends AppCompatActivity {
     String Type;
     String ref_id;
 
+    public static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        if(checkAndRequestPermissions()) {
+            // carry on the normal flow, as the case of  permissions  granted.
+        }
 
         // otherside tab soft keyboard closed
         LinearLayout layout = (LinearLayout) findViewById(R.id.login_body);
@@ -148,7 +159,33 @@ public class LoginActivity extends AppCompatActivity {
         typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         type.setAdapter(typeAdapter);
     }
+//******************************************************************************
+private  boolean checkAndRequestPermissions() {
+    int permissionCamara = ContextCompat.checkSelfPermission(this,Manifest.permission.CAMERA);
+    int permissionStorage = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+    int permissionStorage1 = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
+    int permissionPhone = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE);
 
+    List<String> listPermissionsNeeded = new ArrayList<>();
+    if (permissionCamara != PackageManager.PERMISSION_GRANTED) {
+        listPermissionsNeeded.add(Manifest.permission.CAMERA);
+    }
+    if (permissionStorage != PackageManager.PERMISSION_GRANTED) {
+        listPermissionsNeeded.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+    }
+    if (permissionStorage1 != PackageManager.PERMISSION_GRANTED) {
+        listPermissionsNeeded.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+    }
+    if (permissionPhone != PackageManager.PERMISSION_GRANTED) {
+        listPermissionsNeeded.add(Manifest.permission.READ_PHONE_STATE);
+    }
+    if (!listPermissionsNeeded.isEmpty()) {
+        ActivityCompat.requestPermissions(this, listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]),REQUEST_ID_MULTIPLE_PERMISSIONS);
+        return false;
+    }
+    return true;
+}
+//*************************************************************************
     class ExecuteTask extends AsyncTask<String, Integer, String> {
         ProgressDialog dialog;
 
