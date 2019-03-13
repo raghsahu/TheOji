@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 public class ShowClassActivity extends AppCompatActivity {
-    ImageView showClass;
+    ImageView addClass;
 
 
     @Override
@@ -16,12 +16,13 @@ public class ShowClassActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_class);
 
-    showClass=findViewById(R.id.showclass);
+    addClass=findViewById(R.id.addclass);
 
-    showClass.setOnClickListener(new View.OnClickListener() {
+    addClass.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             Intent intent=new Intent(ShowClassActivity.this,AddClassActivity.class);
+            startActivity(intent);
         }
     });
 
