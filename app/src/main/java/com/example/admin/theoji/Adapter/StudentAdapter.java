@@ -158,6 +158,13 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
                 final AlertDialog.Builder dialog = new AlertDialog.Builder(context).setTitle("The Oji")
                         .setMessage("Are you sure, you want to delete this student");
 
+                dialog.setNegativeButton("no", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
                 dialog.setPositiveButton("yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int whichButton) {

@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.admin.theoji.Connection.Connectivity;
 import com.example.admin.theoji.Connection.HttpHandler;
 import com.example.admin.theoji.ModelClass.StateModel;
 import com.example.admin.theoji.Shared_prefrence.AppPreference;
@@ -107,12 +108,14 @@ public class Registration_activity extends AppCompatActivity {
                // Sch_name=sch_name.getText().toString();
                // Sch_mail=sch_mail.getText().toString();
 
-
-                if (check_box.isChecked())
-                {
-                   // new registerExecuteTask().execute();
+                if (Connectivity.isNetworkAvailable(Registration_activity.this)) {
+                    if (check_box.isChecked()) {
+                        // new registerExecuteTask().execute();
+                    } else {
+                        Toast.makeText(Registration_activity.this, "please accept terms & conditions", Toast.LENGTH_SHORT).show();
+                    }
                 }else {
-                    Toast.makeText(Registration_activity.this, "please accept terms & conditions", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Registration_activity.this, "No Internet", Toast.LENGTH_SHORT).show();
                 }
             }
         });

@@ -80,7 +80,7 @@ public class  PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
         public ImageView img_person;
         ImageView img2;
-        public ImageView btn1, btn2, btn3, dis_like,send_comment,img_close;
+        public ImageView btn1, btn2, btn3, dis_like,img_close;
         public TextView txt1, txt2, txt3,txt_nm;
         public  TextView count1,count2;
         public EditText etcomment;
@@ -110,7 +110,7 @@ public class  PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             btn3 = (ImageView) viewlike.findViewById(R.id.btn3);
             dis_like=(ImageView)viewlike.findViewById(R.id.dis_btn);
             img_close=(ImageView) viewlike.findViewById(R.id.image_close);
-            send_comment=(ImageView)viewlike.findViewById(R.id.btnSend);
+            //send_comment=(ImageView)viewlike.findViewById(R.id.btnSend);
 
 //            lin_vew = (LinearLayout)view.findViewById(R.id.lin_vew);
             et_comment = (LinearLayout) viewlike.findViewById(R.id.ll_comment);
@@ -163,7 +163,7 @@ public class  PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         viewHolder.img_close.setTag(viewHolder);
         viewHolder.img2.setTag(viewHolder);
        viewHolder.Click_all.setTag(viewHolder);
-       viewHolder.send_comment.setTag(viewHolder);
+       //viewHolder.send_comment.setTag(viewHolder);
         viewHolder.pos = position;
 
         viewHolder.img2.setOnClickListener(new View.OnClickListener() {
@@ -245,6 +245,13 @@ public class  PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
                 final AlertDialog.Builder dialog = new AlertDialog.Builder(context).setTitle("The Oji")
                         .setMessage("Are you sure, you want to delete this post");
+
+                dialog.setNegativeButton("no", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
 
                 dialog.setPositiveButton("yes", new DialogInterface.OnClickListener() {
                     @Override
@@ -331,18 +338,18 @@ public class  PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             }
         });
 
-        viewHolder.send_comment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                int i = position;
-                PID =  postStringHashMap.get(i);
-
-               EditText etcomment=viewlike.findViewById(R.id.commenttxt);
-                 Comment = etcomment.getText().toString();
-                new CommentExecuteTask(PID,Comment).execute();
-            }
-        });
+//        viewHolder.send_comment.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                int i = position;
+//                PID =  postStringHashMap.get(i);
+//
+//               EditText etcomment=viewlike.findViewById(R.id.commenttxt);
+//                 Comment = etcomment.getText().toString();
+//                new CommentExecuteTask(PID,Comment).execute();
+//            }
+//        });
 
     }
 
