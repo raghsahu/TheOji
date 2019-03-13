@@ -2,6 +2,7 @@
     <string name="app_name">TheOji</string>
 
     <string name="approve">Approved</string>
+    <string name="update_class_section"><![CDATA[Update Class & Section]]></string>
 
     <string-array name="class_entries">
 
