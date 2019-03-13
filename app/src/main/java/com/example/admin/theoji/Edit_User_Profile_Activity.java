@@ -185,7 +185,7 @@ public class Edit_User_Profile_Activity extends AppCompatActivity {
                 {
                     new SchoolProfileUpdateExecuteTask().execute();
                 }else {
-                    Toast.makeText(Edit_User_Profile_Activity.this, "please accept terms & conditions", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Edit_User_Profile_Activity.this, "Please accept terms & conditions", Toast.LENGTH_LONG).show();
                 }
                // new SchoolProfileUpdateExecuteTask().execute();
             }

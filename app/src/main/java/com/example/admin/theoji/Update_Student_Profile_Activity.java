@@ -9,6 +9,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MotionEvent;
 
@@ -95,6 +97,8 @@ public class Update_Student_Profile_Activity extends AppCompatActivity {
     public String SID="";
      String user_type;
 
+    private String beforeText, currentText;
+    private boolean noAction, addStroke, dontAddChar, deleteStroke;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -145,6 +149,56 @@ public class Update_Student_Profile_Activity extends AppCompatActivity {
         student_bank_ifsc_code = (EditText) findViewById(R.id.st_bank_ifsc_code);
         student_sssmid = (EditText) findViewById(R.id.st_sssmid);
 
+        //*********************************************************************
+        student_aadhar.addTextChangedListener(new TextWatcher(){
+
+            public void afterTextChanged(Editable s) {
+                if (addStroke) {
+                    Log.i("TextWatcherImplement", "afterTextChanged String == " + s + " beforeText == " + beforeText + " currentText == " + currentText);
+                    noAction = true;
+                    addStroke = false;
+                    student_aadhar.setText(currentText + "-");
+                } else if (dontAddChar) {
+                    dontAddChar = false;
+                    noAction = true;
+                    student_aadhar.setText(beforeText);
+                } else if (deleteStroke) {
+                    deleteStroke = false;
+                    noAction = true;
+                    currentText = currentText.substring(0, currentText.length() - 1);
+                    student_aadhar.setText(currentText);
+                } else {
+                    noAction = false;
+                    student_aadhar.setSelection(student_aadhar.getText().length()); // set cursor at the end of the line.
+                }
+            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after){
+                Log.i("TextWatcherImplement", "beforeTextChanged start==" + String.valueOf(start) + " count==" + String.valueOf(count) + " after==" + String.valueOf(after));
+                if (start >= 14)
+                    beforeText = s.toString();
+
+            }
+            public void onTextChanged(CharSequence s, int start, int before, int count){
+                Log.i("TextWatcherImplement", "onTextChanged start==" + String.valueOf(start) + " before==" + String.valueOf(before) + " count==" + String.valueOf(count) + " noAction ==" + String.valueOf(noAction));
+                if ( (before < count) && !noAction ) {
+                    if ( (start == 3) || (start == 8)  ) {
+                        currentText = s.toString();
+                        addStroke = true;
+                    } else if (start >= 14) {
+                        currentText = s.toString();
+                        dontAddChar = true;
+                    }
+                } else {
+                    if ( (start == 4) ||  (start == 9)  ) { //(start == 5) || (start == 10) || (start == 15)
+                        currentText = s.toString();
+                        deleteStroke = true;
+                    }
+                }
+            }
+        });
+
+
+//*******************************************************************
         btn_final_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

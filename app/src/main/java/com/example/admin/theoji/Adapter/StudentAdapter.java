@@ -146,7 +146,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
                 Intent intent = new Intent(context, Update_Student_Profile_Activity.class);
                 intent.putExtra("uid",SID);
                 context.startActivity(intent);
-                //((Activity)context).finish();
+                ((Activity)context).finish();
 
             }
         });

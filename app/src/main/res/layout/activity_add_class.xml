@@ -90,7 +90,7 @@
                                     android:layout_height="wrap_content"
                                     android:hint="Enter class name"
                                     android:textColor="#FF3360DC"
-                                    android:inputType="number"
+                                    android:inputType="text"
                                     android:textSize="13dp" />
                             </android.support.design.widget.TextInputLayout>
 
@@ -182,7 +182,7 @@
                                     android:layout_height="wrap_content"
                                     android:hint="Add section"
                                     android:textColor="#FF3360DC"
-                                    android:inputType="number"
+                                    android:inputType="text"
                                     android:textSize="13dp" />
                             </android.support.design.widget.TextInputLayout>
 
