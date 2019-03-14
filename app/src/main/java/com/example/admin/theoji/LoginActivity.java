@@ -10,7 +10,10 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -26,6 +29,7 @@ import android.widget.Toast;
 import com.example.admin.theoji.Connection.Connectivity;
 import com.example.admin.theoji.Shared_prefrence.AppPreference;
 import com.example.admin.theoji.Shared_prefrence.SessionManager;
+import com.example.admin.theoji.Utils.CustomAlert;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -51,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText school_code;
     EditText password;
     EditText mobile_no;
-    TextView click_reg;
+    TextView click_reg,txt_forgot_pw;
 
     SessionManager manager;
 
@@ -63,11 +67,15 @@ public class LoginActivity extends AppCompatActivity {
     String ref_id;
 
     public static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 1;
+     Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         if(checkAndRequestPermissions()) {
             // carry on the normal flow, as the case of  permissions  granted.
@@ -91,6 +99,7 @@ public class LoginActivity extends AppCompatActivity {
         password = (EditText) findViewById(R.id.login_pw);
         mobile_no = (EditText) findViewById(R.id.login_mobile);
         click_reg = (TextView) findViewById(R.id.tv_click);
+        txt_forgot_pw = (TextView) findViewById(R.id.txt_forgot);
 
         btn_login  = (Button)findViewById(R.id.btn_login);
         type = (Spinner)findViewById(R.id.type);
@@ -106,6 +115,14 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(LoginActivity.this, Registration_activity.class);
+                startActivity(intent);
+            }
+        });
+
+        txt_forgot_pw.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, Forgot_activity.class);
                 startActivity(intent);
             }
         });
@@ -158,6 +175,34 @@ public class LoginActivity extends AppCompatActivity {
         typeAdapter = new ArrayAdapter<String>(LoginActivity.this, R.layout.support_simple_spinner_dropdown_item, typeList);
         typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         type.setAdapter(typeAdapter);
+    }
+//*********************************************************************************************
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.login_menu, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+        switch (id){
+            case R.id.about_us:
+                if (Connectivity.isNetworkAvailable(LoginActivity.this)){
+                    startActivity(new Intent(this, AboutUsActivity.class));
+                    //finish();
+
+                }else {
+                    Toast.makeText(LoginActivity.this, "No Internet", Toast.LENGTH_SHORT).show();
+                    CustomAlert.alertDialogShow(LoginActivity.this,"Please Check Internet!");
+                }
+                return true;
+
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 //******************************************************************************
 private  boolean checkAndRequestPermissions() {
