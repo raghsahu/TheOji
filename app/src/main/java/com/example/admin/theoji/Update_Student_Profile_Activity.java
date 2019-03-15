@@ -638,7 +638,7 @@ public class Update_Student_Profile_Activity extends AppCompatActivity {
                             }
 
 
-//                           Picasso.get().load("http://theoji.com/uploads/"+postListModel.getPostimg()).into(viewHolder.);
+//                           Picasso.get().load("https://jntrcpl.com/theoji/uploads/"+postListModel.getPostimg()).into(viewHolder.);
 
 
                         }else {

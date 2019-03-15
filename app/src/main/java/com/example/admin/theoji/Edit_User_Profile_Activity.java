@@ -687,7 +687,7 @@ public class Edit_User_Profile_Activity extends AppCompatActivity {
 
                     } else {
                         Toast.makeText(Edit_User_Profile_Activity.this, "success", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(Edit_User_Profile_Activity.this, MainActivity.class);
+                        Intent intent = new Intent(Edit_User_Profile_Activity.this, Main2Activity.class);
                         startActivity(intent);
                         finish();
 

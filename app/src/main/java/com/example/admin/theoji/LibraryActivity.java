@@ -45,6 +45,7 @@ public class LibraryActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(LibraryActivity.this,AddLibraryActivity.class);
                 startActivity(intent);
+                finish();
 
             }
         });
@@ -146,7 +147,7 @@ public class LibraryActivity extends AppCompatActivity {
                         recyclerlibrary.setItemAnimator(new DefaultItemAnimator());
                         recyclerlibrary.setAdapter(libraryAdapter);
 
-//                           Picasso.get().load("http://theoji.com/uploads/"+postListModel.getPostimg()).into(viewHolder.);
+//                           Picasso.get().load("https://jntrcpl.com/theoji/uploads/"+postListModel.getPostimg()).into(viewHolder.);
 
 
                     }else {

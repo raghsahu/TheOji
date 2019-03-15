@@ -12,8 +12,6 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
-
-
     <application
         android:allowBackup="true"
         android:icon="@drawable/theoji"
@@ -21,6 +19,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <activity android:name=".Main2Activity"></activity>
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -45,7 +45,7 @@
         <activity android:name=".HomeworkActivity" />
         <activity android:name=".AddPostActivity" />
         <activity android:name=".PayFeesActivity" />
-        <activity android:name=".AddPayFeesActivity"/>
+        <activity android:name=".AddPayFeesActivity" />
         <activity android:name=".AddLibraryActivity" />
         <activity android:name=".Update_Student_Profile_Activity" />
         <activity android:name=".View_User_Profile_Activity" />
@@ -59,7 +59,6 @@
         <activity android:name=".Forgot_activity" />
         <activity android:name=".AboutUsActivity" />
 
-
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.example.admin.theoji.provider"
@@ -69,8 +68,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
-
-
     </application>
 
 </manifest>

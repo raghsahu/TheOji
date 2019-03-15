@@ -138,7 +138,7 @@ public class ProjectActivity extends AppCompatActivity {
                         recyclerproject.setItemAnimator(new DefaultItemAnimator());
                         recyclerproject.setAdapter(projectAdapter);
 
-//                           Picasso.get().load("http://theoji.com/uploads/"+postListModel.getPostimg()).into(viewHolder.);
+//                           Picasso.get().load("https://jntrcpl.com/theoji/uploads/"+postListModel.getPostimg()).into(viewHolder.);
 
 
                     }else {

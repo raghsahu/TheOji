@@ -281,7 +281,7 @@ public class AddNewsEvents extends AppCompatActivity {
                 entity.addPart("News_description", new StringBody(Description_news));
                 entity.addPart("id",new StringBody(id));
 
-                result = Utilities.postEntityAndFindJson("http://theoji.com/index.php/Api/news_and_update",entity);
+                result = Utilities.postEntityAndFindJson("https://jntrcpl.com/theoji/index.php/Api/news_and_update",entity);
 //                        AppPreference.getUserid(AddNewsEvents.this), entity);
 
                 return result;

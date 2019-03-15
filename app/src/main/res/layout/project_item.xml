@@ -158,14 +158,6 @@
             </LinearLayout>
         </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/ln4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="horizontal"
-        android:padding="2dp"
-        android:weightSum="2">
 
         <LinearLayout
             android:weightSum="1"
@@ -189,8 +181,8 @@
                     android:layout_height="wrap_content">
                     <ImageView
                         android:id="@+id/btn1"
-                        android:layout_width="60dp"
-                        android:layout_height="50dp"
+                        android:layout_width="@dimen/like_icon_hight"
+                        android:layout_height="@dimen/like_icon_hight"
                         android:padding="15dp"
                         android:src="@drawable/like_icon"
                         android:background="@drawable/dot" />
@@ -226,13 +218,14 @@
                     android:id="@+id/relative_layout1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
+
                     <ImageView
                         android:id="@+id/btn2"
-                        android:layout_width="60dp"
-                        android:layout_height="50dp"
+                        android:layout_width="@dimen/like_icon_hight"
+                        android:layout_height="@dimen/like_icon_hight"
+                        android:background="@drawable/dot"
                         android:padding="15dp"
-                        android:src="@drawable/comm"
-                        android:background="@drawable/dot" />
+                        android:src="@drawable/comm" />
                 </RelativeLayout>
                 <TextView
                     android:id="@+id/badge_count2"
@@ -258,15 +251,15 @@
                     android:layout_height="wrap_content">
                     <ImageView
                         android:id="@+id/btn3"
-                        android:layout_width="60dp"
-                        android:layout_height="50dp"
+                        android:layout_width="@dimen/like_icon_hight"
+                        android:layout_height="@dimen/like_icon_hight"
                         android:padding="15dp"
                         android:src="@drawable/delete"
                         android:background="@drawable/dot" />
                 </RelativeLayout>
             </RelativeLayout>
 
-        </LinearLayout>
+
     </LinearLayout>
         <LinearLayout
 

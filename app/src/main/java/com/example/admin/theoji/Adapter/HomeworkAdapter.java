@@ -134,10 +134,10 @@ public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.ViewHo
         viewHolder.txt_acti_date.setText(homeworkModel.getActvitydate());
 
         viewHolder.img_person.setImageResource(R.drawable.person);
-       Picasso.get().load("http://theoji.com/uploads/"+homeworkModel.getUmeta_value()).into(viewHolder.img_person);
+       Picasso.get().load("https://jntrcpl.com/theoji/uploads/"+homeworkModel.getUmeta_value()).into(viewHolder.img_person);
 
         viewHolder.img2.setImageResource(R.drawable.img);
-       Picasso.get().load("http://theoji.com/uploads/"+homeworkModel.getImagename())
+       Picasso.get().load("https://jntrcpl.com/theoji/uploads/"+homeworkModel.getImagename())
                .placeholder(R.drawable.img)
                .into(viewHolder.img2);
 
@@ -259,8 +259,8 @@ public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.ViewHo
         protected String doInBackground(String... params) {
 
             try {
-                // http://theoji.com/index.php/Api/plike?id=
-                server_url = "http://theoji.com/index.php/Api/plike?id="+ AppPreference.getUserid(v.getContext())
+                // https://jntrcpl.com/theoji/index.php/Api/plike?id=
+                server_url = "https://jntrcpl.com/theoji/index.php/Api/plike?id="+ AppPreference.getUserid(v.getContext())
                         +"&pid="+PID;
 
 

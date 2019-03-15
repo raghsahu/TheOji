@@ -149,7 +149,7 @@ public class PostActivity extends AppCompatActivity {
                         recyclerpost.setItemAnimator(new DefaultItemAnimator());
                         recyclerpost.setAdapter(postAdapter);
 
-//                           Picasso.get().load("http://theoji.com/uploads/"+postListModel.getPostimg()).into(viewHolder.);
+//                           Picasso.get().load("https://jntrcpl.com/theoji/uploads/"+postListModel.getPostimg()).into(viewHolder.);
 
 
                     }else {

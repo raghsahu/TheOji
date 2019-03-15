@@ -120,7 +120,7 @@
                                 android:layout_width="110dp"
                                 android:layout_height="110dp"
                                 app:civ_border_color="#000000"
-                                app:civ_border_width="1.5dp"
+
                                 android:src="@drawable/person"
                                 />
 

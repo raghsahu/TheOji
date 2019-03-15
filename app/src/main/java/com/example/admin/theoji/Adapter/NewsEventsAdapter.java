@@ -109,10 +109,10 @@ public class NewsEventsAdapter extends RecyclerView.Adapter<NewsEventsAdapter.Vi
         viewHolder.newsDate.setText(newsEventModel.getDate());
 
         viewHolder.profileImg.setImageResource(R.drawable.person);
-        Picasso.get().load("http://theoji.com/uploads/" + newsEventModel.getUserimg()).into(viewHolder.profileImg);
+        Picasso.get().load("https://jntrcpl.com/theoji/uploads/" + newsEventModel.getUserimg()).into(viewHolder.profileImg);
 
         viewHolder.newsImg.setImageResource(R.drawable.img);
-        Picasso.get().load("http://theoji.com/uploads/" + newsEventModel.getPostimg())
+        Picasso.get().load("https://jntrcpl.com/theoji/uploads/" + newsEventModel.getPostimg())
                 .placeholder(R.drawable.img)
                 .into(viewHolder.newsImg);
 
@@ -200,7 +200,7 @@ public class NewsEventsAdapter extends RecyclerView.Adapter<NewsEventsAdapter.Vi
         protected String doInBackground(String... params) {
 
             try {
-                server_url = "http://theoji.com/index.php/Api/plike?id="+AppPreference.getUserid(v.getContext())
+                server_url = "https://jntrcpl.com/theoji/index.php/Api/plike?id="+AppPreference.getUserid(v.getContext())
                         +"&pid="+AppPreference.getPOSTID(v.getContext());
 
 

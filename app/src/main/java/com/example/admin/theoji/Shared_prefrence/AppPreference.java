@@ -14,6 +14,8 @@ public class AppPreference {
     public static final String LUSERID = "luserId";
     public static final String POSTID = "postId";
     public static final String REFID = "refId";
+    public static final String FIRSTNAME = "firstname";
+    public static final String EMAIL = "email";
 
     Context context;
     SharedPreferences prefs;
@@ -72,6 +74,28 @@ public class AppPreference {
         editor.commit();
     }
 
+    public static void setFirstname(Context context, String firstname) {
+        SharedPreferences preferences = context.getSharedPreferences(SHARED_PREFERENCE_NAME, 0);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(FIRSTNAME, firstname);
+        editor.commit();
+    }
+
+    public static String getFirstname(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences(SHARED_PREFERENCE_NAME, 0);
+        return preferences.getString(FIRSTNAME, "");
+    }
+    public static void setEmail(Context context, String email) {
+        SharedPreferences preferences = context.getSharedPreferences(SHARED_PREFERENCE_NAME, 0);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(EMAIL, email);
+        editor.commit();
+    }
+
+    public static String getEmail(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences(SHARED_PREFERENCE_NAME, 0);
+        return preferences.getString(EMAIL, "");
+    }
 
     public void logoutSession() {
         editor.clear();

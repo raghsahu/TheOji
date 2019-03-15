@@ -68,6 +68,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 1;
      Toolbar toolbar;
+    public String firstname,email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -194,8 +195,8 @@ public class LoginActivity extends AppCompatActivity {
                     //finish();
 
                 }else {
-                    Toast.makeText(LoginActivity.this, "No Internet", Toast.LENGTH_SHORT).show();
-                    CustomAlert.alertDialogShow(LoginActivity.this,"Please Check Internet!");
+                    //Toast.makeText(LoginActivity.this, "No Internet", Toast.LENGTH_SHORT).show();
+                    CustomAlert.alertDialogShow(getApplicationContext(),"Please Check Internet!");
                 }
                 return true;
 
@@ -262,9 +263,9 @@ private  boolean checkAndRequestPermissions() {
                     JSONObject data= new JSONObject(result).getJSONObject("data");
                      user_id=data.getString("user_id");
                     String username1=data.getString("username");
-                    String firstname1=data.getString("firstname");
+                     firstname=data.getString("firstname");
                     String lastname1=data.getString("lastname");
-                    String email1=data.getString("email");
+                     email=data.getString("email");
                     String mobileno1=data.getString("mobileno");
                     String date1=data.getString("date");
                     String user_type1=data.getString("user_type");
@@ -289,7 +290,7 @@ private  boolean checkAndRequestPermissions() {
                     String sturemainfee1=data.getString("sturemainfee");
                     String stulastfee1=data.getString("stulastfee");
 
-                    AppPreference.setRefid(LoginActivity.this,ref_id);
+
 
 
                     if (!res.equalsIgnoreCase("true")) {
@@ -298,9 +299,12 @@ private  boolean checkAndRequestPermissions() {
 
                     } else {
                         manager.setLogin(true);
-//                    Toast.makeText(LoginActivity.this, "login error", Toast.LENGTH_SHORT).show();
+                        AppPreference.setRefid(LoginActivity.this,ref_id);
+                        AppPreference.setFirstname(LoginActivity.this,firstname);
+                        AppPreference.setEmail(LoginActivity.this,email);
+
                         AppPreference.setUserid(LoginActivity.this,user_id);
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        Intent intent = new Intent(LoginActivity.this, Main2Activity.class);
                         startActivity(intent);
                         finish();
                         Toast.makeText(LoginActivity.this, "login success", Toast.LENGTH_SHORT).show();

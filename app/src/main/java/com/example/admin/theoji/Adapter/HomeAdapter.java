@@ -140,9 +140,9 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         viewHolder.txt2.setText(homeListModel.getEmail());
         viewHolder.txt3.setText(homeListModel.getDate());
         viewHolder.txt_nm.setText(homeListModel.getContent());
-//        Picasso.get().load("http://theoji.com/uploads/apex_school.jpg").into(viewHolder.img2);
+//        Picasso.get().load("https://jntrcpl.com/theoji/uploads/apex_school.jpg").into(viewHolder.img2);
         viewHolder.img_person.setImageResource(R.drawable.person);
-        Picasso.get().load("http://theoji.com/uploads/"+homeListModel.getUserimg()).into(viewHolder.img_person);
+        Picasso.get().load("https://jntrcpl.com/theoji/uploads/"+homeListModel.getUserimg()).into(viewHolder.img_person);
 
         viewHolder.img2.setImageResource(R.drawable.img);
         Picasso.get()
@@ -338,7 +338,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         protected String doInBackground(String... params) {
 
             try {
-                // http://theoji.com/index.php/Api/plike?id=
+                // https://jntrcpl.com/theoji/index.php/Api/plike?id=
                 server_url = "https://jntrcpl.com/theoji/index.php/Api/plike?id="+ AppPreference.getUserid(v.getContext())
                         +"&pid="+PIDg;
 

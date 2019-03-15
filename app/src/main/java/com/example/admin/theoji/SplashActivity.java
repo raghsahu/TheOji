@@ -37,7 +37,7 @@ public class SplashActivity extends AppCompatActivity {
 
                         if (manager.isLoggedIn()) {
 
-                            Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                            Intent intent = new Intent(SplashActivity.this, Main2Activity.class);
                             startActivity(intent);
                             SplashActivity.this.finish();
                         } else {

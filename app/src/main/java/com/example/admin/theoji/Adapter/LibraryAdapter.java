@@ -124,9 +124,9 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.ViewHold
         viewHolder.txt3.setText(libraryListModel.getDate());
         viewHolder.txt_title.setText(libraryListModel.getTitle());
         viewHolder.txt_nm.setText(libraryListModel.getContent());
-//        Picasso.get().load("http://theoji.com/uploads/apex_school.jpg").into(viewHolder.img2);
+//        Picasso.get().load("https://jntrcpl.com/theoji/uploads/apex_school.jpg").into(viewHolder.img2);
         viewHolder.img_person.setImageResource(R.drawable.person);
-        Picasso.get().load("http://theoji.com/uploads/"+libraryListModel.getUserimg()).into(viewHolder.img_person);
+        Picasso.get().load("https://jntrcpl.com/theoji/uploads/"+libraryListModel.getUserimg()).into(viewHolder.img_person);
 
         viewHolder.img2.setImageResource(R.drawable.img);
         Picasso.get().load("https://jntrcpl.com/theoji/uploads/"+libraryListModel.getPostimg())
@@ -253,8 +253,8 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.ViewHold
         protected String doInBackground(String... params) {
 
             try {
-                // http://theoji.com/index.php/Api/plike?id=
-                server_url = "http://theoji.com/index.php/Api/plike?id="+ AppPreference.getUserid(v.getContext())
+                // https://jntrcpl.com/theoji/index.php/Api/plike?id=
+                server_url = "https://jntrcpl.com/theoji/index.php/Api/plike?id="+ AppPreference.getUserid(v.getContext())
                         +"&pid="+PID;
 
 

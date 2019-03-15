@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group
+        android:checkableBehavior="single">
+
+        <group android:checkableBehavior="single"
+            android:id="@+id/group1">
+            <item
+                android:id="@+id/nav_homepage"
+                android:icon="@drawable/home"
+                android:title="HomePage"
+                />
+        </group>
+        <group android:checkableBehavior="single"
+            android:id="@+id/group2">
+            <item
+                android:id="@+id/nav_post"
+                android:icon="@drawable/post"
+                android:title="Post" />
+        </group>
+        <group android:checkableBehavior="single"
+            android:id="@+id/group3">
+            <item
+                android:id="@+id/nav_buy_news"
+                android:icon="@drawable/news"
+                android:title="News &amp; Events" />
+        </group>
+        <group android:checkableBehavior="single"
+            android:id="@+id/group4">
+            <item
+                android:id="@+id/nav_homework"
+                android:icon="@drawable/notice"
+                android:title="HomeWorks" />
+        </group>
+        <group android:checkableBehavior="single"
+            android:id="@+id/group5">
+            <item
+                android:id="@+id/nav_project"
+                android:icon="@drawable/project"
+                android:title="Projects" />
+        </group>
+        <group android:checkableBehavior="single"
+            android:id="@+id/group6">
+            <item
+                android:id="@+id/nav_student"
+                android:icon="@drawable/people1"
+                android:title="Students" />
+        </group>
+        <group android:checkableBehavior="single"
+            android:id="@+id/group7">
+            <item
+                android:id="@+id/nav_teacher"
+                android:icon="@drawable/person"
+                android:title="Teacher" />
+        </group>
+        <group android:checkableBehavior="single"
+            android:id="@+id/group8">
+            <item
+                android:id="@+id/nav_fees_details"
+                android:icon="@drawable/logout"
+                android:title="Fees Details" />
+        </group>
+        <group android:checkableBehavior="single"
+            android:id="@+id/group9">
+            <item
+                android:id="@+id/nav_library"
+                android:icon="@drawable/library"
+                android:title="Library" />
+        </group>
+        <group android:checkableBehavior="single"
+            android:id="@+id/group10">
+            <item
+                android:id="@+id/nav_attendance"
+                android:icon="@drawable/view1"
+                android:title="Attendance" />
+        </group>
+        <group android:checkableBehavior="single"
+            android:id="@+id/group11">
+            <item
+                android:id="@+id/nav_class"
+                android:icon="@drawable/ic_menu_slideshow"
+                android:title="Class" />
+        </group>
+
+    </group>
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/group12">
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Share" />
+
+        </menu>
+    </item>
+    </group>
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/group13">
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/logout"
+            android:title="Logout" />
+    </group>
+
+</menu>

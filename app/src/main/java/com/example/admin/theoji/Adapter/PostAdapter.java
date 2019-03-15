@@ -144,9 +144,9 @@ public class  PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         viewHolder.txt2.setText(postListModel.getEmail());
         viewHolder.txt3.setText(postListModel.getDate());
         viewHolder.txt_nm.setText(postListModel.getContent());
-//        Picasso.get().load("http://theoji.com/uploads/apex_school.jpg").into(viewHolder.img2);
+//        Picasso.get().load("https://jntrcpl.com/theoji/uploads/apex_school.jpg").into(viewHolder.img2);
         viewHolder.img_person.setImageResource(R.drawable.person);
-        Picasso.get().load("http://theoji.com/uploads/"+postListModel.getUserimg()).into(viewHolder.img_person);
+        Picasso.get().load("https://jntrcpl.com/theoji/uploads/"+postListModel.getUserimg()).into(viewHolder.img_person);
 
         viewHolder.img2.setImageResource(R.drawable.img);
       Picasso.get()
@@ -383,7 +383,7 @@ public class  PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         protected String doInBackground(String... params) {
 
             try {
-                // http://theoji.com/index.php/Api/plike?id=
+                // https://jntrcpl.com/theoji/index.php/Api/plike?id=
                 server_url = "https://jntrcpl.com/theoji/index.php/Api/plike?id="+AppPreference.getUserid(v.getContext())
                         +"&pid="+PIDg;
 

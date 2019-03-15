@@ -126,9 +126,9 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
         viewHolder.txt3.setText(projectListModel.getDate());
         viewHolder.txt_title.setText(projectListModel.getTitle());
         viewHolder.txt_nm.setText(projectListModel.getContent());
-//        Picasso.get().load("http://theoji.com/uploads/apex_school.jpg").into(viewHolder.img2);
+//        Picasso.get().load("https://jntrcpl.com/theoji/uploads/apex_school.jpg").into(viewHolder.img2);
         viewHolder.img_person.setImageResource(R.drawable.person);
-        Picasso.get().load("http://theoji.com/uploads/"+projectListModel.getUserimg()).into(viewHolder.img_person);
+        Picasso.get().load("https://jntrcpl.com/theoji/uploads/"+projectListModel.getUserimg()).into(viewHolder.img_person);
 
         viewHolder.img2.setImageResource(R.drawable.img);
         Picasso.get().load("https://jntrcpl.com/theoji/uploads/"+projectListModel.getPostimg())
@@ -256,8 +256,8 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
         protected String doInBackground(String... params) {
 
             try {
-                // http://theoji.com/index.php/Api/plike?id=
-                server_url = "http://theoji.com/index.php/Api/plike?id="+ AppPreference.getUserid(v.getContext())
+                // https://jntrcpl.com/theoji/index.php/Api/plike?id=
+                server_url = "https://jntrcpl.com/theoji/index.php/Api/plike?id="+ AppPreference.getUserid(v.getContext())
                         +"&pid="+PID;
 
 

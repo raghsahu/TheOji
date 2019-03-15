@@ -84,7 +84,7 @@ public class NewsActivity extends AppCompatActivity {
         protected String doInBackground(String... params) {
 
             try {
-                server_url = "http://theoji.com/index.php/Api/get_news_update?id="+AppPreference.getUserid(NewsActivity.this);
+                server_url = "https://jntrcpl.com/theoji/index.php/Api/get_news_update?id="+AppPreference.getUserid(NewsActivity.this);
 
 
             } catch (Exception e) {
