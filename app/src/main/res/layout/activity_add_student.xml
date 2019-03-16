@@ -683,28 +683,6 @@
 
         </ScrollView>
 
-
-        <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:weightSum="0.3"-->
-        <!--android:layout_marginTop="5dp"-->
-        <!--android:gravity="center"-->
-        <!--android:orientation="vertical">-->
-
-    <!--<Button-->
-        <!--android:id="@+id/submit_final"-->
-        <!---->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginTop="5dp"-->
-        <!--android:layout_marginLeft="10dp"-->
-        <!--android:layout_marginRight="10dp"-->
-        <!--android:background="@color/colorPrimary"-->
-        <!--android:text="Final Submit"-->
-        <!--android:textAllCaps="false"-->
-        <!--android:textColor="#fff" />-->
-    <!--</LinearLayout>-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"

@@ -3,6 +3,8 @@ package com.example.admin.theoji;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -35,6 +37,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -284,9 +287,8 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
 
     }else if (id == R.id.nav_share) {
             if (Connectivity.isNetworkAvailable(Main2Activity.this)){
-//                Intent intent = new Intent(Main2Activity.this,LoginActivity.class);
-//                startActivity(intent);
-//                finish();
+             shareApplication();
+
             }else {
                 Toast.makeText(Main2Activity.this, "No Internet", Toast.LENGTH_SHORT).show();
                 CustomAlert.alertDialogShow(getApplicationContext(),"Please Check Internet!");
@@ -309,6 +311,27 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    private void shareApplication() {
+//        ApplicationInfo packageinfo = Main2Activity.this.getPackageManager().getApplicationInfo(, 0);
+//        File file = new File(packageinfo.publicSourceDir);
+
+        ApplicationInfo app = getApplicationContext().getApplicationInfo();
+        String filePath = app.sourceDir;
+
+        Intent intent = new Intent(Intent.ACTION_SEND);
+
+        // MIME of .apk is "application/vnd.android.package-archive".
+        // but Bluetooth does not accept this. Let's use "*/*" instead.
+        intent.setType("*/*");
+
+
+        // Append file and send Intent
+        intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(filePath)));
+        startActivity(Intent.createChooser(intent, "Share app via"));
+    }
+
+
 
     class GetPostList extends AsyncTask<String, Void, String> {
         String output = "";

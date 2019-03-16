@@ -26,6 +26,7 @@ public class StudentListAdapter extends ArrayAdapter<StudentModel> {
       public static String present_students = "";
 
 
+
    public static ArrayList<String> multiselected = new ArrayList<String>();
 
         public StudentListAdapter(Context context, int resource, List<StudentModel> objects) {
@@ -99,12 +100,12 @@ public class StudentListAdapter extends ArrayAdapter<StudentModel> {
                             if (holder.mCheckBox.isChecked()) {
                                // present_students =  studentList.get(position).getFirstname();
                                // present_students = present_students.concat(studentList.get(position).getFirstname().concat(","));
-                               multiselected.add(studentList.get(position).getFirstname());
+                               multiselected.add(studentList.get(position).getUser_id());
                                 Toast.makeText(mContext, "multi+ "+multiselected, Toast.LENGTH_SHORT).show();
 
                             }
-                            else if (multiselected.contains(studentList.get(position).getFirstname())){
-                                multiselected.remove(studentList.get(position).getFirstname());
+                            else if (multiselected.contains(studentList.get(position).getUser_id())){
+                                multiselected.remove(studentList.get(position).getUser_id());
 //                                String replce = (",").concat(studentList.get(position).getFirstname().concat(","));
 //                                present_students = present_students.replace(replce,"");
                                 Toast.makeText(mContext, "Removechecked+ "+multiselected, Toast.LENGTH_SHORT).show();

@@ -222,11 +222,35 @@ public class AddHomeWork extends AppCompatActivity {
         });
 //****************************************
         btn_post.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
-            @Override
             public void onClick(View v) {
 
+                Title_homework = title.getText().toString();
+                Description_homework = description.getText().toString();
+                Date_homework=homework_date.getText().toString();
+                Participent_homework=participent.getText().toString();
+                Spin_Class=spin_class.getSelectedItem().toString();
+                // Spin_Student=spin_student.getSelectedItem().toString();
+                // spin_student.setOnItemClickListener(new );
+                for(int i=0;i<studentList.size();i++){
+                    String p1 = studentList.get(i).getFirstname();
+                    Spin_Student=p1.toString();
+                }
 
+
+                //*****************************************
+                Toast.makeText(AddHomeWork.this, ""+Spin_Student, Toast.LENGTH_SHORT).show();
+
+
+
+                if (validate()  ) {
+                    Title_homework = title.getText().toString();
+                    Description_homework = description.getText().toString();
+
+
+                }
+
+
+                previewCapturedImage();
             }
         });
     }
