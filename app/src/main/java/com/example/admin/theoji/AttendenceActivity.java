@@ -47,6 +47,7 @@ import java.util.Locale;
 import javax.net.ssl.HttpsURLConnection;
 
 import static com.androidquery.util.AQUtility.getContext;
+import static com.example.admin.theoji.Adapter.StudentListAdapter.multiselected;
 
 public class AttendenceActivity extends AppCompatActivity {
 
@@ -54,7 +55,6 @@ public class AttendenceActivity extends AppCompatActivity {
     //ArrayList<String> ChooseStudent =new ArrayList<>();
     private ArrayList<StudentModel> studentList=new ArrayList<>();
     private StudentListAdapter studentListAdapter;
-
 
     Spinner spin_class;
     ArrayList<String> ChooseClass =new ArrayList<>();
@@ -91,12 +91,29 @@ public class AttendenceActivity extends AppCompatActivity {
         btn_send_attend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Spin_Student=spin_student.getSelectedItem().toString();
                 Spin_Class=spin_class.getSelectedItem().toString();
                 Spin_P_A=p_a.getSelectedItem().toString();
                 Spin_Section=spin_section.getSelectedItem().toString();
                 Attend_date=attend_date.getText().toString();
                 Attend_Remark=attend_remark.getText().toString();
+
+               // Spin_Student=spin_student.getSelectedItem().toString();
+                StringBuilder commaSepValueBuilder = new StringBuilder();
+
+                //Looping through the list
+                for ( int i = 0; i< multiselected.size(); i++){
+                    //append the value into the builder
+                    commaSepValueBuilder.append(multiselected.get(i));
+
+                    //if the value is not the last element of the list
+                    //then append the comma(,) as well
+                    if ( i != multiselected.size()-1){
+                        commaSepValueBuilder.append(", ");
+                    }
+                }
+                System.out.println(commaSepValueBuilder.toString());
+                Spin_Student=commaSepValueBuilder.toString();
+                Toast.makeText(AttendenceActivity.this, ""+Spin_Student , Toast.LENGTH_SHORT).show();
 
                 new AttendanceExecuteTask().execute();
 

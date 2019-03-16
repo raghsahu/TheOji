@@ -19,8 +19,11 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.admin.theoji.Adapter.StudentListAdapter;
 import com.example.admin.theoji.Connection.Connectivity;
 import com.example.admin.theoji.Connection.HttpHandler;
+import com.example.admin.theoji.ModelClass.ClassModel;
+import com.example.admin.theoji.ModelClass.SectionModel;
 import com.example.admin.theoji.ModelClass.StudentModel;
 import com.example.admin.theoji.Shared_prefrence.AppPreference;
 
@@ -37,26 +40,35 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import static com.example.admin.theoji.Adapter.StudentListAdapter.multiselected;
+
 public class AddPayFeesActivity extends AppCompatActivity {
 
-    Spinner spin_class;
-//    private ArrayAdapter<String> classAdapter;
-//    private ArrayList<String> classList;
+    Spinner spin_class,spin_class1;
+    ArrayList<String> ChooseClass =new ArrayList<>();
+    private ArrayList<ClassModel> classList=new ArrayList<>();
+    private ArrayAdapter<String> classListAdapter;
+
+    Spinner spin_section;
+    ArrayList<String> ChooseSection =new ArrayList<>();
+    private ArrayList<SectionModel> sectionList=new ArrayList<>();
+    private ArrayAdapter<String> sectionListAdapter;
+
     String Class;
+    String Class1,Spin_Section;
 
-    Spinner spin_class1;
-    String Class1;
-
-    Spinner spin_student;
-    ArrayList<String>ChooseStudent;
-    private ArrayList<StudentModel> studentList;
-    private ArrayAdapter<String> StudentAdapter;
     String Student;
+    Spinner spin_student;
+    private ArrayList<StudentModel> studentList=new ArrayList<>();
+    private StudentListAdapter studentListAdapter;
 
+    public HashMap<Integer, ClassModel> ClassHashMap = new HashMap<Integer, ClassModel>();
+    public HashMap<Integer, SectionModel> SectionHashMap = new HashMap<Integer, SectionModel>();
 
     LinearLayout layout;
     Button btn_submit, btn_payfees;
@@ -90,46 +102,88 @@ public class AddPayFeesActivity extends AppCompatActivity {
         spin_class=(Spinner)findViewById(R.id.classess2);
         spin_class1=(Spinner)findViewById(R.id.classess22);
         spin_student = (Spinner)findViewById(R.id.classess23);
+        spin_section = (Spinner)findViewById(R.id.stud_section);
 
-//        classList = new ArrayList<>();
-////        new spinnerClassExecuteTask().execute();
-//        classList.add("Select Class");
-//        classList.add("Nursery");
-//        classList.add("KG1");
-//        classList.add("KG2");
-//        classList.add("1");
-//        classList.add("2");
-//        classList.add("3");
-//        classList.add("4");
-//        classList.add("5");
-//        classList.add("6");
-//        classList.add("7");
-//        classList.add("8");
-//        classList.add("9");
-//        classList.add("10");
-//        classList.add("11 Mathes");
-//        classList.add("11 Bio");
-//        classList.add("11 Commerce");
-//
-//        spin_class.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                Class = classAdapter.getItem(position).toString();
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//
-//            }
-//        });
-//
-//        classAdapter = new ArrayAdapter<String>(AddPayFeesActivity.this, R.layout.support_simple_spinner_dropdown_item, classList);
-//        classAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        spin_class.setAdapter(classAdapter);
         //**********************************************
-        ChooseStudent = new ArrayList<>();
         studentList = new ArrayList<>();
-        new spinnerStudentExecuteTask().execute();
+       // new spinnerStudentExecuteTask().execute();
+
+        new spinnerClassExecuteTask().execute();
+
+        spin_class1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                //strSid = stateList.get(position).getState_id();
+                try{
+                    if(sectionList.size() !=0)
+                    {
+                        ChooseSection.clear();
+
+                        spin_section.setAdapter(null);
+                        sectionListAdapter.notifyDataSetChanged();
+
+                    }
+
+                }catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+                for (int i = 0; i < ClassHashMap.size(); i++)
+                {
+
+                    if (ClassHashMap.get(i).getM_name().equals(spin_class1.getItemAtPosition(position)))
+                    {
+                        new SectionExecuteTask(ClassHashMap.get(i).getM_id()).execute();
+                    }
+                    // else (StateHashMap.get(i).getState_name().equals(spin_state.getItemAtPosition(position))
+                }
+            }
+
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+
+            }
+        });
+//*****************************************************
+        spin_section.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                //strSid = stateList.get(position).getState_id();
+//                try{
+//
+//                    if(studentList.size() !=0)
+//                    {
+//                        ChooseStudent.clear();
+//
+//                        spin_student.setAdapter(null);
+//                        studentListAdapter.notifyDataSetChanged();
+//
+//                    }
+//
+//                }catch (Exception e)
+//                {
+//                    e.printStackTrace();
+//                }
+                for (int i = 0; i < SectionHashMap.size(); i++)
+                {
+
+                    if (SectionHashMap.get(i).getM_name().equals(spin_section.getItemAtPosition(position)))
+                    {
+                        new spinnerStudentExecuteTask(SectionHashMap.get(i).getM_id()).execute();
+                    }
+                    // else (StateHashMap.get(i).getState_name().equals(spin_state.getItemAtPosition(position))
+                }
+            }
+
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+
+            }
+        });
 
 //****************************************************************************************
 
@@ -160,7 +214,24 @@ public class AddPayFeesActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Pay_fees =pay_fees.getText().toString();
                 Class1=spin_class1.getSelectedItem().toString();
-                Student=spin_student.getSelectedItem().toString();
+                Spin_Section=spin_section.getSelectedItem().toString();
+               // Student=spin_student.getSelectedItem().toString();
+                StringBuilder commaSepValueBuilder = new StringBuilder();
+
+                //Looping through the list
+                for ( int i = 0; i< multiselected.size(); i++){
+                    //append the value into the builder
+                    commaSepValueBuilder.append(multiselected.get(i));
+
+                    //if the value is not the last element of the list
+                    //then append the comma(,) as well
+                    if ( i != multiselected.size()-1){
+                        commaSepValueBuilder.append(", ");
+                    }
+                }
+                System.out.println(commaSepValueBuilder.toString());
+                Student=commaSepValueBuilder.toString();
+                Toast.makeText(AddPayFeesActivity.this, ""+Student , Toast.LENGTH_SHORT).show();
 
                 if (Connectivity.isNetworkAvailable(AddPayFeesActivity.this)) {
                     if (validate1()) {
@@ -313,9 +384,14 @@ public class AddPayFeesActivity extends AppCompatActivity {
 //*******************************************************************
 
     //*****************************************************************
-    public class spinnerStudentExecuteTask extends AsyncTask<String, Integer,String>{
+    public class spinnerStudentExecuteTask extends AsyncTask<String, Integer,String> {
 
         String output = "";
+        String M_id;
+
+        public spinnerStudentExecuteTask(String m_id) {
+            this.M_id=m_id;
+        }
 
 
         @Override
@@ -328,8 +404,7 @@ public class AddPayFeesActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
 
-//                String sever_url = "http://saibabacollege.com/jobsjunction/Api/********";
-            String sever_url = "https://jntrcpl.com/theoji/index.php/Api/student_list?id="+AppPreference.getUserid(AddPayFeesActivity.this);
+            String sever_url = "https://jntrcpl.com/theoji/index.php/Api/get_student_by_section?section_id="+ M_id;
 
 
             output = HttpHandler.makeServiceCall(sever_url);
@@ -343,52 +418,49 @@ public class AddPayFeesActivity extends AppCompatActivity {
             } else {
                 try {
 
-                   //Toast.makeText(AddPayFeesActivity.this, "result is" + output, Toast.LENGTH_SHORT).show();
-                    JSONObject object=new JSONObject(output);
+//                    Toast.makeText(RegistrationActivity.this, "result is" + output, Toast.LENGTH_SHORT).show();
+                    JSONObject object = new JSONObject(output);
+                    String res=object.getString("responce");
 
-                    JSONArray jsonArray = object.getJSONArray("data");
+                    if (res.equals("true")) {
 
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-                        String user_id = jsonObject1.getString("user_id");
-//                        String username = jsonObject1.getString("password");
-//                        String showpass = jsonObject1.getString("showpass");
-//                        String st_pass = jsonObject1.getString("stu_password");
-                        String firstname = jsonObject1.getString("firstname");
-//                        String lastname = jsonObject1.getString("lastname");
-//                        String email = jsonObject1.getString("email");
-//                        String mobile = jsonObject1.getString("mobileno");
-//                        String date = jsonObject1.getString("date");
-//                        String user_type = jsonObject1.getString("user_type");
-//                        String gender = jsonObject1.getString("gender");
-//                        String dob = jsonObject1.getString("dob");
-//                        String city = jsonObject1.getString("city");
-//                        String address = jsonObject1.getString("address");
-//                        String status = jsonObject1.getString("status");
-//                        String block_unblock = jsonObject1.getString("block_unblock");
-//                        String ref_id = jsonObject1.getString("ref_id");
-//                        String profileupdate = jsonObject1.getString("profileupdate");
-//                        String about = jsonObject1.getString("about");
-//                        String latest_post = jsonObject1.getString("latest_post");
-//                        String latest_event = jsonObject1.getString("latest_event");
-//                        String school_code = jsonObject1.getString("school_code");
-//                        String notice = jsonObject1.getString("notice");
-//                        String latest_activities = jsonObject1.getString("latest_activities");
-//                        String stutotalfees = jsonObject1.getString("stutotalfees");
-//                        String latest_news = jsonObject1.getString("latest_news");
-//                        String sturemainfee = jsonObject1.getString("sturemainfee");
-//                        String latest_noticboard = jsonObject1.getString("latest_noticboard");
-//                        String stulastfee = jsonObject1.getString("stulastfee");
-//                        String sales_lead_name = jsonObject1.getString("sales_lead_name");
+                        JSONArray jsonArray = object.getJSONArray("student");
 
-                        studentList.add(new StudentModel(user_id, firstname));
-                        ChooseStudent.add(firstname);
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject1 = jsonArray.getJSONObject(i);
 
+                            String user_id = jsonObject1.getString("user_id");
+                            String firstname = jsonObject1.getString("firstname");
+                            String lastname = jsonObject1.getString("lastname");
+
+                            studentList.add(new StudentModel(user_id, firstname));
+                            // ChooseStudent.add(firstname);
+//                            if ( i==0){
+//                                studentList.add("select all");
+//                            }
+
+                        }
+
+                        studentListAdapter = new StudentListAdapter(AddPayFeesActivity.this, android.R.layout.simple_spinner_item, studentList);
+                        //StudentListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+                        // spin_student.setAdapter(StudentAdapter,false, onSelectedListener);
+                        spin_student.setAdapter(studentListAdapter);
+
+                    }else {
+                        try{
+
+                            // ChooseStudent.clear();
+                            studentList.clear();
+                            studentListAdapter = new StudentListAdapter(AddPayFeesActivity.this, android.R.layout.simple_spinner_item, studentList);
+                            spin_student.setAdapter(studentListAdapter);
+                            studentListAdapter.notifyDataSetChanged();
+
+                        }catch (Exception e)
+                        {
+                            e.printStackTrace();
+                        }
+                        Toast.makeText(AddPayFeesActivity.this, "no student found", Toast.LENGTH_SHORT).show();
                     }
-
-                    StudentAdapter = new ArrayAdapter<String>(AddPayFeesActivity.this, android.R.layout.simple_spinner_dropdown_item, ChooseStudent);
-                    StudentAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spin_student.setAdapter(StudentAdapter);
 
                     super.onPostExecute(output);
                 } catch (JSONException e) {
@@ -397,7 +469,6 @@ public class AddPayFeesActivity extends AppCompatActivity {
             }
         }
     }
-
     //*******************************************************************
     class PayFeesExecuteTask extends AsyncTask<String, Integer, String> {
         ProgressDialog dialog;
@@ -463,7 +534,8 @@ public class AddPayFeesActivity extends AppCompatActivity {
             JSONObject postDataParams = new JSONObject();
             postDataParams.put("Class_type", spin_class1.getSelectedItem().toString());
             postDataParams.put("Annual_fees", pay_fees.getText().toString());
-            postDataParams.put("Select_student_name",spin_student.getSelectedItem().toString());
+            postDataParams.put("Select_student_name",Student);
+            postDataParams.put("section",Spin_Section);
             postDataParams.put("id",id);
 
             Log.e("postDataParams", postDataParams.toString());
@@ -567,5 +639,139 @@ public boolean validate1() {
     {
         InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         in.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+
+    private class spinnerClassExecuteTask extends AsyncTask<String, Integer,String> {
+
+        String output = "";
+
+
+        @Override
+        protected void onPreExecute() {
+
+            super.onPreExecute();
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            String sever_url = "https://jntrcpl.com/theoji/index.php/Api/get_class?school_id="
+                    +AppPreference.getUserid(AddPayFeesActivity.this);
+
+
+            output = HttpHandler.makeServiceCall(sever_url);
+            System.out.println("getcomment_url" + output);
+            return output;
+        }
+
+        @Override
+        protected void onPostExecute(String output) {
+            if (output == null) {
+            } else {
+                try {
+
+//                    Toast.makeText(RegistrationActivity.this, "result is" + output, Toast.LENGTH_SHORT).show();
+                    JSONObject object = new JSONObject(output);
+                    String res=object.getString("responce");
+
+                    if (res.equals("true")) {
+
+                        JSONArray jsonArray = object.getJSONArray("class");
+
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+                            String m_id = jsonObject1.getString("m_id");
+                            String m_name = jsonObject1.getString("m_name");
+                            String type = jsonObject1.getString("type");
+                            String parent = jsonObject1.getString("parent");
+                            String school_id = jsonObject1.getString("school_id");
+
+                            classList.add(new ClassModel(m_id, m_name));
+                            ChooseClass.add(m_name);
+                            ClassHashMap.put(i, new ClassModel(m_id,m_name));
+
+                        }
+
+                        classListAdapter = new ArrayAdapter<String>(AddPayFeesActivity.this, android.R.layout.simple_spinner_dropdown_item, ChooseClass);
+                        classListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spin_class.setAdapter(classListAdapter);
+                        spin_class1.setAdapter(classListAdapter);
+
+                    }else {
+                        Toast.makeText(AddPayFeesActivity.this, "no class found", Toast.LENGTH_SHORT).show();
+                    }
+                    super.onPostExecute(output);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+    //***************************************************************************
+    private class SectionExecuteTask extends AsyncTask<String,Integer,String> {
+
+        String output = "";
+
+        String strMId;
+
+        public SectionExecuteTask(String m_id) {
+            this.strMId=m_id;
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            String sever_url = "https://jntrcpl.com/theoji/index.php/Api/get_section?m_id="+strMId;
+
+            output = HttpHandler.makeServiceCall(sever_url);
+            System.out.println("getcomment_url" + output);
+            return output;
+        }
+
+        @Override
+        protected void onPostExecute(String output) {
+            if (output == null) {
+            } else {
+                try {
+
+                    //  Toast.makeText(Service_provider_reg.this, "result is" + output, Toast.LENGTH_SHORT).show();
+                    JSONObject object=new JSONObject(output);
+                    String res=object.getString("responce");
+
+                    if (res.equals("true")) {
+
+                        JSONArray jsonArray = object.getJSONArray("section");
+
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+                            String m_id = jsonObject1.getString("m_id");
+                            String m_name = jsonObject1.getString("m_name");
+                            String type = jsonObject1.getString("type");
+                            String parent = jsonObject1.getString("parent");
+                            String school_id = jsonObject1.getString("school_id");
+
+                            sectionList.add(new SectionModel(m_id, m_name));
+                            SectionHashMap.put(i, new SectionModel(m_id,m_name));
+                            ChooseSection.add(m_name);
+
+                        }
+
+                        sectionListAdapter = new ArrayAdapter<String>(AddPayFeesActivity.this, android.R.layout.simple_spinner_dropdown_item, ChooseSection);
+                        sectionListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spin_section.setAdapter(sectionListAdapter);
+
+
+                        // reloadAllData();
+
+                    }else {
+                        Toast.makeText(AddPayFeesActivity.this, "no section found", Toast.LENGTH_SHORT).show();
+                    }
+                    super.onPostExecute(output);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
     }
 }

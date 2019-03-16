@@ -40,6 +40,8 @@ import com.example.admin.theoji.Connection.HttpHandler;
 import com.example.admin.theoji.Connection.Utilities;
 import com.example.admin.theoji.Connection.Utility;
 
+import com.example.admin.theoji.ModelClass.ClassModel;
+import com.example.admin.theoji.ModelClass.SectionModel;
 import com.example.admin.theoji.ModelClass.StudentModel;
 import com.example.admin.theoji.Shared_prefrence.AppPreference;
 import com.karumi.dexter.Dexter;
@@ -73,17 +75,28 @@ import static com.example.admin.theoji.Adapter.StudentListAdapter.multiselected;
 import static com.example.admin.theoji.Adapter.StudentListAdapter.present_students;
 
 public class AddHomeWork extends AppCompatActivity {
-
-    Spinner spin_class;
-    private ArrayAdapter<String> classAdapter;
-    private ArrayList<String> classList;
-    String Class;
+//
+//    Spinner spin_class;
+//    private ArrayAdapter<String> classAdapter;
+//    private ArrayList<String> classList;
+//    String Class;
 
     Spinner spin_student;
-    ArrayList<String>ChooseStudent;
     ArrayList<StudentModel> studentList=new ArrayList<StudentModel>();
      StudentListAdapter studentListAdapter;
-   // CheckableSpinnerAdapter checkableSpinnerAdapter;
+
+    Spinner spin_class;
+    ArrayList<String> ChooseClass =new ArrayList<>();
+    private ArrayList<ClassModel> classList=new ArrayList<>();
+    private ArrayAdapter<String> classListAdapter;
+
+    Spinner spin_section;
+    ArrayList<String> ChooseSection =new ArrayList<>();
+    private ArrayList<SectionModel> sectionList=new ArrayList<>();
+    private ArrayAdapter<String> sectionListAdapter;
+
+    public HashMap<Integer, ClassModel> ClassHashMap = new HashMap<Integer, ClassModel>();
+    public HashMap<Integer, SectionModel> SectionHashMap = new HashMap<Integer, SectionModel>();
 
     String Student;
 
@@ -104,7 +117,7 @@ public class AddHomeWork extends AppCompatActivity {
     private Boolean upflag = false;
     int Gallery_view = 2;
     String Title_homework, Description_homework,Date_homework,Participent_homework,Spin_Class;
-        String Spin_Student;
+        String Spin_Student,Spin_Section;
 
     public static HashMap<Integer , String> StudentSpinHashMap = new HashMap<>();
     String Spin_Students;
@@ -117,51 +130,8 @@ public class AddHomeWork extends AppCompatActivity {
 
         spin_class = (Spinner)findViewById(R.id.spin_class);
         spin_student = (Spinner)findViewById(R.id.class_students);
-        //spin_student.setAdapter(StudentAdapter, true, onSelectedListener);
-        //MultiSelectionSpinner spinner=(MultiSelectionSpinner)findViewById(R.id.input1);
-
-        classList = new ArrayList<>();
-//        new spinnerClassExecuteTask().execute();
-        classList.add("Select Class");
-        classList.add("Nursery");
-        classList.add("KG1");
-        classList.add("KG2");
-        classList.add("1");
-        classList.add("2");
-        classList.add("3");
-        classList.add("4");
-        classList.add("5");
-        classList.add("6");
-        classList.add("7");
-        classList.add("8");
-        classList.add("9");
-        classList.add("10");
-        classList.add("11 Mathes");
-        classList.add("11 Bio");
-        classList.add("11 Commerce");
-
-        spin_class.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Class = classAdapter.getItem(position).toString();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        classAdapter = new ArrayAdapter<String>(AddHomeWork.this, R.layout.support_simple_spinner_dropdown_item, classList);
-        classAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spin_class.setAdapter(classAdapter);
-
-        //***************student spinner******
-        ChooseStudent = new ArrayList<>();
-        studentList = new ArrayList<>();
-        new spinnerStudentExecuteTask().execute();
-
-//*******************************************************
+        spin_section = (Spinner)findViewById(R.id.stud_section);
+        //*******************************************************
         choose_img = (Button) findViewById(R.id.btn_img);
         btn_post = (Button) findViewById(R.id.btn_post);
 
@@ -171,7 +141,84 @@ public class AddHomeWork extends AppCompatActivity {
         homework_date=(EditText)findViewById(R.id.homework_date);
         participent=(EditText)findViewById(R.id.participent);
 //*********************************************************************
+        new spinnerClassExecuteTask().execute();
 
+        spin_class.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                //strSid = stateList.get(position).getState_id();
+                try{
+                    if(sectionList.size() !=0)
+                    {
+                        ChooseSection.clear();
+
+                        spin_section.setAdapter(null);
+                        sectionListAdapter.notifyDataSetChanged();
+
+                    }
+
+                }catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+                for (int i = 0; i < ClassHashMap.size(); i++)
+                {
+
+                    if (ClassHashMap.get(i).getM_name().equals(spin_class.getItemAtPosition(position)))
+                    {
+                        new SectionExecuteTask(ClassHashMap.get(i).getM_id()).execute();
+                    }
+                    // else (StateHashMap.get(i).getState_name().equals(spin_state.getItemAtPosition(position))
+                }
+            }
+
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+
+            }
+        });
+        //******************************************************
+        spin_section.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                //strSid = stateList.get(position).getState_id();
+//                try{
+//
+//                    if(studentList.size() !=0)
+//                    {
+//                        ChooseStudent.clear();
+//
+//                        spin_student.setAdapter(null);
+//                        studentListAdapter.notifyDataSetChanged();
+//
+//                    }
+//
+//                }catch (Exception e)
+//                {
+//                    e.printStackTrace();
+//                }
+                for (int i = 0; i < SectionHashMap.size(); i++)
+                {
+
+                    if (SectionHashMap.get(i).getM_name().equals(spin_section.getItemAtPosition(position)))
+                    {
+                        new spinnerStudentExecuteTask(SectionHashMap.get(i).getM_id()).execute();
+                    }
+                    // else (StateHashMap.get(i).getState_name().equals(spin_state.getItemAtPosition(position))
+                }
+            }
+
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+
+            }
+        });
+
+        //**************************************************************
        homework_date.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -222,6 +269,7 @@ public class AddHomeWork extends AppCompatActivity {
         });
 //****************************************
         btn_post.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             public void onClick(View v) {
 
                 Title_homework = title.getText().toString();
@@ -229,15 +277,27 @@ public class AddHomeWork extends AppCompatActivity {
                 Date_homework=homework_date.getText().toString();
                 Participent_homework=participent.getText().toString();
                 Spin_Class=spin_class.getSelectedItem().toString();
+                Spin_Section=spin_section.getSelectedItem().toString();
                 // Spin_Student=spin_student.getSelectedItem().toString();
-                // spin_student.setOnItemClickListener(new );
-                for(int i=0;i<studentList.size();i++){
-                    String p1 = studentList.get(i).getFirstname();
-                    Spin_Student=p1.toString();
+//**************************************************
+                StringBuilder commaSepValueBuilder = new StringBuilder();
+
+                //Looping through the list
+                for ( int i = 0; i< multiselected.size(); i++){
+                    //append the value into the builder
+                    commaSepValueBuilder.append(multiselected.get(i));
+
+                    //if the value is not the last element of the list
+                    //then append the comma(,) as well
+                    if ( i != multiselected.size()-1){
+                     commaSepValueBuilder.append(", ");
+                    }
                 }
+                System.out.println(commaSepValueBuilder.toString());
+                Spin_Student=commaSepValueBuilder.toString();
 
 
-                //*****************************************
+            //*****************************************
                 Toast.makeText(AddHomeWork.this, ""+Spin_Student, Toast.LENGTH_SHORT).show();
 
 
@@ -537,6 +597,7 @@ public class AddHomeWork extends AppCompatActivity {
                 entity.addPart("Homework_date", new StringBody(Date_homework));
                 entity.addPart("Homework_description", new StringBody(Description_homework));
                 entity.addPart("Homework_participent", new StringBody(Participent_homework));
+                entity.addPart("section", new StringBody(Spin_Section));
                 entity.addPart("id",new StringBody(id));
 
                 result = Utilities.postEntityAndFindJson("https://jntrcpl.com/theoji/index.php/Api/post_activity_student",entity);
@@ -590,101 +651,92 @@ public class AddHomeWork extends AppCompatActivity {
     }
 
 
-    public class spinnerStudentExecuteTask extends AsyncTask<String, Integer,String>{
+    public class spinnerStudentExecuteTask extends AsyncTask<String, Integer,String> {
 
-            String output = "";
+        String output = "";
+        String M_id;
 
-
-            @Override
-            protected void onPreExecute() {
-
-                super.onPreExecute();
-
-            }
-
-            @Override
-            protected String doInBackground(String... params) {
-
-//                String sever_url = "http://saibabacollege.com/jobsjunction/Api/********";
-                String sever_url = "https://jntrcpl.com/theoji/index.php/Api/student_list?id="+AppPreference.getUserid(AddHomeWork.this);
+        public spinnerStudentExecuteTask(String m_id) {
+            this.M_id=m_id;
+        }
 
 
-                output = HttpHandler.makeServiceCall(sever_url);
-                System.out.println("getcomment_url" + output);
-                return output;
-            }
+        @Override
+        protected void onPreExecute() {
 
-            @Override
-            protected void onPostExecute(String output) {
-                if (output == null) {
-                } else {
-                    try {
+            super.onPreExecute();
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            String sever_url = "https://jntrcpl.com/theoji/index.php/Api/get_student_by_section?section_id="+ M_id;
+
+
+            output = HttpHandler.makeServiceCall(sever_url);
+            System.out.println("getcomment_url" + output);
+            return output;
+        }
+
+        @Override
+        protected void onPostExecute(String output) {
+            if (output == null) {
+            } else {
+                try {
 
 //                    Toast.makeText(RegistrationActivity.this, "result is" + output, Toast.LENGTH_SHORT).show();
-                        JSONObject object=new JSONObject(output);
+                    JSONObject object = new JSONObject(output);
+                    String res=object.getString("responce");
 
-                        JSONArray jsonArray = object.getJSONArray("data");
+                    if (res.equals("true")) {
+
+                        JSONArray jsonArray = object.getJSONArray("student");
 
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+
                             String user_id = jsonObject1.getString("user_id");
-                            // String password = jsonObject1.getString("password");
-                            // String showpass = jsonObject1.getString("showpass");
-                            // String st_pass = jsonObject1.getString("stu_password");
                             String firstname = jsonObject1.getString("firstname");
-                            // String lastname = jsonObject1.getString("lastname");
-                            String email = jsonObject1.getString("email");
-                            String mobile = jsonObject1.getString("mobileno");
-                            //  String date = jsonObject1.getString("date");
-                            //  String user_type = jsonObject1.getString("user_type");
-                            // String gender = jsonObject1.getString("gender");
-                            // String dob = jsonObject1.getString("dob");
-                            String city = jsonObject1.getString("city");
-                            String address = jsonObject1.getString("address");
-                            // String status = jsonObject1.getString("status");
-                            // String block_unblock = jsonObject1.getString("block_unblock");
-                            // String ref_id = jsonObject1.getString("ref_id");
-                            // String profileupdate = jsonObject1.getString("profileupdate");
-                            // String about = jsonObject1.getString("about");
-                            // String latest_post = jsonObject1.getString("latest_post");
-                            // String latest_event = jsonObject1.getString("latest_event");
-                            // String school_code = jsonObject1.getString("school_code");
-                            //  String notice = jsonObject1.getString("notice");
-                            //  String latest_activities = jsonObject1.getString("latest_activities");
-                            //  String stutotalfees = jsonObject1.getString("stutotalfees");
-                            //  String latest_news = jsonObject1.getString("latest_news");
-                            // String sturemainfee = jsonObject1.getString("sturemainfee");
-                            // String latest_noticboard = jsonObject1.getString("latest_noticboard");
-                            // String stulastfee = jsonObject1.getString("stulastfee");
-                            // String sales_lead_name = jsonObject1.getString("sales_lead_name");
+                            String lastname = jsonObject1.getString("lastname");
 
                             studentList.add(new StudentModel(user_id, firstname));
-                            StudentSpinHashMap.put(Integer.valueOf(user_id), firstname);
-                            ChooseStudent.add(firstname);
+                            // ChooseStudent.add(firstname);
+//                            if ( i==0){
+//                                studentList.add("select all");
+//                            }
 
                         }
 
-                       studentListAdapter = new StudentListAdapter(AddHomeWork.this, android.R.layout.simple_spinner_item, studentList);
-                       //StudentListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-                      // spin_student.setAdapter(StudentAdapter,false, onSelectedListener);
+                        studentListAdapter = new StudentListAdapter(AddHomeWork.this, android.R.layout.simple_spinner_item, studentList);
+                        //StudentListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+                        // spin_student.setAdapter(StudentAdapter,false, onSelectedListener);
                         spin_student.setAdapter(studentListAdapter);
 
-                        super.onPostExecute(output);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                    }else {
+                        try{
+
+                            // ChooseStudent.clear();
+                            studentList.clear();
+                            studentListAdapter = new StudentListAdapter(AddHomeWork.this, android.R.layout.simple_spinner_item, studentList);
+                            spin_student.setAdapter(studentListAdapter);
+                            studentListAdapter.notifyDataSetChanged();
+
+                        }catch (Exception e)
+                        {
+                            e.printStackTrace();
+                        }
+                        Toast.makeText(AddHomeWork.this, "no student found", Toast.LENGTH_SHORT).show();
                     }
+
+                    super.onPostExecute(output);
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
             }
-
-
-
         }
-//    private MultiSpinner.MultiSpinnerListener onSelectedListener = new MultiSpinner.MultiSpinnerListener() {
-//        public void onItemsSelected(boolean[] selected) {
-//            // Do something here with the selected items
-//
-//        }
-//    };
+    }
+
 
 
     public boolean validate() {
@@ -732,5 +784,138 @@ public class AddHomeWork extends AppCompatActivity {
 
         return valid;
     }
+
+    private class spinnerClassExecuteTask extends AsyncTask<String, Integer,String> {
+
+        String output = "";
+
+
+        @Override
+        protected void onPreExecute() {
+
+            super.onPreExecute();
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            String sever_url = "https://jntrcpl.com/theoji/index.php/Api/get_class?school_id="
+                    +AppPreference.getUserid(AddHomeWork.this);
+
+
+            output = HttpHandler.makeServiceCall(sever_url);
+            System.out.println("getcomment_url" + output);
+            return output;
+        }
+
+        @Override
+        protected void onPostExecute(String output) {
+            if (output == null) {
+            } else {
+                try {
+
+//                    Toast.makeText(RegistrationActivity.this, "result is" + output, Toast.LENGTH_SHORT).show();
+                    JSONObject object = new JSONObject(output);
+                    String res=object.getString("responce");
+
+                    if (res.equals("true")) {
+
+                        JSONArray jsonArray = object.getJSONArray("class");
+
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+                            String m_id = jsonObject1.getString("m_id");
+                            String m_name = jsonObject1.getString("m_name");
+                            String type = jsonObject1.getString("type");
+                            String parent = jsonObject1.getString("parent");
+                            String school_id = jsonObject1.getString("school_id");
+
+                            classList.add(new ClassModel(m_id, m_name));
+                            ChooseClass.add(m_name);
+                            ClassHashMap.put(i, new ClassModel(m_id,m_name));
+
+                        }
+
+                        classListAdapter = new ArrayAdapter<String>(AddHomeWork.this, android.R.layout.simple_spinner_dropdown_item, ChooseClass);
+                        classListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spin_class.setAdapter(classListAdapter);
+
+                    }else {
+                        Toast.makeText(AddHomeWork.this, "no class found", Toast.LENGTH_SHORT).show();
+                    }
+                    super.onPostExecute(output);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
+    //***************************************************************************
+    private class SectionExecuteTask extends AsyncTask<String,Integer,String> {
+
+        String output = "";
+
+        String strMId;
+
+        public SectionExecuteTask(String m_id) {
+            this.strMId=m_id;
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            String sever_url = "https://jntrcpl.com/theoji/index.php/Api/get_section?m_id="+strMId;
+
+            output = HttpHandler.makeServiceCall(sever_url);
+            System.out.println("getcomment_url" + output);
+            return output;
+        }
+
+        @Override
+        protected void onPostExecute(String output) {
+            if (output == null) {
+            } else {
+                try {
+
+                    //  Toast.makeText(Service_provider_reg.this, "result is" + output, Toast.LENGTH_SHORT).show();
+                    JSONObject object=new JSONObject(output);
+                    String res=object.getString("responce");
+
+                    if (res.equals("true")) {
+
+                        JSONArray jsonArray = object.getJSONArray("section");
+
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+                            String m_id = jsonObject1.getString("m_id");
+                            String m_name = jsonObject1.getString("m_name");
+                            String type = jsonObject1.getString("type");
+                            String parent = jsonObject1.getString("parent");
+                            String school_id = jsonObject1.getString("school_id");
+
+                            sectionList.add(new SectionModel(m_id, m_name));
+                            SectionHashMap.put(i, new SectionModel(m_id,m_name));
+                            ChooseSection.add(m_name);
+
+                        }
+
+                        sectionListAdapter = new ArrayAdapter<String>(AddHomeWork.this, android.R.layout.simple_spinner_dropdown_item, ChooseSection);
+                        sectionListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spin_section.setAdapter(sectionListAdapter);
+
+
+                        // reloadAllData();
+
+                    }else {
+                        Toast.makeText(AddHomeWork.this, "no section found", Toast.LENGTH_SHORT).show();
+                    }
+                    super.onPostExecute(output);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
+    }
+}
 

@@ -26,8 +26,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.admin.theoji.Connection.HttpHandler;
+import com.example.admin.theoji.ModelClass.ClassModel;
 import com.example.admin.theoji.ModelClass.FirstStepModel;
 import com.example.admin.theoji.ModelClass.SecondStepModel;
+import com.example.admin.theoji.ModelClass.SectionModel;
 import com.example.admin.theoji.ModelClass.StateModel;
 import com.example.admin.theoji.Shared_prefrence.AppPreference;
 import com.example.admin.theoji.Utils.ProjectUtils;
@@ -47,6 +49,7 @@ import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
 
@@ -54,17 +57,20 @@ import javax.net.ssl.HttpsURLConnection;
 
 import static com.androidquery.util.AQUtility.getContext;
 
-public class AddStudentActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener{
+public class AddStudentActivity extends AppCompatActivity{
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
     Button btn_final_submit;
 
-    private FirstStepActivity firstStepActivity = new FirstStepActivity();
-    private SeconStepActivity seconStepActivity = new SeconStepActivity();
+    ArrayList<String> ChooseClass =new ArrayList<>();
+    private ArrayList<ClassModel> classList=new ArrayList<>();
+    private ArrayAdapter<String> classListAdapter;
 
-    FirstStepModel firstStepModel;
-    SecondStepModel secondStepModel;
+    ArrayList<String> ChooseSection =new ArrayList<>();
+    private ArrayList<SectionModel> sectionList=new ArrayList<>();
+    private ArrayAdapter<String> sectionListAdapter;
+
 
     Spinner rteType;
     Spinner country;
@@ -104,27 +110,14 @@ public class AddStudentActivity extends AppCompatActivity implements TabLayout.O
     private boolean noAction, addStroke, dontAddChar, deleteStroke;
 
 
+    public HashMap<Integer, ClassModel> ClassHashMap = new HashMap<Integer, ClassModel>();
+    public HashMap<Integer, SectionModel> SectionHashMap = new HashMap<Integer, SectionModel>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_student);
 
-       // tabLayout = (TabLayout) findViewById(R.id.tabLayout);
-
-        //Adding the tabs using addTab() method
-       // tabLayout.addTab(tabLayout.newTab().setText("First Step"));
-       // tabLayout.addTab(tabLayout.newTab().setText("Second Step"));
-       // tabLayout.addTab(tabLayout.newTab().setText("Third Step"));
-        //tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-
-       // viewPager = (ViewPager) findViewById(R.id.pager);
-        //Creating our pager adapter
-       // PagerView adapter = new PagerView(getSupportFragmentManager(), tabLayout.getTabCount());
-        //Adding adapter to pager
-       // viewPager.setAdapter(adapter);
-        //Adding onTabSelectedListener to swipe views
-       // tabLayout.addOnTabSelectedListener(this);
-        //*******************************************************************
         btn_final_submit=(Button)findViewById(R.id.submit_final);
 
         email=(EditText)findViewById(R.id.st_email);
@@ -209,6 +202,45 @@ public class AddStudentActivity extends AppCompatActivity implements TabLayout.O
         });
 
 //******************************************************************************************
+        new spinnerClassExecuteTask().execute();
+
+        spin_st_class.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                //strSid = stateList.get(position).getState_id();
+                try{
+                    if(sectionList.size() !=0)
+                    {
+                        ChooseSection.clear();
+
+                        std_section.setAdapter(null);
+                        sectionListAdapter.notifyDataSetChanged();
+
+                    }
+
+                }catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+                for (int i = 0; i < ClassHashMap.size(); i++)
+                {
+
+                    if (ClassHashMap.get(i).getM_name().equals(spin_st_class.getItemAtPosition(position)))
+                    {
+                        new SectionExecuteTask(ClassHashMap.get(i).getM_id()).execute();
+                    }
+                    // else (StateHashMap.get(i).getState_name().equals(spin_state.getItemAtPosition(position))
+                }
+            }
+
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+
+            }
+        });
+        //**********************************************************
 
         student_dob.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -292,16 +324,9 @@ public class AddStudentActivity extends AppCompatActivity implements TabLayout.O
             }
         });
 
-
-
-
         //***************************************************************
-
-
         country = (Spinner)findViewById(R.id.country);
         rteType = (Spinner)findViewById(R.id.RTEtype);
-
-
 //RTE type spinner list
         rteTypeList = new ArrayList<>();
         rteTypeList.add("yes");
@@ -493,22 +518,6 @@ public class AddStudentActivity extends AppCompatActivity implements TabLayout.O
         }
     }
 
-    @Override
-    public void onTabSelected(TabLayout.Tab tab) {
-
-        viewPager.setCurrentItem(tab.getPosition());
-
-    }
-
-    @Override
-    public void onTabUnselected(TabLayout.Tab tab) {
-
-    }
-
-    @Override
-    public void onTabReselected(TabLayout.Tab tab) {
-
-    }
 
     //****************************************************************
     class StudentCreatExecuteTask extends AsyncTask<String, Integer, String> {
@@ -677,4 +686,137 @@ public class AddStudentActivity extends AppCompatActivity implements TabLayout.O
         return result.toString();
     }
 
+   //***************************************************************
+   private class spinnerClassExecuteTask extends AsyncTask<String, Integer,String> {
+
+       String output = "";
+
+
+       @Override
+       protected void onPreExecute() {
+
+           super.onPreExecute();
+
+       }
+
+       @Override
+       protected String doInBackground(String... params) {
+
+           String sever_url = "https://jntrcpl.com/theoji/index.php/Api/get_class?school_id="
+                   +AppPreference.getUserid(AddStudentActivity.this);
+
+
+           output = HttpHandler.makeServiceCall(sever_url);
+           System.out.println("getcomment_url" + output);
+           return output;
+       }
+
+       @Override
+       protected void onPostExecute(String output) {
+           if (output == null) {
+           } else {
+               try {
+
+//                    Toast.makeText(RegistrationActivity.this, "result is" + output, Toast.LENGTH_SHORT).show();
+                   JSONObject object = new JSONObject(output);
+                   String res=object.getString("responce");
+
+                   if (res.equals("true")) {
+
+                       JSONArray jsonArray = object.getJSONArray("class");
+
+                       for (int i = 0; i < jsonArray.length(); i++) {
+                           JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+                           String m_id = jsonObject1.getString("m_id");
+                           String m_name = jsonObject1.getString("m_name");
+                           String type = jsonObject1.getString("type");
+                           String parent = jsonObject1.getString("parent");
+                           String school_id = jsonObject1.getString("school_id");
+
+                           classList.add(new ClassModel(m_id, m_name));
+                           ChooseClass.add(m_name);
+                           ClassHashMap.put(i, new ClassModel(m_id,m_name));
+
+                       }
+
+                       classListAdapter = new ArrayAdapter<String>(AddStudentActivity.this, android.R.layout.simple_spinner_dropdown_item, ChooseClass);
+                       classListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                       spin_st_class.setAdapter(classListAdapter);
+
+                   }else {
+                       Toast.makeText(AddStudentActivity.this, "no class found", Toast.LENGTH_SHORT).show();
+                   }
+                   super.onPostExecute(output);
+               } catch (JSONException e) {
+                   e.printStackTrace();
+               }
+           }
+       }
+   }
+    //***************************************************************************
+    private class SectionExecuteTask extends AsyncTask<String,Integer,String> {
+
+        String output = "";
+
+        String strMId;
+
+        public SectionExecuteTask(String m_id) {
+            this.strMId=m_id;
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            String sever_url = "https://jntrcpl.com/theoji/index.php/Api/get_section?m_id="+strMId;
+
+            output = HttpHandler.makeServiceCall(sever_url);
+            System.out.println("getcomment_url" + output);
+            return output;
+        }
+
+        @Override
+        protected void onPostExecute(String output) {
+            if (output == null) {
+            } else {
+                try {
+
+                    //  Toast.makeText(Service_provider_reg.this, "result is" + output, Toast.LENGTH_SHORT).show();
+                    JSONObject object=new JSONObject(output);
+                    String res=object.getString("responce");
+
+                    if (res.equals("true")) {
+
+                        JSONArray jsonArray = object.getJSONArray("section");
+
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+                            String m_id = jsonObject1.getString("m_id");
+                            String m_name = jsonObject1.getString("m_name");
+                            String type = jsonObject1.getString("type");
+                            String parent = jsonObject1.getString("parent");
+                            String school_id = jsonObject1.getString("school_id");
+
+                            sectionList.add(new SectionModel(m_id, m_name));
+                            SectionHashMap.put(i, new SectionModel(m_id,m_name));
+                            ChooseSection.add(m_name);
+
+                        }
+
+                        sectionListAdapter = new ArrayAdapter<String>(AddStudentActivity.this, android.R.layout.simple_spinner_dropdown_item, ChooseSection);
+                        sectionListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        std_section.setAdapter(sectionListAdapter);
+
+
+                        // reloadAllData();
+
+                    }else {
+                        Toast.makeText(AddStudentActivity.this, "no section found", Toast.LENGTH_SHORT).show();
+                    }
+                    super.onPostExecute(output);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
+    }
 }
