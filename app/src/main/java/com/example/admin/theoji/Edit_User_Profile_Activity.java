@@ -469,7 +469,7 @@ public class Edit_User_Profile_Activity extends AppCompatActivity {
         }
 
     }
-
+//*****************************************************************
     private class SchoolGetUpdateExecuteTask extends AsyncTask<String, Void, String> {
 
         String output = "";
@@ -539,21 +539,13 @@ public class Edit_User_Profile_Activity extends AppCompatActivity {
                             String lastname = c.getString("lastname");
                             user_type = c.getString("user_type");
                              umeta_value = c.getString("umeta_value");
-
-
                         }
                         seperateData = new String[umeta_value.split(",").length];
                         Log.e("length is",""+umeta_value.split(",").length);
-                        seperateData = umeta_value.split(",");
+
+                       // seperateData = umeta_value.split(",");
+
                         Log.e("length is",""+seperateData[0]);
-                        Log.e("length is",""+seperateData[1]);
-                        Log.e("length is",""+seperateData[2]);
-                        Log.e("length is",""+seperateData[3]);
-                        Log.e("length is",""+seperateData[4]);
-                        Log.e("length is",""+seperateData[5]);
-                        Log.e("length is",""+seperateData[6]);
-                        Log.e("length is",""+seperateData[7]);
-                        Log.e("length is",""+seperateData[8]);
                         String address1 = seperateData[0];
                         sch_add2.setText(address1);
                         String state = seperateData[1];
@@ -601,7 +593,7 @@ public class Edit_User_Profile_Activity extends AppCompatActivity {
 
         }
     }
-
+//*********************************************************************************************
     private class SchoolProfileUpdateExecuteTask extends AsyncTask<String, Integer, String> {
         ProgressDialog dialog;
          String result;

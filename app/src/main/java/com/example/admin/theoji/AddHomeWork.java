@@ -240,7 +240,7 @@ public class AddHomeWork extends AppCompatActivity {
                         myCalendar.set(Calendar.YEAR, selectedyear);
                         myCalendar.set(Calendar.MONTH, selectedmonth);
                         myCalendar.set(Calendar.DAY_OF_MONTH, selectedday);
-                        String myFormat = "dd/MM/yyyy"; //Change as you need
+                        String myFormat = "yyyy/MM/dd"; //Change as you need
                         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
                         homework_date.setText(sdf.format(myCalendar.getTime()));
 
@@ -650,7 +650,7 @@ public class AddHomeWork extends AppCompatActivity {
         }
     }
 
-
+//**********************************************************
     public class spinnerStudentExecuteTask extends AsyncTask<String, Integer,String> {
 
         String output = "";
@@ -684,7 +684,7 @@ public class AddHomeWork extends AppCompatActivity {
             if (output == null) {
             } else {
                 try {
-
+                        int p;
 //                    Toast.makeText(RegistrationActivity.this, "result is" + output, Toast.LENGTH_SHORT).show();
                     JSONObject object = new JSONObject(output);
                     String res=object.getString("responce");
@@ -692,6 +692,7 @@ public class AddHomeWork extends AppCompatActivity {
                     if (res.equals("true")) {
 
                         JSONArray jsonArray = object.getJSONArray("student");
+                        //studentList.add(0,new StudentModel("0", "Select all"));
 
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject1 = jsonArray.getJSONObject(i);
@@ -700,14 +701,13 @@ public class AddHomeWork extends AppCompatActivity {
                             String firstname = jsonObject1.getString("firstname");
                             String lastname = jsonObject1.getString("lastname");
 
+
+                            if ( i==0){
+                                studentList.add(new StudentModel("0","Select all"));
+                            }
                             studentList.add(new StudentModel(user_id, firstname));
-                            // ChooseStudent.add(firstname);
-//                            if ( i==0){
-//                                studentList.add("select all");
-//                            }
 
                         }
-
                         studentListAdapter = new StudentListAdapter(AddHomeWork.this, android.R.layout.simple_spinner_item, studentList);
                         //StudentListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
                         // spin_student.setAdapter(StudentAdapter,false, onSelectedListener);

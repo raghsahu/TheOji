@@ -1,7 +1,9 @@
 package com.example.admin.theoji;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.net.Uri;
@@ -26,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.admin.theoji.Adapter.HomeAdapter;
+import com.example.admin.theoji.Adapter.PostAdapter;
 import com.example.admin.theoji.Connection.Connectivity;
 import com.example.admin.theoji.Connection.HttpHandler;
 import com.example.admin.theoji.ModelClass.HomeListModel;
@@ -42,6 +45,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static com.example.admin.theoji.PostActivity.postStringHashMap;
 
 
 public class Main2Activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -129,9 +134,31 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
         switch (id) {
             case R.id.logout:
                 if (Connectivity.isNetworkAvailable(Main2Activity.this)) {
-                    manager.logoutUser();
-                    startActivity(new Intent(this, LoginActivity.class));
-                    finish();
+                    final AlertDialog.Builder dialog = new AlertDialog.Builder(Main2Activity.this).setTitle("The Oji")
+                            .setMessage("Are you sure, you want to logout this app");
+
+                    dialog.setNegativeButton("no", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+
+                    dialog.setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            exitLauncher();
+                        }
+
+                        private void exitLauncher() {
+                            Intent intent = new Intent(Main2Activity.this,LoginActivity.class);
+                            startActivity(intent);
+                            manager.logoutUser();
+                            finish();
+                        }
+                    });
+                    final AlertDialog alert = dialog.create();
+                    alert.show();
 
                 } else {
                     Toast.makeText(Main2Activity.this, "No Internet", Toast.LENGTH_SHORT).show();
@@ -295,13 +322,38 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
             }
 
         }else if (id == R.id.nav_logout) {
-            manager.logoutUser();
+
             if (Connectivity.isNetworkAvailable(Main2Activity.this)){
-                Intent intent = new Intent(Main2Activity.this,LoginActivity.class);
-                startActivity(intent);
-                finish();
+
+                final AlertDialog.Builder dialog = new AlertDialog.Builder(Main2Activity.this).setTitle("The Oji")
+                        .setMessage("Are you sure, you want to logout this app");
+
+                dialog.setNegativeButton("no", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+                dialog.setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        exitLauncher();
+                    }
+
+                    private void exitLauncher() {
+                        Intent intent = new Intent(Main2Activity.this,LoginActivity.class);
+                        startActivity(intent);
+                        manager.logoutUser();
+                        finish();
+                    }
+                });
+                final AlertDialog alert = dialog.create();
+                alert.show();
+
+
             }else {
-                Toast.makeText(Main2Activity.this, "No Internet", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(Main2Activity.this, "No Internet", Toast.LENGTH_SHORT).show();
                 CustomAlert.alertDialogShow(getApplicationContext(),"Please Check Internet!");
             }
 

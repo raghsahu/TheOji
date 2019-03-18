@@ -222,7 +222,7 @@ public class AttendenceActivity extends AppCompatActivity {
                                 myCalendar.set(Calendar.YEAR, selectedyear);
                                 myCalendar.set(Calendar.MONTH, selectedmonth);
                                 myCalendar.set(Calendar.DAY_OF_MONTH, selectedday);
-                                String myFormat = "dd/MM/yyyy"; //Change as you need
+                                String myFormat = "yyyy/MM/dd"; //Change as you need
                                 SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
                                 attend_date.setText(sdf.format(myCalendar.getTime()));
 
@@ -294,11 +294,11 @@ public class AttendenceActivity extends AppCompatActivity {
                             String firstname = jsonObject1.getString("firstname");
                             String lastname = jsonObject1.getString("lastname");
 
+                            if ( i==0){
+                                studentList.add(new StudentModel("0","Select all"));
+                            }
                             studentList.add(new StudentModel(user_id, firstname));
-                           // ChooseStudent.add(firstname);
-//                            if ( i==0){
-//                                studentList.add("select all");
-//                            }
+
 
                         }
 
