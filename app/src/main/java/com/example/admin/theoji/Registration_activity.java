@@ -21,6 +21,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.admin.theoji.Connection.Connectivity;
@@ -47,7 +48,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class Registration_activity extends AppCompatActivity {
 
-    Spinner type,state,board;
+    Spinner type,state,board,select_class;
 
     ArrayList<String> ChooseState;
     private ArrayAdapter<String> stateAdapter;
@@ -57,19 +58,24 @@ public class Registration_activity extends AppCompatActivity {
     private ArrayAdapter<String> boardAdapter;
    // private ArrayList<BoardModel> boardList =new ArrayList<>();
 
+    ArrayList<String> ChooseClass= new ArrayList<>();
+    private ArrayAdapter<String> classAdapter;
+
     EditText sch_code, full_name, father_name, email_id,mobile_no, passw,city, sch_name, sales_lead;
     String Sch_code, Full_name, Father_name, Email_id,Mobile_no, Passw,City, Sch_name, Sales_lead;
 
-    TextInputLayout tv_city,tv_sch_code,tv_fullname,tv_fathername,tv_lead,tv_sch_name;
+    TextInputLayout tv_city,tv_sch_code,tv_fullname,tv_fathername,tv_lead,tv_sch_name,tv_Email,tv_Pass,tv_Mobile;
     CardView card_board;
-    Button btn_register;
+    Button btn_register,btn_findSchool,btn_Conf_school;
     CheckBox check_box;
+    CardView show_class;
+    TextView text_accept;
 
     private ArrayAdapter<String> typeAdapter;
     private ArrayList<String> typeList;
     String Type,State,Board;
 
-
+    TextView view_school_name,view_sch_address;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -99,14 +105,26 @@ public class Registration_activity extends AppCompatActivity {
         sales_lead=(EditText)findViewById(R.id.sales_lead);
 
         tv_city=(TextInputLayout)findViewById(R.id.tv_city);
-        tv_fullname=(TextInputLayout)findViewById(R.id.tv_fullname);
+          tv_fullname=(TextInputLayout)findViewById(R.id.tv_fullname);
         tv_fathername=(TextInputLayout)findViewById(R.id.tv_father_name);
         tv_sch_code=(TextInputLayout)findViewById(R.id.tv_code);
         tv_sch_name=(TextInputLayout)findViewById(R.id.tv_sch_name);
         tv_lead=(TextInputLayout)findViewById(R.id.tv_saleslead);
+        tv_Email=(TextInputLayout)findViewById(R.id.view_email);
+        tv_Mobile=(TextInputLayout)findViewById(R.id.view_mobile);
+        tv_Pass=(TextInputLayout)findViewById(R.id.view_pass);
         card_board=(CardView)findViewById(R.id.card_views_board);
         check_box=findViewById(R.id.checkbox);
         btn_register=findViewById(R.id.cont_reg1);
+        btn_findSchool=findViewById(R.id.find_school);
+        show_class=findViewById(R.id.card_views_class);
+        text_accept=findViewById(R.id.text12);
+        view_sch_address=findViewById(R.id.text_school_address);
+        view_school_name=findViewById(R.id.text_school);
+        select_class=findViewById(R.id.sch_class_show);
+        btn_Conf_school=findViewById(R.id.conf_school_next);
+
+
 
         type = (Spinner)findViewById(R.id.type);
         state=(Spinner)findViewById(R.id.state_type);
@@ -147,6 +165,46 @@ public class Registration_activity extends AppCompatActivity {
                 }
             }
         });
+//************************************************
+        btn_findSchool.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Sch_code= sch_code.getText().toString();
+
+                if (Connectivity.isNetworkAvailable(Registration_activity.this)) {
+                    if (!Sch_code.isEmpty()) {
+                        new ParentExecuteTask().execute();
+                    } else {
+                        Toast.makeText(Registration_activity.this, "please enter school code", Toast.LENGTH_SHORT).show();
+                    }
+                }else {
+                    Toast.makeText(Registration_activity.this, "No Internet", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+
+        btn_Conf_school.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (Connectivity.isNetworkAvailable(Registration_activity.this)) {
+//                    if (sho()) {
+                        Intent intent=new Intent(Registration_activity.this,ParentRegistrationActivity.class);
+
+                        startActivity(intent);
+//                    } else {
+//                        Toast.makeText(Registration_activity.this, "please select class type", Toast.LENGTH_SHORT).show();
+//                    }
+                }else {
+                    Toast.makeText(Registration_activity.this, "No Internet", Toast.LENGTH_SHORT).show();
+                }
+
+
+                Intent intent=new Intent(Registration_activity.this,ParentRegistrationActivity.class);
+                startActivity(intent);
+            }
+        });
 
         type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -154,25 +212,58 @@ public class Registration_activity extends AppCompatActivity {
 
                 String text=type.getSelectedItem().toString();
                 if(text.equalsIgnoreCase("Parent")) {
+                    btn_findSchool.setVisibility(View.VISIBLE);
+
+                    view_sch_address.setVisibility(View.VISIBLE);
+                    view_school_name.setVisibility(View.VISIBLE);
+
+
                     tv_city.setVisibility(View.GONE);
                     tv_sch_name.setVisibility(View.GONE);
                     tv_lead.setVisibility(View.GONE);
                     card_board.setVisibility(View.GONE);
+
+                    state.setVisibility(View.GONE);
+                    tv_fullname.setVisibility(View.GONE);
+                    tv_fathername.setVisibility(View.GONE);
+                    tv_Email.setVisibility(View.GONE);
+                    tv_Mobile.setVisibility(View.GONE);
+                    tv_Pass.setVisibility(View.GONE);
+                    btn_register.setVisibility(View.GONE);
+                    check_box.setVisibility(View.GONE);
+                    text_accept.setVisibility(View.GONE);
+
+
                 }else {
                     tv_city.setVisibility(View.VISIBLE);
                     tv_sch_name.setVisibility(View.VISIBLE);
                     tv_lead.setVisibility(View.VISIBLE);
                     card_board.setVisibility(View.VISIBLE);
+                    tv_Email.setVisibility(View.VISIBLE);
+                    tv_Mobile.setVisibility(View.VISIBLE);
+                    tv_Pass.setVisibility(View.VISIBLE);
+                    state.setVisibility(View.VISIBLE);
                 }
                 if(text.equalsIgnoreCase("School")) {
                     tv_sch_code.setVisibility(View.GONE);
                     tv_fullname.setVisibility(View.GONE);
                    tv_fathername.setVisibility(View.GONE);
 
+                   btn_findSchool.setVisibility(View.GONE);
+                   btn_Conf_school.setVisibility(View.GONE);
+                   view_school_name.setVisibility(View.GONE);
+                   view_sch_address.setVisibility(View.GONE);
+                   show_class.setVisibility(View.GONE);
+                   btn_register.setVisibility(View.VISIBLE);
+
+                   check_box.setVisibility(View.VISIBLE);
+                   text_accept.setVisibility(View.VISIBLE);
+
+
                 }else {
                     tv_sch_code.setVisibility(View.VISIBLE);
-                    tv_fullname.setVisibility(View.VISIBLE);
-                    tv_fathername.setVisibility(View.VISIBLE);
+//                    tv_fullname.setVisibility(View.VISIBLE);
+//                    tv_fathername.setVisibility(View.VISIBLE);
                 }
 
 
@@ -516,5 +607,136 @@ public class Registration_activity extends AppCompatActivity {
             }
         }
     }
+//**************************************************************
+    private class ParentExecuteTask  extends AsyncTask<String, Integer, String> {
+    ProgressDialog dialog;
+
+    protected void onPreExecute() {
+        dialog = new ProgressDialog(Registration_activity.this);
+        dialog.show();
+
+    }
+
+    @Override
+    protected String doInBackground(String... params) {
+
+        try {
+
+            URL url = new URL("http://jntrcpl.com/theoji/index.php/Api/school_by_class");
+
+            JSONObject postDataParams = new JSONObject();
+            postDataParams.put("school_code", Sch_code);
+
+
+            Log.e("postDataParams", postDataParams.toString());
+
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setReadTimeout(15000 /* milliseconds*/);
+            conn.setConnectTimeout(15000  /*milliseconds*/);
+            conn.setRequestMethod("POST");
+            conn.setDoInput(true);
+            conn.setDoOutput(true);
+
+            OutputStream os = conn.getOutputStream();
+            BufferedWriter writer = new BufferedWriter(
+                    new OutputStreamWriter(os, "UTF-8"));
+            writer.write(getPostDataString(postDataParams));
+
+            writer.flush();
+            writer.close();
+            os.close();
+            int responseCode = conn.getResponseCode();
+
+            if (responseCode == HttpsURLConnection.HTTP_OK) {
+
+                BufferedReader r = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                StringBuilder result = new StringBuilder();
+                String line;
+                while ((line = r.readLine()) != null) {
+                    result.append(line);
+                }
+                r.close();
+                return result.toString();
+
+            } else {
+                return new String("false : " + responseCode);
+            }
+        } catch (Exception e) {
+            return new String("Exception: " + e.getMessage());
+        }
+    }
+
+    @Override
+    protected void onPostExecute(String result) {
+        if (result != null) {
+            dialog.dismiss();
+
+            try {
+                //Toast.makeText(Registration_activity.this, "result is" + result, Toast.LENGTH_SHORT).show();
+
+
+                JSONObject object = new JSONObject(result);
+                String res=object.getString("responce");
+                if (res.equals("true")) {
+
+                    show_class.setVisibility(View.VISIBLE);
+                    btn_Conf_school.setVisibility(View.VISIBLE);
+                   // btn_findSchool.setVisibility(View.GONE);
+
+//                   full_name.setVisibility(View.VISIBLE);
+//                   father_name.setVisibility(View.VISIBLE);
+//                   state.setVisibility(View.VISIBLE);
+//                   email_id.setVisibility(View.VISIBLE);
+//                   mobile_no.setVisibility(View.VISIBLE);
+//                   passw.setVisibility(View.VISIBLE);
+
+
+                    JSONArray jsonArray = object.getJSONArray("userdata");
+
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+
+                        String firstname = jsonObject1.getString("firstname");
+                        view_school_name.setText(firstname);
+
+                        String address1 = jsonObject1.getString("address");
+                        view_sch_address.setText(address1);
+                    }
+
+                    JSONArray jsonArray1 = object.getJSONArray("class");
+                    for (int i = 0; i < jsonArray1.length(); i++) {
+                        JSONObject jsonObject1 = jsonArray1.getJSONObject(i);
+                        String m_id = jsonObject1.getString("m_id");
+                        String m_name = jsonObject1.getString("m_name");
+                        String type = jsonObject1.getString("type");
+                        String parent = jsonObject1.getString("parent");
+                        String school_id = jsonObject1.getString("school_id");
+
+
+//                        boardList.add(new BoardModel(m_id, m_name));
+                        ChooseClass.add(m_name);
+
+                    }
+
+                   classAdapter = new ArrayAdapter<String>(Registration_activity.this, android.R.layout.simple_spinner_dropdown_item, ChooseClass);
+                    classAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    select_class.setAdapter(classAdapter);
+
+
+                }else {
+                    view_school_name.setText("No School Found");
+                    view_sch_address.setText("No Address Found");
+                   // Toast.makeText(Registration_activity.this, "No School Found", Toast.LENGTH_SHORT).show();
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+}
+
+
 }
 
