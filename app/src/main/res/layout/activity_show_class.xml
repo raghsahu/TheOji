@@ -42,8 +42,17 @@
 
     </android.support.v7.widget.Toolbar>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Class List"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:typeface="serif" />
+
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_post"
+        android:id="@+id/recycler_class_list"
         android:scrollbars="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

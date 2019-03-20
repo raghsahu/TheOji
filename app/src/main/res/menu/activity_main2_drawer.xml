@@ -85,6 +85,21 @@
                 android:title="Class" />
         </group>
 
+        <group android:checkableBehavior="single"
+            android:id="@+id/group111">
+            <item
+                android:id="@+id/nav_chat"
+                android:icon="@drawable/chat_icon"
+                android:title="Chat" />
+        </group>
+
+        <group android:checkableBehavior="single"
+            android:id="@+id/group121">
+            <item
+                android:id="@+id/nav_performance"
+                android:icon="@drawable/perform"
+                android:title="Test Performance" />
+        </group>
     </group>
 
     <group android:checkableBehavior="single"

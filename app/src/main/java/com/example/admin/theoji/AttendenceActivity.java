@@ -74,6 +74,7 @@ public class AttendenceActivity extends AppCompatActivity {
 
     public HashMap<Integer, ClassModel> ClassHashMap = new HashMap<Integer, ClassModel>();
     public HashMap<Integer, SectionModel> SectionHashMap = new HashMap<Integer, SectionModel>();
+     String Section_ID;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -186,6 +187,8 @@ public class AttendenceActivity extends AppCompatActivity {
                     if (SectionHashMap.get(i).getM_name().equals(spin_section.getItemAtPosition(position)))
                     {
                         new spinnerStudentExecuteTask(SectionHashMap.get(i).getM_id()).execute();
+                        Section_ID=SectionHashMap.get(i).getM_id();
+                        Toast.makeText(AttendenceActivity.this, "sec_Id"+Section_ID, Toast.LENGTH_SHORT).show();
                     }
                     // else (StateHashMap.get(i).getState_name().equals(spin_state.getItemAtPosition(position))
                 }
@@ -486,17 +489,19 @@ public class AttendenceActivity extends AppCompatActivity {
 
                 JSONObject postDataParams = new JSONObject();
                 String id = AppPreference.getUserid(AttendenceActivity.this);
+                String Sch_id = AppPreference.getRefid(AttendenceActivity.this);
+               // Toast.makeText(AttendenceActivity.this, "sch_id="+Sch_id, Toast.LENGTH_SHORT).show();
 
                 postDataParams.put("id", id);
 
-                postDataParams.put("school_id", "AD2565");
+                postDataParams.put("school_id", Sch_id);
                 postDataParams.put("teacher_id", id);
                 postDataParams.put("class", Spin_Class);
                 postDataParams.put("attendance", Spin_Student);
                 postDataParams.put("type", Spin_P_A);
                 postDataParams.put("remark", Attend_Remark);
                 postDataParams.put("date", Attend_date);
-                postDataParams.put("section", Spin_Section);
+                postDataParams.put("section", Section_ID);
 
 
                 Log.e("postDataParams", postDataParams.toString());

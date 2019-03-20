@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.example.admin.theoji.Connection.Connectivity;
 import com.example.admin.theoji.Connection.HttpHandler;
+import com.example.admin.theoji.ModelClass.ClassModel;
 import com.example.admin.theoji.ModelClass.StateModel;
 import com.example.admin.theoji.Shared_prefrence.AppPreference;
 
@@ -42,6 +43,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -60,9 +62,10 @@ public class Registration_activity extends AppCompatActivity {
 
     ArrayList<String> ChooseClass= new ArrayList<>();
     private ArrayAdapter<String> classAdapter;
+     private ArrayList<ClassModel> classList =new ArrayList<>();
 
-    EditText sch_code, full_name, father_name, email_id,mobile_no, passw,city, sch_name, sales_lead;
-    String Sch_code, Full_name, Father_name, Email_id,Mobile_no, Passw,City, Sch_name, Sales_lead;
+    EditText sch_code,  email_id,mobile_no, passw,city, sch_name, sales_lead;
+    String Sch_code,  Email_id,Mobile_no, Passw,City, Sch_name, Sales_lead;
 
     TextInputLayout tv_city,tv_sch_code,tv_fullname,tv_fathername,tv_lead,tv_sch_name,tv_Email,tv_Pass,tv_Mobile;
     CardView card_board;
@@ -70,12 +73,17 @@ public class Registration_activity extends AppCompatActivity {
     CheckBox check_box;
     CardView show_class;
     TextView text_accept;
+    LinearLayout LL_Reg;
 
     private ArrayAdapter<String> typeAdapter;
     private ArrayList<String> typeList;
     String Type,State,Board;
 
-    TextView view_school_name,view_sch_address;
+    TextView view_school_name,view_sch_address,view_school_city;
+
+    public HashMap<Integer, ClassModel> ClassHashMap = new HashMap<Integer, ClassModel>();
+   String Class_id;
+    String school_code;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -95,18 +103,19 @@ public class Registration_activity extends AppCompatActivity {
         });
 
         sch_code=(EditText)findViewById(R.id.sch_code);
-        full_name=(EditText)findViewById(R.id.full_name);
-        father_name=(EditText)findViewById(R.id.father_name);
+//        full_name=(EditText)findViewById(R.id.full_name);
+//        father_name=(EditText)findViewById(R.id.father_name);
         email_id=(EditText)findViewById(R.id.email);
         passw=(EditText)findViewById(R.id.reg_pw);
         mobile_no=(EditText)findViewById(R.id.mobile);
         city=(EditText)findViewById(R.id.city);
         sch_name=(EditText)findViewById(R.id.sch_name);
         sales_lead=(EditText)findViewById(R.id.sales_lead);
+        LL_Reg=(LinearLayout) findViewById(R.id.ll_register);
 
         tv_city=(TextInputLayout)findViewById(R.id.tv_city);
-          tv_fullname=(TextInputLayout)findViewById(R.id.tv_fullname);
-        tv_fathername=(TextInputLayout)findViewById(R.id.tv_father_name);
+//          tv_fullname=(TextInputLayout)findViewById(R.id.tv_fullname);
+//        tv_fathername=(TextInputLayout)findViewById(R.id.tv_father_name);
         tv_sch_code=(TextInputLayout)findViewById(R.id.tv_code);
         tv_sch_name=(TextInputLayout)findViewById(R.id.tv_sch_name);
         tv_lead=(TextInputLayout)findViewById(R.id.tv_saleslead);
@@ -121,6 +130,7 @@ public class Registration_activity extends AppCompatActivity {
         text_accept=findViewById(R.id.text12);
         view_sch_address=findViewById(R.id.text_school_address);
         view_school_name=findViewById(R.id.text_school);
+        view_school_city=findViewById(R.id.text_school_city);
         select_class=findViewById(R.id.sch_class_show);
         btn_Conf_school=findViewById(R.id.conf_school_next);
 
@@ -183,26 +193,52 @@ public class Registration_activity extends AppCompatActivity {
             }
         });
 
+//****************************************************
+        select_class.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                try{
+                    for (int i = 0; i < ClassHashMap.size(); i++)
+                    {
 
+                        if (ClassHashMap.get(i).getM_name().equals(select_class.getItemAtPosition(position)))
+                        {
+                            Class_id=ClassHashMap.get(i).getM_id();
+                            Toast.makeText(Registration_activity.this, "class_id"+Class_id, Toast.LENGTH_SHORT).show();
+                        }
+                        // else (StateHashMap.get(i).getState_name().equals(spin_state.getItemAtPosition(position))
+                    }
+                }catch (Exception e){
+
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        //************************************************************
         btn_Conf_school.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 if (Connectivity.isNetworkAvailable(Registration_activity.this)) {
-//                    if (sho()) {
-                        Intent intent=new Intent(Registration_activity.this,ParentRegistrationActivity.class);
 
-                        startActivity(intent);
+//                    if (!view_school_name.equals("No School Found")) {
+                        Intent go_to_parent_reg=new Intent(Registration_activity.this,ParentRegistrationActivity.class);
+                       go_to_parent_reg.putExtra("class_id",Class_id);
+                       go_to_parent_reg.putExtra("school_code",school_code);
+                       go_to_parent_reg.putExtra("reg_type",type.getSelectedItem().toString());
+                       go_to_parent_reg.putExtra("sch_name",view_school_name.getText().toString());
+                        startActivity(go_to_parent_reg);
 //                    } else {
-//                        Toast.makeText(Registration_activity.this, "please select class type", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(Registration_activity.this, "please search valid school", Toast.LENGTH_SHORT).show();
 //                    }
                 }else {
                     Toast.makeText(Registration_activity.this, "No Internet", Toast.LENGTH_SHORT).show();
                 }
 
-
-                Intent intent=new Intent(Registration_activity.this,ParentRegistrationActivity.class);
-                startActivity(intent);
             }
         });
 
@@ -224,12 +260,13 @@ public class Registration_activity extends AppCompatActivity {
                     card_board.setVisibility(View.GONE);
 
                     state.setVisibility(View.GONE);
-                    tv_fullname.setVisibility(View.GONE);
-                    tv_fathername.setVisibility(View.GONE);
+//                    tv_fullname.setVisibility(View.GONE);
+//                    tv_fathername.setVisibility(View.GONE);
                     tv_Email.setVisibility(View.GONE);
                     tv_Mobile.setVisibility(View.GONE);
                     tv_Pass.setVisibility(View.GONE);
-                    btn_register.setVisibility(View.GONE);
+//                    btn_register.setVisibility(View.GONE);
+                    LL_Reg.setVisibility(View.GONE);
                     check_box.setVisibility(View.GONE);
                     text_accept.setVisibility(View.GONE);
 
@@ -246,8 +283,8 @@ public class Registration_activity extends AppCompatActivity {
                 }
                 if(text.equalsIgnoreCase("School")) {
                     tv_sch_code.setVisibility(View.GONE);
-                    tv_fullname.setVisibility(View.GONE);
-                   tv_fathername.setVisibility(View.GONE);
+//                    tv_fullname.setVisibility(View.GONE);
+//                   tv_fathername.setVisibility(View.GONE);
 
                    btn_findSchool.setVisibility(View.GONE);
                    btn_Conf_school.setVisibility(View.GONE);
@@ -255,6 +292,7 @@ public class Registration_activity extends AppCompatActivity {
                    view_sch_address.setVisibility(View.GONE);
                    show_class.setVisibility(View.GONE);
                    btn_register.setVisibility(View.VISIBLE);
+                   LL_Reg.setVisibility(View.VISIBLE);
 
                    check_box.setVisibility(View.VISIBLE);
                    text_accept.setVisibility(View.VISIBLE);
@@ -358,11 +396,60 @@ public class Registration_activity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... params) {
+            try {
 
-            String res = PostData(params);
+                URL url = new URL("http://jntrcpl.com/theoji/index.php/Api/Registration");
 
-            return res;
+                JSONObject postDataParams = new JSONObject();
+                postDataParams.put("type",Type);
+                postDataParams.put("email",Email_id);
+                postDataParams.put("mobileno",Mobile_no);
+                postDataParams.put("city",City);
+                postDataParams.put("firstname",Sch_name);
+                postDataParams.put("sales_lead_name",Sales_lead);
+                postDataParams.put("password",Passw);
+                postDataParams.put("stateschool",State);
+                postDataParams.put("board",Board);
+
+                Log.e("postDataParams", postDataParams.toString());
+
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setReadTimeout(15000 /* milliseconds*/);
+                conn.setConnectTimeout(15000  /*milliseconds*/);
+                conn.setRequestMethod("POST");
+                conn.setDoInput(true);
+                conn.setDoOutput(true);
+
+                OutputStream os = conn.getOutputStream();
+                BufferedWriter writer = new BufferedWriter(
+                        new OutputStreamWriter(os, "UTF-8"));
+                writer.write(getPostDataString(postDataParams));
+
+                writer.flush();
+                writer.close();
+                os.close();
+                int responseCode = conn.getResponseCode();
+
+                if (responseCode == HttpsURLConnection.HTTP_OK) {
+
+                    BufferedReader r = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    StringBuilder result = new StringBuilder();
+                    String line;
+                    while ((line = r.readLine()) != null) {
+                        result.append(line);
+                    }
+                    r.close();
+                    return result.toString();
+
+                } else {
+                    return new String("false : " + responseCode);
+                }
+            }
+            catch (Exception e) {
+                return new String("Exception: " + e.getMessage());
+            }
         }
+
         @Override
         protected void onPostExecute(String result) {
             if (result != null) {
@@ -379,34 +466,7 @@ public class Registration_activity extends AppCompatActivity {
 //                   // user_id=data.getString("user_id");
 //                    String username1=data.getString("username");
 //                   // firstname=data.getString("firstname");
-//                    String lastname1=data.getString("lastname");
-//                   // email=data.getString("email");
-//                    String mobileno1=data.getString("mobileno");
-//                    String date1=data.getString("date");
-//                    String user_type1=data.getString("user_type");
-//                    String gender1=data.getString("gender");
-//                    String dob1=data.getString("dob");
-//                    String city1=data.getString("city");
-//                    String address1=data.getString("address");
-//                    String status1=data.getString("status");
-//                    String block_unblock1=data.getString("block_unblock");
-//                   // ref_id=data.getString("ref_id");
-//                    String about1=data.getString("about");
-//                    String school_code1=data.getString("school_code");
-//                    String profileupdate1=data.getString("profileupdate");
-//                    String latest_post1=data.getString("latest_post");
-//                    String latest_event1=data.getString("latest_event");
-//                    String latest_activities1=data.getString("latest_activities");
-//                    String latest_news1=data.getString("latest_news");
-//                    String sales_lead_name1=data.getString("sales_lead_name");
-//                    String latest_noticboard1=data.getString("latest_noticboard");
-//                    String notice1=data.getString("notice");
-//                    String stutotalfees1=data.getString("stutotalfees");
-//                    String sturemainfee1=data.getString("sturemainfee");
-//                    String stulastfee1=data.getString("stulastfee");
-
-
-
+//
 
                     if (res.equals("true")) {
 
@@ -415,13 +475,7 @@ public class Registration_activity extends AppCompatActivity {
                     } else {
                        // manager.setLogin(true);
 //                        AppPreference.setRefid(LoginActivity.this,ref_id);
-//                        AppPreference.setFirstname(LoginActivity.this,firstname);
-//                        AppPreference.setEmail(LoginActivity.this,email);
-//
-//                        AppPreference.setUserid(LoginActivity.this,user_id);
-//                        Intent intent = new Intent(LoginActivity.this, Main2Activity.class);
-//                        startActivity(intent);
-//                        finish();
+
                         Toast.makeText(Registration_activity.this, "Registration failed, please try again", Toast.LENGTH_SHORT).show();
                     }
 
@@ -433,61 +487,7 @@ public class Registration_activity extends AppCompatActivity {
             }
         }
     }
-    public String PostData(String[] values) {
-        try {
 
-            URL url = new URL("http://jntrcpl.com/theoji/index.php/Api/Registration");
-
-            JSONObject postDataParams = new JSONObject();
-            postDataParams.put("type",Type);
-            postDataParams.put("email",Email_id);
-           postDataParams.put("mobileno",Mobile_no);
-            postDataParams.put("city",City);
-            postDataParams.put("firstname",Sch_name);
-            postDataParams.put("sales_lead_name",Sales_lead);
-            postDataParams.put("password",Passw);
-            postDataParams.put("stateschool",State);
-            postDataParams.put("board",Board);
-
-
-            Log.e("postDataParams", postDataParams.toString());
-
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setReadTimeout(15000 /* milliseconds*/);
-            conn.setConnectTimeout(15000  /*milliseconds*/);
-            conn.setRequestMethod("POST");
-            conn.setDoInput(true);
-            conn.setDoOutput(true);
-
-            OutputStream os = conn.getOutputStream();
-            BufferedWriter writer = new BufferedWriter(
-                    new OutputStreamWriter(os, "UTF-8"));
-            writer.write(getPostDataString(postDataParams));
-
-            writer.flush();
-            writer.close();
-            os.close();
-            int responseCode = conn.getResponseCode();
-
-            if (responseCode == HttpsURLConnection.HTTP_OK) {
-
-                BufferedReader r = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                StringBuilder result = new StringBuilder();
-                String line;
-                while ((line = r.readLine()) != null) {
-                    result.append(line);
-                }
-                r.close();
-                return result.toString();
-
-            } else {
-                return new String("false : " + responseCode);
-            }
-        }
-        catch (Exception e) {
-            return new String("Exception: " + e.getMessage());
-        }
-    }
 
     public String getPostDataString(JSONObject params) throws Exception {
 
@@ -673,23 +673,12 @@ public class Registration_activity extends AppCompatActivity {
 
             try {
                 //Toast.makeText(Registration_activity.this, "result is" + result, Toast.LENGTH_SHORT).show();
-
-
                 JSONObject object = new JSONObject(result);
                 String res=object.getString("responce");
                 if (res.equals("true")) {
 
                     show_class.setVisibility(View.VISIBLE);
                     btn_Conf_school.setVisibility(View.VISIBLE);
-                   // btn_findSchool.setVisibility(View.GONE);
-
-//                   full_name.setVisibility(View.VISIBLE);
-//                   father_name.setVisibility(View.VISIBLE);
-//                   state.setVisibility(View.VISIBLE);
-//                   email_id.setVisibility(View.VISIBLE);
-//                   mobile_no.setVisibility(View.VISIBLE);
-//                   passw.setVisibility(View.VISIBLE);
-
 
                     JSONArray jsonArray = object.getJSONArray("userdata");
 
@@ -697,9 +686,12 @@ public class Registration_activity extends AppCompatActivity {
                         JSONObject jsonObject1 = jsonArray.getJSONObject(i);
 
                         String firstname = jsonObject1.getString("firstname");
-                        view_school_name.setText(firstname);
-
+                       school_code = jsonObject1.getString("school_code");
                         String address1 = jsonObject1.getString("address");
+                      String  city1 = jsonObject1.getString("city");
+
+                        view_school_name.setText(firstname);
+                        view_school_city.setText(city1);
                         view_sch_address.setText(address1);
                     }
 
@@ -713,8 +705,9 @@ public class Registration_activity extends AppCompatActivity {
                         String school_id = jsonObject1.getString("school_id");
 
 
-//                        boardList.add(new BoardModel(m_id, m_name));
+                        classList.add(new ClassModel(m_id, m_name));
                         ChooseClass.add(m_name);
+                        ClassHashMap.put(i, new ClassModel(m_id,m_name));
 
                     }
 
@@ -726,6 +719,9 @@ public class Registration_activity extends AppCompatActivity {
                 }else {
                     view_school_name.setText("No School Found");
                     view_sch_address.setText("No Address Found");
+
+                    show_class.setVisibility(View.GONE);
+                    btn_Conf_school.setVisibility(View.GONE);
                    // Toast.makeText(Registration_activity.this, "No School Found", Toast.LENGTH_SHORT).show();
                 }
 

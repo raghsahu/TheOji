@@ -16,6 +16,7 @@ public class AppPreference {
     public static final String REFID = "refId";
     public static final String FIRSTNAME = "firstname";
     public static final String EMAIL = "email";
+    public static final String SchoolCode = "schoolcode";
 
     Context context;
     SharedPreferences prefs;
@@ -95,6 +96,17 @@ public class AppPreference {
     public static String getEmail(Context context) {
         SharedPreferences preferences = context.getSharedPreferences(SHARED_PREFERENCE_NAME, 0);
         return preferences.getString(EMAIL, "");
+    }
+
+    public static void setSchoolCode(Context context, String value) {
+        SharedPreferences preferences = context.getSharedPreferences(SHARED_PREFERENCE_NAME, 0);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(SchoolCode, value);
+        editor.commit();
+    }
+    public static String getSchoolCode(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences(SHARED_PREFERENCE_NAME, 0);
+        return preferences.getString(SchoolCode, "");
     }
 
     public void logoutSession() {

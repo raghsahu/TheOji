@@ -161,7 +161,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                     alert.show();
 
                 } else {
-                    Toast.makeText(Main2Activity.this, "No Internet", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(Main2Activity.this, "No Internet", Toast.LENGTH_SHORT).show();
                     CustomAlert.alertDialogShow(getApplicationContext(),"Please Check Internet!");
                 }
                 return true;

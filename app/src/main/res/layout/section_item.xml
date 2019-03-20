@@ -42,41 +42,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
 
-                        android:text="Class-  "
-                        android:textStyle="bold"
-                        android:textColor="#000"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/txt_class_sch"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:typeface="serif"
-                        android:textColor="#000"
-                        android:textSize="14sp" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-
                         android:text="Section-  "
                         android:textStyle="bold"
                         android:textColor="#000"
                         android:textSize="14sp" />
 
-                    <TextView
-                        android:id="@+id/txt_section_sch"
+                    <EditText
+                        android:id="@+id/txt_section_edit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="#000"
                         android:textSize="14sp"
+                        android:background="#fff"
                         android:typeface="serif" />
                 </LinearLayout>
 
@@ -93,12 +70,12 @@
                 >
 
                 <Button
-                    android:id="@+id/class_edit"
+                    android:id="@+id/section_update"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:background="@color/colorPrimary"
-                    android:text="Edit"
+                    android:text="Update"
                     android:textAllCaps="false"
                     android:textColor="#fff"
                     android:layout_weight="0.33"

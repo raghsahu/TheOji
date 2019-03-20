@@ -69,6 +69,7 @@ public class LoginActivity extends AppCompatActivity {
     public static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 1;
      Toolbar toolbar;
     public String firstname,email;
+     String school_code1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -277,7 +278,7 @@ private  boolean checkAndRequestPermissions() {
                     String block_unblock1=data.getString("block_unblock");
                     ref_id=data.getString("ref_id");
                     String about1=data.getString("about");
-                    String school_code1=data.getString("school_code");
+                    school_code1=data.getString("school_code");
                     String profileupdate1=data.getString("profileupdate");
                     String latest_post1=data.getString("latest_post");
                     String latest_event1=data.getString("latest_event");
@@ -302,6 +303,7 @@ private  boolean checkAndRequestPermissions() {
                         AppPreference.setRefid(LoginActivity.this,ref_id);
                         AppPreference.setFirstname(LoginActivity.this,firstname);
                         AppPreference.setEmail(LoginActivity.this,email);
+                        AppPreference.setSchoolCode(LoginActivity.this,school_code1);
 
                         AppPreference.setUserid(LoginActivity.this,user_id);
                         Intent intent = new Intent(LoginActivity.this, Main2Activity.class);
