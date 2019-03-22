@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -76,6 +77,8 @@ public class AttendenceActivity extends AppCompatActivity {
     public HashMap<Integer, SectionModel> SectionHashMap = new HashMap<Integer, SectionModel>();
      String Section_ID;
 
+     RecyclerView recycle_spinner;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,6 +91,7 @@ public class AttendenceActivity extends AppCompatActivity {
         p_a=findViewById(R.id.students_p_a);
         spin_section = (Spinner)findViewById(R.id.stud_section);
         btn_send_attend=(Button) findViewById(R.id.btn_attend);
+
         //******************************************************************
         btn_send_attend.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -188,7 +192,7 @@ public class AttendenceActivity extends AppCompatActivity {
                     {
                         new spinnerStudentExecuteTask(SectionHashMap.get(i).getM_id()).execute();
                         Section_ID=SectionHashMap.get(i).getM_id();
-                        Toast.makeText(AttendenceActivity.this, "sec_Id"+Section_ID, Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(AttendenceActivity.this, "sec_Id"+Section_ID, Toast.LENGTH_SHORT).show();
                     }
                     // else (StateHashMap.get(i).getState_name().equals(spin_state.getItemAtPosition(position))
                 }
@@ -308,6 +312,7 @@ public class AttendenceActivity extends AppCompatActivity {
                         studentListAdapter = new StudentListAdapter(AttendenceActivity.this, android.R.layout.simple_spinner_item, studentList);
                         //StudentListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
                         // spin_student.setAdapter(StudentAdapter,false, onSelectedListener);
+
                         spin_student.setAdapter(studentListAdapter);
 
                     }else {

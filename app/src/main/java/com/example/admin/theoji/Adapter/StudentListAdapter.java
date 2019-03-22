@@ -26,6 +26,7 @@ public class StudentListAdapter extends ArrayAdapter<StudentModel> {
       public static String present_students = "";
 
 
+    private ArrayList<CheckBox> checkBoxes = new ArrayList<>();
 
    public static ArrayList<String> multiselected = new ArrayList<String>();
 
@@ -91,27 +92,51 @@ public class StudentListAdapter extends ArrayAdapter<StudentModel> {
                         studentList.get(position).setSelected(isChecked);
                     }
 //*****************************************************************
-                   // Toast.makeText(mContext, "select+"+studentList.get(position).getFirstname(), Toast.LENGTH_SHORT).show();
 
                     try {
+                           boolean isChecked1 = studentList.get(0).isSelected();
 
-                        if (present_students.length() >= 0){
+                      if(isChecked1==true)
+                      {
+                          Toast.makeText(mContext, "all select", Toast.LENGTH_SHORT).show();
 
-                            if (holder.mCheckBox.isChecked()) {
-                               // present_students =  studentList.get(position).getFirstname();
-                               // present_students = present_students.concat(studentList.get(position).getFirstname().concat(","));
-                               multiselected.add(studentList.get(position).getUser_id());
-                                Toast.makeText(mContext, "multi+ "+multiselected, Toast.LENGTH_SHORT).show();
+                          for ( int i=0; i < studentList.size(); i++) {
+                              studentList.get(i).setSelected(true);
 
-                            }
-                            else if (multiselected.contains(studentList.get(position).getUser_id())){
-                                multiselected.remove(studentList.get(position).getUser_id());
-//                                String replce = (",").concat(studentList.get(position).getFirstname().concat(","));
-//                                present_students = present_students.replace(replce,"");
-                                Toast.makeText(mContext, "Removechecked+ "+multiselected, Toast.LENGTH_SHORT).show();
-                            }
+                              multiselected.add(studentList.get(i).getUser_id());
+                              Toast.makeText(mContext, "all+ "+multiselected, Toast.LENGTH_SHORT).show();
+                          }
+                          notifyDataSetChanged();
 
-                        }
+                          }
+ //*****************************************************************
+                          else if (isChecked1==false) {
+                          for (int i = 0; i < studentList.size(); i++) {
+                              studentList.get(i).setSelected(false);
+
+                              multiselected.remove(studentList.get(i).getUser_id());
+                              Toast.makeText(mContext, "remo all- " + multiselected, Toast.LENGTH_SHORT).show();
+                          }
+                          notifyDataSetChanged();
+                         }
+//*************************************************************
+                          else if(!studentList.get(0).isSelected())
+                          {
+                          if (holder.mCheckBox.isChecked()) {
+                              multiselected.add(studentList.get(position).getUser_id());
+                              Toast.makeText(mContext, "multi+ "+multiselected, Toast.LENGTH_SHORT).show();
+                          }
+                              notifyDataSetChanged();
+                      }
+  //***************************************************************
+                       else if (multiselected.contains(studentList.get(position).getUser_id())){
+                          if(!isChecked1){
+
+                           multiselected.remove(studentList.get(position).getUser_id());
+                          Toast.makeText(mContext, "Removechecked+ "+multiselected, Toast.LENGTH_SHORT).show();
+                          }}
+                        notifyDataSetChanged();
+
                     }catch (Exception e)
                     {
                         Toast.makeText(mContext, ""+e, Toast.LENGTH_SHORT).show();

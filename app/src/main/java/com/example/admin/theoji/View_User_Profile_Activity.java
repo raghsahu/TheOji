@@ -14,6 +14,7 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -107,6 +108,8 @@ public class View_User_Profile_Activity extends AppCompatActivity {
     private Bundle savedInstanceState;
     int Gallery_view = 2;
 
+    CardView card_total,card_request,card_conf;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -119,6 +122,10 @@ public class View_User_Profile_Activity extends AppCompatActivity {
 
         et_discription=findViewById(R.id.about_description);
         et_title=findViewById(R.id.title_about);
+
+        card_conf=findViewById(R.id.card_conferm);
+        card_request=findViewById(R.id.card_request);
+        card_total=findViewById(R.id.card_total);
 
         btn_edit_profile=(Button)findViewById(R.id.edit_profile);
        // btn_add_about=(Button)findViewById(R.id.btn_add_about);
@@ -203,7 +210,38 @@ public class View_User_Profile_Activity extends AppCompatActivity {
         });
 
         new GetViewProfileExcuteTask().execute();
+//*************************************************************
 
+        card_total.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(View_User_Profile_Activity.this,StudentActivity.class);
+                startActivity(intent);
+                //finish();
+
+            }
+        });
+        card_request.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(View_User_Profile_Activity.this,StudentActivity.class);
+                startActivity(intent);
+                //finish();
+
+            }
+        });
+        card_conf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(View_User_Profile_Activity.this,StudentActivity.class);
+                startActivity(intent);
+                //finish();
+
+            }
+        });
 
     }
 
@@ -354,10 +392,12 @@ public class View_User_Profile_Activity extends AppCompatActivity {
             if(BannerAnInt ==1)
             {
                 banner_image.setImageBitmap(bitmap);
+               // new ImageCompression().execute(imageStoragePath2);
             }
             if(ProfileAnInt ==1)
             {
                 profile_img.setImageBitmap(bitmap);
+               // new ImageCompression().execute(imageStoragePath1);
             }
 
 
@@ -382,12 +422,26 @@ public class View_User_Profile_Activity extends AppCompatActivity {
                     imageStoragePath2 = imageStoragePath;
                     //tv_banner_img.setText(imageStoragePath2);
                     Toast.makeText(this, "banner"+imageStoragePath2, Toast.LENGTH_SHORT).show();
+
+                    if (imageStoragePath2 != null) {
+                        File imgFile = new File(imageStoragePath2);
+                        if (imgFile.exists()) {
+                            new ImageUploadTask(imgFile).execute();
+                        }
+                    }
                 }
                 if(ProfileAnInt ==1)
                 {
                     imageStoragePath1 = imageStoragePath;
                    // tv_profile_img.setText(imageStoragePath1);
                     Toast.makeText(this, "profile"+imageStoragePath1, Toast.LENGTH_SHORT).show();
+
+                    if (imageStoragePath1 != null) {
+                        File imgFile = new File(imageStoragePath1);
+                        if (imgFile.exists()) {
+                            new ImageUploadTask(imgFile).execute();
+                        }
+                    }
                 }
 
                 // successfully captured the image
@@ -415,10 +469,12 @@ public class View_User_Profile_Activity extends AppCompatActivity {
             if(BannerAnInt ==1)
             {
                 banner_image.setImageBitmap(BitmapFactory.decodeFile(imageStoragePath));
+
             }
             if(ProfileAnInt ==1)
             {
                 profile_img.setImageBitmap(BitmapFactory.decodeFile(imageStoragePath));
+
             }
 
             cursor.close();
@@ -426,14 +482,27 @@ public class View_User_Profile_Activity extends AppCompatActivity {
             if(BannerAnInt ==1)
             {
                 imageStoragePath2 = imageStoragePath;
-                //tv_banner_img.setText(imageStoragePath2);
                 Toast.makeText(this, "banner"+imageStoragePath2, Toast.LENGTH_SHORT).show();
+
+                if (imageStoragePath2 != null) {
+                    File imgFile = new File(imageStoragePath2);
+                    if (imgFile.exists()) {
+                         new ImageUploadTask(imgFile).execute();
+                    }
+                }
             }
             if(ProfileAnInt ==1)
             {
                 imageStoragePath1 = imageStoragePath;
                 // tv_profile_img.setText(imageStoragePath1);
                 Toast.makeText(this, "profile"+imageStoragePath1, Toast.LENGTH_SHORT).show();
+
+                if (imageStoragePath1 != null) {
+                    File imgFile = new File(imageStoragePath1);
+                    if (imgFile.exists()) {
+                        new ImageUploadTask(imgFile).execute();
+                    }
+                }
             }
         }
 
@@ -812,7 +881,7 @@ public class View_User_Profile_Activity extends AppCompatActivity {
             if (imagePath != null) {
                 File imgFile = new File(imagePath);
                 if (imgFile.exists()) {
-                    //new ImageUploadTask(imgFile).execute();
+                   // new ImageUploadTask(imgFile).execute();
                 }
             } else {
                // AlertDialogCreate();
@@ -820,7 +889,7 @@ public class View_User_Profile_Activity extends AppCompatActivity {
 
         }
     }
-
+//***************************************************************************************
     class ImageUploadTask extends AsyncTask<Void, Void, String> {
 
         ProgressDialog dialog;
@@ -851,10 +920,24 @@ public class View_User_Profile_Activity extends AppCompatActivity {
                         HttpMultipartMode.BROWSER_COMPATIBLE);
                 String id= AppPreference.getUserid(View_User_Profile_Activity.this);
 
-                entity.addPart("file", new FileBody(Image));
-                entity.addPart("id",new StringBody(id));
 
-                result = Utilities.postEntityAndFindJson("https://jntrcpl.com/theoji/index.php/Api/******", entity);
+
+                if(ProfileAnInt ==1)
+                {
+                    entity.addPart("imagename", new FileBody(Image));
+                    entity.addPart("user_id",new StringBody(id));
+
+                    result = Utilities.postEntityAndFindJson("https://jntrcpl.com/theoji/index.php/Api/uploadprofilephoto", entity);
+                }
+                if(BannerAnInt ==1)
+                {
+                    entity.addPart("bannerimage", new FileBody(Image));
+                    entity.addPart("user_id",new StringBody(id));
+
+                    result = Utilities.postEntityAndFindJson("https://jntrcpl.com/theoji/index.php/Api/uploadcoverphoto", entity);
+                }
+
+
 
                 return result;
 
@@ -876,7 +959,7 @@ public class View_User_Profile_Activity extends AppCompatActivity {
                 Log.e("result_Image", result);
                 try {
                     JSONObject object = new JSONObject(result);
-                    String img = object.getString("img");
+                    String img = object.getString("responce");
                     if (img.equals("true")) {
 
                         Toast.makeText(View_User_Profile_Activity.this, "Success", Toast.LENGTH_LONG).show();
