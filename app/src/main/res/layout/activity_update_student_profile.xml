@@ -364,6 +364,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Mobile No"
+                        android:maxLength="10"
                         android:inputType="number"
                         android:textColor="#FF3360DC"
                         android:textSize="13dp" />
@@ -381,6 +382,7 @@
                         android:layout_height="wrap_content"
                         android:hint="Alternate no"
                         android:inputType="number"
+                        android:maxLength="10"
                         android:textColor="#FF3360DC"
                         android:textSize="13dp" />
                 </android.support.design.widget.TextInputLayout>

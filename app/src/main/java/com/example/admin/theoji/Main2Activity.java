@@ -2,10 +2,11 @@ package com.example.admin.theoji;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -28,7 +29,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.admin.theoji.Adapter.HomeAdapter;
-import com.example.admin.theoji.Adapter.PostAdapter;
 import com.example.admin.theoji.Connection.Connectivity;
 import com.example.admin.theoji.Connection.HttpHandler;
 import com.example.admin.theoji.ModelClass.HomeListModel;
@@ -43,10 +43,9 @@ import org.json.JSONObject;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-
-import static com.example.admin.theoji.PostActivity.postStringHashMap;
 
 
 public class Main2Activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -61,6 +60,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
     CircleImageView Profile_img;
 
     SessionManager manager;
+     String name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -364,22 +364,38 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
         return true;
     }
 
-    private void shareApplication() {
-//        ApplicationInfo packageinfo = Main2Activity.this.getPackageManager().getApplicationInfo(, 0);
-//        File file = new File(packageinfo.publicSourceDir);
+    private String shareApplication() {
 
         ApplicationInfo app = getApplicationContext().getApplicationInfo();
         String filePath = app.sourceDir;
 
+        int lastDot = 0;
+        String packageName = app.packageName;
+        lastDot= packageName.lastIndexOf(".");
+        name = packageName.substring(lastDot + 1);
+
         Intent intent = new Intent(Intent.ACTION_SEND);
-
-        // MIME of .apk is "application/vnd.android.package-archive".
-        // but Bluetooth does not accept this. Let's use "*/*" instead.
         intent.setType("*/*");
-
-        // Append file and send Intent
         intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(filePath)));
         startActivity(Intent.createChooser(intent, "Share app via"));
+
+        // PackageManager packageManager = getPackageManager();
+//        List<ResolveInfo> resolveInfos = packageManager.queryIntentActivities(intent,0);
+//        int lastDot = 0;
+//         name = "";
+//        for (int i = 0; i < resolveInfos.size(); i++) {
+//            // Extract the label, append it, and repackage it in a LabeledIntent
+//            ResolveInfo resolveInfo = resolveInfos.get(i);
+//            String packageName = resolveInfo.activityInfo.packageName;
+//
+//            lastDot= packageName.lastIndexOf(".");
+//
+//            name = packageName.substring(lastDot + 1);
+//        }
+       return name;
+
+
+
     }
 
     class GetPostList extends AsyncTask<String, Void, String> {
