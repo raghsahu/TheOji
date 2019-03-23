@@ -12,7 +12,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.admin.theoji.Adapter.NewsEventsAdapter;
@@ -34,7 +36,7 @@ public class NewsActivity extends AppCompatActivity {
     String server_url;
     ArrayList<NewsEventModel> NewsEventList;
     private NewsEventsAdapter newseventsadapter;
-
+    TextView add_post_icon;
 
 //    Toolbar toolbar;
 
@@ -44,7 +46,17 @@ public class NewsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_news);
 
         addNews = (ImageView)findViewById(R.id.viewNews);
+        add_post_icon=findViewById(R.id.et_post);
+//        add_post_icon.setEnabled(false);
         addNews.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(NewsActivity.this,AddNewsEvents.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+        add_post_icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(NewsActivity.this,AddNewsEvents.class);

@@ -39,6 +39,8 @@ import java.util.Iterator;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 import static com.androidquery.util.AQUtility.getContext;
 
 public class NewsEventsAdapter extends RecyclerView.Adapter<NewsEventsAdapter.ViewHolder> {
@@ -53,7 +55,8 @@ public class NewsEventsAdapter extends RecyclerView.Adapter<NewsEventsAdapter.Vi
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView newsName, newsEmail, newsTittle, newsContent, newsDate;
-        public ImageView profileImg, newsImg, btn1, btn2, btn3;
+        public ImageView  newsImg, btn1, btn2, btn3;
+        public CircleImageView profileImg;
         public LinearLayout et_comment;
         CardView cardeview;
         int pos;
@@ -67,7 +70,7 @@ public class NewsEventsAdapter extends RecyclerView.Adapter<NewsEventsAdapter.Vi
 //            newsTime = (TextView)view.findViewById(R.id.time);
             newsTittle = (TextView) view.findViewById(R.id.title_news);
             newsDate = (TextView) view.findViewById(R.id.date);
-            profileImg = (ImageView) view.findViewById(R.id.img_person);
+            profileImg = view.findViewById(R.id.img_person);
             newsImg = (ImageView) view.findViewById(R.id.iv_news);
             btn1 = (ImageView) view.findViewById(R.id.btn1);
             btn2 = (ImageView) view.findViewById(R.id.btn2);

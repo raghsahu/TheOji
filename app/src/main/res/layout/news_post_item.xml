@@ -37,11 +37,11 @@
                     android:gravity="center"
                     android:orientation="horizontal">
 
-                    <ImageView
+                    <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/img_person"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
-                        android:layout_gravity="center"
+                        android:layout_gravity="left"
                         android:src="@drawable/person" />
 
                 </LinearLayout>

@@ -144,13 +144,13 @@ public class AddProjects extends AppCompatActivity {
                 Project_date=project_date.getText().toString();
 
 
-                if (validate()  )  {
+               // if (validate()  )  {
                     Title_project = title.getText().toString();
                     Description_project = description.getText().toString();
                     Project_date=project_date.getText().toString();
 
                     previewCapturedImage();
-                }
+               // }
 
             }
         });

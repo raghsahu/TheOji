@@ -39,6 +39,8 @@ import java.util.Iterator;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 import static com.androidquery.util.AQUtility.getContext;
 
 public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.ViewHolder> {
@@ -58,7 +60,8 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        public ImageView img_person,img2;
+        public ImageView img2;
+        CircleImageView img_person;
         public ImageView btn1, btn2, btn3, dis_like;
         public TextView txt1, txt2, txt3,txt_nm,txt_title;
         public  TextView count1,count2;
@@ -71,7 +74,7 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.ViewHold
         public ViewHolder(View view) {
             super(view);
             viewlike = view;
-            img_person = (ImageView)viewlike.findViewById(R.id.img_person);
+            img_person = viewlike.findViewById(R.id.img_person);
             img2 = (ImageView)viewlike.findViewById(R.id.img2);
             txt1 = (TextView) viewlike.findViewById(R.id.txt1);
             txt2 = (TextView) viewlike.findViewById(R.id.txt2);

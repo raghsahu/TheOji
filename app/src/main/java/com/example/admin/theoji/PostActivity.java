@@ -7,13 +7,17 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +44,9 @@ public class PostActivity extends AppCompatActivity {
     ArrayList<PostListModel> PostList;
     private PostAdapter postAdapter;
     public static HashMap<Integer , String> postStringHashMap = new HashMap<>();
+    CardView add_post_icon;
+    TextView et_post;
+    LinearLayout ll_next_post;
 
 
     @Override
@@ -48,12 +55,27 @@ public class PostActivity extends AppCompatActivity {
         setContentView(R.layout.activity_post);
 
         addPost = (ImageView)findViewById(R.id.viewPost);
+        add_post_icon=(CardView) findViewById(R.id.add_post_icon);
+        ll_next_post=(LinearLayout)findViewById(R.id.le11);
+        et_post=findViewById(R.id.et_post);
+       // et_post.setEnabled(false);
+
         addPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(PostActivity.this,AddPostActivity.class);
                 startActivity(intent);
                 finish();
+            }
+        });
+
+        et_post.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PostActivity.this,AddPostActivity.class);
+                startActivity(intent);
+                 finish();
+                // Toast.makeText(PostActivity.this, "aaaa", Toast.LENGTH_SHORT).show();
             }
         });
         //--------------------------------------------------------------------------

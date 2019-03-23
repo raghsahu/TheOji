@@ -120,7 +120,7 @@ public class AddHomeWork extends AppCompatActivity {
         String Spin_Student,Spin_Section;
 
     public static HashMap<Integer , String> StudentSpinHashMap = new HashMap<>();
-    String Spin_Students;
+
 
 
     @Override
@@ -588,11 +588,11 @@ public class AddHomeWork extends AppCompatActivity {
 
                 org.apache.http.entity.mime.MultipartEntity entity = new MultipartEntity(
                         HttpMultipartMode.BROWSER_COMPATIBLE);
-               Log.e("students",""+Spin_Students);
+               Log.e("students",""+Spin_Student);
                 String id= AppPreference.getUserid(AddHomeWork.this);
                 entity.addPart("Homework_image", new FileBody(Image));
                 entity.addPart("Student_class_type", new StringBody(Spin_Class));
-                entity.addPart("Student_name", new StringBody(Spin_Students));
+                entity.addPart("Student_name", new StringBody(Spin_Student));
                 entity.addPart("Homework_title", new StringBody(Title_homework));
                 entity.addPart("Homework_date", new StringBody(Date_homework));
                 entity.addPart("Homework_description", new StringBody(Description_homework));

@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.admin.theoji.Adapter.ProjectAdapter;
@@ -32,6 +33,7 @@ public class ProjectActivity extends AppCompatActivity {
     String server_url;
     ArrayList<ProjectListModel> ProjectList;
     private ProjectAdapter projectAdapter;
+    TextView et_post;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +41,17 @@ public class ProjectActivity extends AppCompatActivity {
         setContentView(R.layout.activity_project);
 
         viewProjects = (ImageView)findViewById(R.id.viewProjects);
+        et_post=findViewById(R.id.et_post);
 
         viewProjects.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ProjectActivity.this,AddProjects.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+        et_post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ProjectActivity.this,AddProjects.class);
