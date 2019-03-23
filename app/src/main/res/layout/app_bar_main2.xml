@@ -51,22 +51,22 @@
                     android:textSize="15dp"
                     android:typeface="serif" />
 
-                <ImageView
-                    android:id="@+id/img_newstud_count"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:background="@drawable/people"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="0.45"
-                    />
-                <ImageView
-                    android:id="@+id/new_msg_count"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:background="@drawable/comm"
-                    android:layout_marginRight="5dp"
-                    android:layout_weight="0.45"
-                    />
+                <!--<ImageView-->
+                    <!--android:id="@+id/img_newstud_count"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="40dp"-->
+                    <!--android:background="@drawable/people"-->
+                    <!--android:layout_marginRight="10dp"-->
+                    <!--android:layout_weight="0.45"-->
+                    <!--/>-->
+                <!--<ImageView-->
+                    <!--android:id="@+id/new_msg_count"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="40dp"-->
+                    <!--android:background="@android:drawable/ic_dialog_email"-->
+                    <!--android:layout_marginRight="5dp"-->
+                    <!--android:layout_weight="0.45"-->
+                    <!--/>-->
 
 
             </LinearLayout>

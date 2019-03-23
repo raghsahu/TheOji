@@ -52,6 +52,8 @@ import org.json.JSONObject;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 import static com.androidquery.util.AQUtility.getContext;
 import static com.example.admin.theoji.PostActivity.postStringHashMap;
 
@@ -78,7 +80,8 @@ public class  PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        public ImageView img_person;
+        //public ImageView img_person;
+       public CircleImageView img_person;
         ImageView img2;
         public ImageView btn1, btn2, btn3, dis_like,img_close;
         public TextView txt1, txt2, txt3,txt_nm;
@@ -92,7 +95,7 @@ public class  PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         public ViewHolder(View view) {
             super(view);
             viewlike = view;
-            img_person = (ImageView)viewlike.findViewById(R.id.img_person);
+            img_person = viewlike.findViewById(R.id.img_person);
             img2 = (ImageView)viewlike.findViewById(R.id.img2);
 
             txt1 = (TextView) viewlike.findViewById(R.id.txt1);

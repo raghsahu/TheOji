@@ -377,13 +377,10 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
         // but Bluetooth does not accept this. Let's use "*/*" instead.
         intent.setType("*/*");
 
-
         // Append file and send Intent
         intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(filePath)));
         startActivity(Intent.createChooser(intent, "Share app via"));
     }
-
-
 
     class GetPostList extends AsyncTask<String, Void, String> {
         String output = "";
