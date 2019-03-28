@@ -9,9 +9,11 @@ public class StudentListModel {
     private String mobileno;
     private String city;
     private String st_class;
+    private String status;
 
 
-    public StudentListModel(String user_id, String email, String firstname, String address, String mobileno, String city, String st_class) {
+    public StudentListModel(String user_id, String email, String firstname, String address, String mobileno, String city,
+                            String st_class, String status) {
         this.user_id=user_id;
         this.email=email;
         this.firstname=firstname;
@@ -19,6 +21,7 @@ public class StudentListModel {
         this.mobileno=mobileno;
         this.city=city;
         this.st_class=st_class;
+        this.status=status;
     }
 
     public static String getUser_id() {
@@ -47,6 +50,14 @@ public class StudentListModel {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getAddress() {

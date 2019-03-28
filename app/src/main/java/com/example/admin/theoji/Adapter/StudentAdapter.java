@@ -115,18 +115,24 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
         viewHolder.btn3.setTag(viewHolder);
         viewHolder.pos = position;
 
-       // viewHolder.btn1.setTag(1);
-       viewHolder.btn1.setText("Approve");
+        if (studentListModel.getStatus().equals("1")){
+
+            viewHolder.btn1.setText("Approved");
+            viewHolder.btn1.setBackgroundColor(Color.GREEN);
+
+        }else {
+            viewHolder.btn1.setText("Approve");
+        }
 
         viewHolder.btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 if(viewHolder.btn1.getText() == "Approve"){
-
-
-                 pos = position;
-                SID =  studentStringHashMap.get(pos);
+//                    pos = position;
+//                SID =  studentStringHashMap.get(pos);
+                    int i = position;
+                    SID =  studentStringHashMap.get(i);
 
                new approveTask(view.getContext(),SID , viewHolder.btn1.getTag()).execute();
                 }
@@ -365,16 +371,8 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
                         Toast.makeText(context, "approve success", Toast.LENGTH_SHORT).show();
 
                       Button  btn1 = (Button) viewlike.findViewById(R.id.st_approve);
-                       // final int status =(Integer) viewlike.getTag();
-                       // if(status == 1) {
-                            btn1.setText("Approved");
-                            btn1.setBackgroundColor(Color.GREEN);
-                           // btn1.setBackgroundColor("#7CFC00");
-                           // viewlike.setTag(0);
-//                        } else {
-//                            btn1.setText("Approve");
-//                            viewlike.setTag(1);
-//                        }
+                      btn1.setText("Approved");
+                      btn1.setBackgroundColor(Color.GREEN);
 
 
 

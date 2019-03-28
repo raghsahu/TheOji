@@ -35,6 +35,7 @@ import com.example.admin.theoji.ModelClass.HomeListModel;
 import com.example.admin.theoji.Shared_prefrence.AppPreference;
 import com.example.admin.theoji.Shared_prefrence.SessionManager;
 import com.example.admin.theoji.Utils.CustomAlert;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -106,6 +107,18 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
 
         Nav_text_name.setText(AppPreference.getFirstname(Main2Activity.this));
         Nav_text_email.setText(AppPreference.getEmail(Main2Activity.this));
+
+        Picasso.get()
+                .load("https://jntrcpl.com/theoji/uploads/"+AppPreference.getProfileImage(Main2Activity.this))
+                .into(Main2Activity.this.Profile_img);
+
+        Profile_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i=new Intent(Main2Activity.this,View_User_Profile_Activity.class);
+                startActivity(i);
+            }
+        });
     }
 
     @Override

@@ -126,9 +126,9 @@
                         android:id="@+id/view_profile"
                         android:layout_weight="0.1"
                         android:layout_width="wrap_content"
-                        android:layout_height="26dp"
+                        android:layout_height="40dp"
                         android:layout_gravity="left"
-                        android:background="@color/colorPrimary"
+                        android:background="@drawable/button_bg"
                         android:text="View Profile"
                         android:textAllCaps="false"
                         android:textColor="#fff" />
@@ -504,6 +504,7 @@
                         android:layout_gravity="center"
                         android:background="#FF3360DC"
                         android:text="Upload Image"
+                        android:textColor="#fff"
                         android:textAllCaps="false"
                         />
                     <TextView
@@ -597,6 +598,7 @@
                         android:layout_gravity="center"
                         android:background="#FF3360DC "
                         android:text="Upload Image"
+                        android:textColor="#fff"
                         android:textAllCaps="false"
                         />
                     <TextView

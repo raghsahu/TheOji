@@ -170,12 +170,13 @@
                         android:id="@+id/edit_profile"
                         android:layout_weight="0.1"
                         android:layout_width="wrap_content"
-                        android:layout_height="26dp"
+                        android:layout_height="40dp"
                         android:layout_gravity="left"
-                        android:background="@color/colorPrimary"
+                        android:background="@drawable/button_bg"
                         android:text="Edit Profile"
                         android:textAllCaps="false"
                         android:textColor="#fff" />
+
                 </LinearLayout>
 
 
@@ -355,7 +356,7 @@
             android:gravity="center"
             android:layout_margin="5dp"
             android:orientation="horizontal"
-            android:background="@color/colorPrimary"
+            android:background="@drawable/button_bg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -377,7 +378,7 @@
             android:layout_margin="5dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:background="#FF3360DC"
+            android:background="@drawable/button_bg"
             android:layout_height="wrap_content">
 
             <TextView

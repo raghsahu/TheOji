@@ -639,6 +639,12 @@ public class View_User_Profile_Activity extends AppCompatActivity {
 
                         JSONObject dataJsonObject = new JSONObject(output);
                         String res = dataJsonObject.getString("responce");
+                        String image = dataJsonObject.getString("image");
+                        Picasso.get()
+                                .load("https://jntrcpl.com/theoji/uploads/"+image)
+                                .into(View_User_Profile_Activity.this.profile_img);
+
+                        AppPreference.setProfileImage(View_User_Profile_Activity.this,image);
 
                         String total = dataJsonObject.getString("total");
                         tv_total_std.setText(total);
@@ -661,6 +667,7 @@ public class View_User_Profile_Activity extends AppCompatActivity {
 
                                 String user_id = c.getString("user_id");
                                 String firstname = c.getString("firstname");
+                                AppPreference.setFirstname(View_User_Profile_Activity.this,firstname);
                                 String school_code = c.getString("school_code");
 
                                 tv_sch_code.setText(school_code);
@@ -710,13 +717,6 @@ public class View_User_Profile_Activity extends AppCompatActivity {
                             Album_recycler.setLayoutManager(sLayoutManager);
                             Album_recycler.setItemAnimator(new DefaultItemAnimator());
                             Album_recycler.setAdapter(albumAdapter);
-
-//                                Picasso.get()
-//                                        .load("https://jntrcpl.com/theoji/uploads/"+pmeta_value)
-//                                        .into(View_User_Profile_Activity.this.sch_image);
-//
-//                            }
-
 
                         }else {
 
@@ -958,15 +958,30 @@ public class View_User_Profile_Activity extends AppCompatActivity {
                 dialog.dismiss();
                 Log.e("result_Image", result);
                 try {
+
                     JSONObject object = new JSONObject(result);
                     String img = object.getString("responce");
-                    if (img.equals("true")) {
 
-                        Toast.makeText(View_User_Profile_Activity.this, "Success", Toast.LENGTH_LONG).show();
+                    if(ProfileAnInt ==1)
+                    {
+                        String profileimage = object.getString("profileimage");
 
+                        if (img.equals("true")) {
+                            AppPreference.setProfileImage(View_User_Profile_Activity.this,profileimage);
 
-                    } else {
-                        Toast.makeText(View_User_Profile_Activity.this, "Some Problem", Toast.LENGTH_LONG).show();
+                            Toast.makeText(View_User_Profile_Activity.this, "Success", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(View_User_Profile_Activity.this, "Some Problem", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                    if(BannerAnInt ==1)
+                    {
+                        if (img.equals("true")) {
+
+                            Toast.makeText(View_User_Profile_Activity.this, "Success", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(View_User_Profile_Activity.this, "Some Problem", Toast.LENGTH_LONG).show();
+                        }
                     }
 
 

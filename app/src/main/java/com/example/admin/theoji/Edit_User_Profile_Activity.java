@@ -548,36 +548,43 @@ public class Edit_User_Profile_Activity extends AppCompatActivity {
                         Log.e("length is",""+seperateData[0]);
                         String address1 = seperateData[0];
                         sch_add2.setText(address1);
-                        String state = seperateData[1];
-                        String country = seperateData[2];
-                        sch_country.setText(country);
-                        String telno= seperateData[3];
-                        schtel_no.setText(telno);
-                        String imagename = seperateData[4];
-                        Picasso.get()
-                                .load("https://jntrcpl.com/theoji/uploads/"+imagename)
-                                .into(Edit_User_Profile_Activity.this.progile_img);
 
-                        // sch_country.setText(country);
-                        String websiteurl = seperateData[5];
-                        sch_web.setText(websiteurl);
-                        String schoolcode = seperateData[6];
-                        // sch_schcode.setText(schoolcode);
-                        String affiliation_no = seperateData[7];
-                        String pin_code = seperateData[8];
-                        sch_pincode.setText(pin_code);
-                        String board_name = seperateData[9];
+                        String established_year = seperateData[1];
 
-                        String no_off_staff = seperateData[10];
-                        sch_staff.setText(no_off_staff);
-                        String bannerimage = seperateData[11];
+                        String subtitle = seperateData[2];
+                        sch_subtitle.setText(subtitle);
+
+                        String bannerimage= seperateData[3];
                         Picasso.get()
                                 .load("https://jntrcpl.com/theoji/uploads/"+bannerimage)
                                 .into(Edit_User_Profile_Activity.this.banner_image);
 
-                        String subtitle = seperateData[12];
-                        sch_subtitle.setText(subtitle);
-                        String established_year = seperateData[13];
+
+                        String no_off_staff = seperateData[4];
+                        sch_staff.setText(no_off_staff);
+
+                        String board_name = seperateData[5];
+                        String pin_code = seperateData[6];
+                        sch_pincode.setText(pin_code);
+                        String affiliation_no = seperateData[7];
+                        String schoolcode = seperateData[8];
+
+                        String websiteurl = seperateData[9];
+                        sch_web.setText(websiteurl);
+
+                        String imagename = seperateData[10];
+                        Picasso.get()
+                                .load("https://jntrcpl.com/theoji/uploads/"+imagename)
+                                .into(Edit_User_Profile_Activity.this.progile_img);
+
+                        String telno = seperateData[11];
+                        schtel_no.setText(telno);
+
+
+                        String country = seperateData[12];
+                        sch_country.setText(country);
+
+                        String state = seperateData[13];
 
                     } else {
 

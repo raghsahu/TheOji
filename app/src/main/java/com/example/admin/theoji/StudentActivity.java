@@ -124,6 +124,7 @@ public class StudentActivity extends AppCompatActivity {
                             String address = c.getString("address");
                             String mobileno = c.getString("mobileno");
                             String city = c.getString("city");
+                            String status = c.getString("status");
 
                            String st_class = c.getString("umeta_value");
                            // String section = c.getString("umeta_value");
@@ -134,7 +135,7 @@ public class StudentActivity extends AppCompatActivity {
 //                            }
 
 
-                            StudentList.add(i, new StudentListModel(user_id, email, firstname, address,mobileno, city,st_class));
+                            StudentList.add(i, new StudentListModel(user_id, email, firstname, address,mobileno, city,st_class,status));
                            studentStringHashMap.put(i,user_id);
                            //  AppPreference.setPostid(PostActivity.this,post_id);
                         }

@@ -260,6 +260,9 @@ private  boolean checkAndRequestPermissions() {
 
                     JSONObject responce = new JSONObject(result);
                     String res = responce.getString("responce");
+                    String profileimage = responce.getString("profileimage");
+                    AppPreference.setProfileImage(LoginActivity.this,profileimage);
+                    Toast.makeText(LoginActivity.this, "pp"+AppPreference.getProfileImage(LoginActivity.this), Toast.LENGTH_SHORT).show();
 
                     JSONObject data= new JSONObject(result).getJSONObject("data");
                      user_id=data.getString("user_id");
