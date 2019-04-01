@@ -669,15 +669,8 @@ public class Edit_User_Profile_Activity extends AppCompatActivity {
                     JSONObject object = new JSONObject(result);
                     String res = object.getString("response");
 
-//                    JSONObject data= new JSONObject(result).getJSONObject("data");
-//                    user_id=data.getString("user_id");
-//                    String name=data.getString("username");
-//                    String email=data.getString("firstname");
-//                    String mobile=data.getString("lastname");
-//                    String pass=data.getString("email");
-//                    String alotclass=data.getString("mobileno");
-//                    String address=data.getString("date");
-
+                    String firstname = object.getString("firstname");
+                    String email= object.getString("email");
 
 
                     if (!res.equalsIgnoreCase("true")) {
@@ -685,6 +678,9 @@ public class Edit_User_Profile_Activity extends AppCompatActivity {
                         Toast.makeText(Edit_User_Profile_Activity.this, "unsuccess", Toast.LENGTH_SHORT).show();
 
                     } else {
+                        AppPreference.setFirstname(Edit_User_Profile_Activity.this,firstname);
+                        AppPreference.setEmail(Edit_User_Profile_Activity.this,email);
+
                         Toast.makeText(Edit_User_Profile_Activity.this, "success", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(Edit_User_Profile_Activity.this, Main2Activity.class);
                         startActivity(intent);

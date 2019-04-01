@@ -502,7 +502,7 @@
                         android:layout_width="136dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:background="#FF3360DC"
+                        android:background="@drawable/button_bg"
                         android:text="Upload Image"
                         android:textColor="#fff"
                         android:textAllCaps="false"
@@ -513,12 +513,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Image name"
+                        android:layout_gravity="center"
                         android:layout_marginLeft="10dp"
                         android:textColor="#FF3360DC"
                         android:textSize="15dp"
                         />
                 </LinearLayout>
-
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
@@ -596,7 +596,7 @@
                         android:layout_width="136dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:background="#FF3360DC "
+                        android:background="@drawable/button_bg"
                         android:text="Upload Image"
                         android:textColor="#fff"
                         android:textAllCaps="false"
@@ -607,6 +607,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Image name"
+                        android:layout_gravity="center"
                         android:layout_marginLeft="10dp"
                         android:textColor="#FF3360DC"
                         android:textSize="15dp"

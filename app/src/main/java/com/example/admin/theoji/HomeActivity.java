@@ -121,18 +121,12 @@ public class HomeActivity extends AppCompatActivity {
 
                             HomeList.add(i, new HomeListModel(post_id, name, email, date, content, userimg, postimg,firstname));
                             postStringHashMap.put(i , post_id);
-//                AppPreference.setPostid(PostActivity.this,post_id);
                         }
-
-
                         homeAdapter = new HomeAdapter(HomeActivity.this, HomeList);
                         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(HomeActivity.this);
                         recyclerpost.setLayoutManager(mLayoutManager);
                         recyclerpost.setItemAnimator(new DefaultItemAnimator());
                         recyclerpost.setAdapter(homeAdapter);
-
-//                           Picasso.get().load("https://jntrcpl.com/theoji/uploads/"+postListModel.getPostimg()).into(viewHolder.);
-
 
                     }else {
 

@@ -6,10 +6,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -27,10 +29,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.admin.theoji.Connection.Connectivity;
+import com.example.admin.theoji.Connection.HttpHandler;
 import com.example.admin.theoji.Shared_prefrence.AppPreference;
 import com.example.admin.theoji.Shared_prefrence.SessionManager;
 import com.example.admin.theoji.Utils.CustomAlert;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -43,6 +47,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -50,7 +55,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class LoginActivity extends AppCompatActivity {
     LinearLayout layout;
-    Button btn_login;
+    Button btn_login,btn_next;
     Spinner type;
     EditText school_code;
     EditText password;
@@ -70,6 +75,17 @@ public class LoginActivity extends AppCompatActivity {
      Toolbar toolbar;
     public String firstname,email;
      String school_code1;
+
+    Spinner stud_child;
+    ArrayList<String> ChooseStudent=new ArrayList<>();
+    private ArrayAdapter<String> ParentAdapter;
+    private ArrayList<ParentStudentModel> ParentStudentList=new ArrayList<>();
+
+     TextInputLayout et_mobile,et_pw,et_schCode;
+     CardView card_stud;
+     String output="";
+    HashMap<Integer, ParentStudentModel> ParentHashMap=new HashMap<Integer, ParentStudentModel>();
+     String Stude_ID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +119,14 @@ public class LoginActivity extends AppCompatActivity {
         click_reg = (TextView) findViewById(R.id.tv_click);
         txt_forgot_pw = (TextView) findViewById(R.id.txt_forgot);
 
+       et_mobile = findViewById(R.id.mobile_view);
+        et_pw = findViewById(R.id.pw_view);
+        stud_child =  findViewById(R.id.students_child);
+        card_stud =  findViewById(R.id.card_stud_child);
+        et_schCode =  findViewById(R.id.view_schCode);
+
         btn_login  = (Button)findViewById(R.id.btn_login);
+        btn_next  = (Button)findViewById(R.id.btn_next);
         type = (Spinner)findViewById(R.id.type);
 
         typeList = new ArrayList<>();
@@ -153,15 +176,81 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        //***************************************
+        btn_next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (Connectivity.isNetworkAvailable(LoginActivity.this)){
+
+                    String sch_code = school_code.getText().toString();
+                    String mobile = mobile_no.getText().toString();
+
+                    if (!sch_code.isEmpty() && !mobile.isEmpty()) {
+
+                        new Search_Stud_Task().execute();
+                    }else {
+                        Toast.makeText(LoginActivity.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
+                    }
+
+                }else {
+                    Toast.makeText(LoginActivity.this, "No Internet", Toast.LENGTH_SHORT).show();
+                }
+
+
+
+            }
+        });
+
         type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
+                try{
+
+                    if(ParentStudentList.size() !=0)
+                    {
+                        ChooseStudent.clear();
+                        stud_child.setAdapter(null);
+                        ParentAdapter.notifyDataSetChanged();
+                    }
+                }catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+
                 String text=type.getSelectedItem().toString();
                 if(text.equals("School")) {
-                    mobile_no.setVisibility(View.GONE);
+                    et_mobile.setVisibility(View.GONE);
+                    btn_next.setVisibility(View.GONE);
+                    card_stud.setVisibility(View.GONE);
+                    et_schCode.setVisibility(View.VISIBLE);
+                    et_pw.setVisibility(View.VISIBLE);
                 }else {
-                    mobile_no.setVisibility(View.VISIBLE);
+                    et_mobile.setVisibility(View.VISIBLE);
+                }
+
+                if(text.equalsIgnoreCase("Teacher")) {
+                    btn_next.setVisibility(View.GONE);
+                    card_stud.setVisibility(View.GONE);
+                    et_schCode.setVisibility(View.VISIBLE);
+                    et_pw.setVisibility(View.VISIBLE);
+                }else {
+
+                }
+
+                if(text.equalsIgnoreCase("Parent")) {
+
+                    et_pw.setVisibility(View.GONE);
+                    btn_login.setVisibility(View.GONE);
+                    card_stud.setVisibility(View.GONE);
+                    btn_next.setVisibility(View.VISIBLE);
+
+                    et_schCode.setVisibility(View.VISIBLE);
+                    //et_pw.setVisibility(View.VISIBLE);
+                }else {
+                    et_pw.setVisibility(View.VISIBLE);
+                    btn_login.setVisibility(View.VISIBLE);
                 }
 
 
@@ -177,6 +266,47 @@ public class LoginActivity extends AppCompatActivity {
         typeAdapter = new ArrayAdapter<String>(LoginActivity.this, R.layout.support_simple_spinner_dropdown_item, typeList);
         typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         type.setAdapter(typeAdapter);
+    //****************************************************************************
+        stud_child.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                //strSid = stateList.get(position).getState_id();
+//                try{
+//
+//                    if(studentList.size() !=0)
+//                    {
+//                        ChooseStudent.clear();
+//
+//                        spin_student.setAdapter(null);
+//                        studentListAdapter.notifyDataSetChanged();
+//
+//                    }
+//
+//                }catch (Exception e)
+//                {
+//                    e.printStackTrace();
+//                }
+                for (int i = 0; i < ParentHashMap.size(); i++)
+                {
+
+                    if (ParentHashMap.get(i).getFirstname().equals(stud_child.getItemAtPosition(position)))
+                    {
+                       // new spinnerStudentExecuteTask(SectionHashMap.get(i).getM_id()).execute();
+                        Stude_ID=ParentHashMap.get(i).getUser_id().toString();
+                        // Toast.makeText(AttendenceActivity.this, "sec_Id"+Section_ID, Toast.LENGTH_SHORT).show();
+                    }
+                    // else (StateHashMap.get(i).getState_name().equals(spin_state.getItemAtPosition(position))
+                }
+            }
+
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+
+            }
+        });
+
     }
 //*********************************************************************************************
     @Override
@@ -255,15 +385,19 @@ private  boolean checkAndRequestPermissions() {
                 dialog.dismiss();
 
                 try {
-//                Toast.makeText(LoginActivity.this, "result is" + result, Toast.LENGTH_SHORT).show();
+               Toast.makeText(LoginActivity.this, "result is" + result, Toast.LENGTH_SHORT).show();
 
 
                     JSONObject responce = new JSONObject(result);
                     String res = responce.getString("responce");
                     String profileimage = responce.getString("profileimage");
-                    AppPreference.setProfileImage(LoginActivity.this,profileimage);
-                    Toast.makeText(LoginActivity.this, "pp"+AppPreference.getProfileImage(LoginActivity.this), Toast.LENGTH_SHORT).show();
 
+                    if(!(profileimage==null)) {
+                        AppPreference.setProfileImage(LoginActivity.this, profileimage);
+                        Toast.makeText(LoginActivity.this, "pp" + AppPreference.getProfileImage(LoginActivity.this), Toast.LENGTH_SHORT).show();
+                    }else {
+                       // AppPreference.setProfileImage(LoginActivity.this, getDrawable(R.id.img_person));
+                    }
                     JSONObject data= new JSONObject(result).getJSONObject("data");
                      user_id=data.getString("user_id");
                     String username1=data.getString("username");
@@ -333,6 +467,7 @@ private  boolean checkAndRequestPermissions() {
             postDataParams.put("School_code",school_code.getText().toString());
             postDataParams.put("Password",password.getText().toString());
             postDataParams.put("Mobileno",mobile_no.getText().toString());
+            postDataParams.put("user_id",Stude_ID);
 
 
             Log.e("postDataParams", postDataParams.toString());
@@ -454,4 +589,86 @@ private  boolean checkAndRequestPermissions() {
         InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         in.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
-}
+
+    private class Search_Stud_Task extends AsyncTask<String, Integer, String> {
+        ProgressDialog dialog;
+
+        protected void onPreExecute() {
+            dialog = new ProgressDialog(LoginActivity.this);
+            dialog.setMessage("processing");
+            dialog.show();
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            String sever_url = "http://jntrcpl.com/theoji/index.php/Api/search_student?school_code=" + school_code.getText().toString()
+                    + "&mobile=" + mobile_no.getText().toString();
+            output = HttpHandler.makeServiceCall(sever_url);
+            System.out.println("getcomment_url" + output);
+            return output;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            if (result != null) {
+                dialog.dismiss();
+
+                try {
+                    //Toast.makeText(Registration_activity.this, "result is" + result, Toast.LENGTH_SHORT).show();
+                    JSONObject object = new JSONObject(result);
+                    String res = object.getString("responce");
+                    if (res.equals("true")) {
+
+                        Toast.makeText(LoginActivity.this, "succedd", Toast.LENGTH_SHORT).show();
+                        et_pw.setVisibility(View.VISIBLE);
+                        card_stud.setVisibility(View.VISIBLE);
+                        btn_login.setVisibility(View.VISIBLE);
+                        btn_next.setVisibility(View.GONE);
+                        et_schCode.setVisibility(View.GONE);
+                        et_mobile.setVisibility(View.GONE);
+
+                        JSONArray jsonArray = object.getJSONArray("data");
+
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+
+                            String user_id = jsonObject1.getString("user_id");
+                            String firstname = jsonObject1.getString("firstname");
+
+                            ParentStudentList.add(new ParentStudentModel(user_id, firstname));
+                            ChooseStudent.add(firstname);
+                            ParentHashMap.put(i, new ParentStudentModel(user_id, firstname));
+
+                        }
+
+                        ParentAdapter = new ArrayAdapter<String>(LoginActivity.this, android.R.layout.simple_spinner_dropdown_item, ChooseStudent);
+                        ParentAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        stud_child.setAdapter(ParentAdapter);
+
+
+                    } else {
+
+                        et_pw.setVisibility(View.GONE);
+                        card_stud.setVisibility(View.GONE);
+                        btn_login.setVisibility(View.GONE);
+                        btn_next.setVisibility(View.VISIBLE);
+                        et_schCode.setVisibility(View.VISIBLE);
+                        et_mobile.setVisibility(View.VISIBLE);
+
+                         Toast.makeText(LoginActivity.this, "No details Found", Toast.LENGTH_SHORT).show();
+
+                        ChooseStudent.clear();
+                        ParentAdapter = new ArrayAdapter<String>(LoginActivity.this, android.R.layout.simple_spinner_dropdown_item, ChooseStudent);
+                        stud_child.setAdapter(ParentAdapter);
+                        ParentAdapter.notifyDataSetChanged();
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+    }

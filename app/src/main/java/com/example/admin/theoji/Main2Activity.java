@@ -325,7 +325,31 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                 CustomAlert.alertDialogShow(getApplicationContext(),"Please Check Internet!");
             }
 
-    }else if (id == R.id.nav_share) {
+    }
+        else if (id == R.id.nav_chat) {
+            if (Connectivity.isNetworkAvailable(Main2Activity.this)){
+                Intent intent = new Intent(Main2Activity.this,ChatActivity.class);
+                startActivity(intent);
+                //finish();
+            }else {
+                CustomAlert.alertDialogShow(getApplicationContext(),"Please Check Internet!");
+            }
+
+        }
+//        else if (id == R.id.nav_class) {
+//            if (Connectivity.isNetworkAvailable(Main2Activity.this)){
+//                Intent intent = new Intent(Main2Activity.this,ShowClassActivity.class);
+//                startActivity(intent);
+//                //finish();
+//            }else {
+//                Toast.makeText(Main2Activity.this, "No Internet", Toast.LENGTH_SHORT).show();
+//                CustomAlert.alertDialogShow(getApplicationContext(),"Please Check Internet!");
+//            }
+//
+//        }
+
+
+    else if (id == R.id.nav_share) {
             if (Connectivity.isNetworkAvailable(Main2Activity.this)){
              shareApplication();
 
