@@ -1,7 +1,6 @@
 package com.example.admin.theoji;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,8 +8,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.admin.theoji.Adapter.HomeAdapter;
@@ -33,7 +30,7 @@ public class HomeActivity extends AppCompatActivity {
     String server_url;
     ArrayList<HomeListModel> HomeList= new ArrayList<>();
     private HomeAdapter homeAdapter;
-    public static HashMap<Integer , String> postStringHashMap = new HashMap<>();
+ //   public static HashMap<Integer, HomeListModel> HomeHashMap = new HashMap<Integer, HomeListModel>();
 
 
     @Override
@@ -120,7 +117,7 @@ public class HomeActivity extends AppCompatActivity {
 
 
                             HomeList.add(i, new HomeListModel(post_id, name, email, date, content, userimg, postimg,firstname));
-                            postStringHashMap.put(i , post_id);
+                            //HomeHashMap.put(i ,new HomeListModel(post_id, name, email, date, content, userimg, postimg,firstname));
                         }
                         homeAdapter = new HomeAdapter(HomeActivity.this, HomeList);
                         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(HomeActivity.this);

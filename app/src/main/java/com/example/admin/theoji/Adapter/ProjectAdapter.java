@@ -1,9 +1,15 @@
 package com.example.admin.theoji.Adapter;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -11,15 +17,18 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.admin.theoji.Comment_View_Activity;
 import com.example.admin.theoji.Connection.HttpHandler;
 import com.example.admin.theoji.ModelClass.CommentModel;
 import com.example.admin.theoji.ModelClass.ProjectListModel;
+import com.example.admin.theoji.PostActivity;
 import com.example.admin.theoji.ProjectActivity;
 import com.example.admin.theoji.R;
 import com.example.admin.theoji.Shared_prefrence.AppPreference;
@@ -42,8 +51,7 @@ import java.util.Iterator;
 import javax.net.ssl.HttpsURLConnection;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-
-import static com.androidquery.util.AQUtility.getContext;
+import static com.example.admin.theoji.ProjectActivity.ProjectHashMap;
 
 public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHolder> {
 
@@ -55,19 +63,14 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
     String PID="";
     String id;
 
-    ArrayList<CommentModel> commentList = new ArrayList<>();
-    RecyclerView recyclerView_comment;
-
-    RecyclerCommentAdapter recyclerCommentAdapter;
-
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        public ImageView img2;
+        public ImageView img2,img_close;
         public CircleImageView img_person;
         public ImageView btn1, btn2, btn3, dis_like;
         public TextView txt1, txt2, txt3,txt_nm,txt_title;
+        TextView Click_all;
         public  TextView count1,count2;
-        public EditText etcomment;
         public LinearLayout et_comment;
         public  RecyclerView recyclerView_comment;
         CardView cardeview;
@@ -82,24 +85,21 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
             txt2 = (TextView) viewlike.findViewById(R.id.txt2);
             txt3 = (TextView) viewlike.findViewById(R.id.txt3);
            txt_title = (TextView) view.findViewById(R.id.title);
-            etcomment=(EditText)viewlike.findViewById(R.id.comment_post);
             recyclerView_comment=(RecyclerView)viewlike.findViewById(R.id.comment_view);
 
             txt_nm = (TextView) viewlike.findViewById(R.id.description);
             count1 = (TextView) viewlike.findViewById(R.id.badge_count1);
             count2 = (TextView) viewlike.findViewById(R.id.badge_count2);
+            Click_all = (TextView) viewlike.findViewById(R.id.commentall);
 
             btn1 = (ImageView) viewlike.findViewById(R.id.btn1);
             btn2 = (ImageView) viewlike.findViewById(R.id.btn2);
             btn3 = (ImageView) viewlike.findViewById(R.id.btn3);
             dis_like=(ImageView)viewlike.findViewById(R.id.dis_btn);
+            img_close=(ImageView)viewlike.findViewById(R.id.image_close);
 
-//            lin_vew = (LinearLayout)view.findViewById(R.id.lin_vew);
             et_comment = (LinearLayout) viewlike.findViewById(R.id.ll_comment);
             cardeview = (CardView)viewlike.findViewById(R.id.cardeview);
-
-//            commentList = new ArrayList<>();
-
 
         }
     }
@@ -145,10 +145,43 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
         viewHolder.btn2.setTag(viewHolder);
         viewHolder.btn3.setTag(viewHolder);
         viewHolder.dis_like.setTag(viewHolder);
-        viewHolder.etcomment.setTag(viewHolder);
+        viewHolder.img2.setTag(viewHolder);
         viewHolder.pos = position;
 
-        commentList = new ArrayList<>();
+
+        viewHolder.img2.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onClick(View view) {
+
+                final AlertDialog.Builder alertadd = new AlertDialog.Builder(context,AlertDialog.THEME_HOLO_LIGHT);
+                ImageView dialogImage = new ImageView(context);
+                final Dialog d = alertadd.setView(new View(context)).create();
+                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                lp.copyFrom(d.getWindow().getAttributes());
+                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+
+                if (projectListModel.getPostimg().length()!=0)
+                {
+                    Picasso.get().load("https://jntrcpl.com/theoji/uploads/"+projectListModel.getPostimg())
+                            .into(dialogImage);
+                    d.show();
+                    d.getWindow().setAttributes(lp);
+                    d.setContentView(dialogImage);
+                }else {
+                    Toast.makeText(context, "no image found", Toast.LENGTH_SHORT).show();
+
+                }
+                ((AlertDialog) d).setButton("back", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        d.dismiss();
+                    }
+                });
+
+            }
+        });
 
         viewHolder.btn1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -179,48 +212,60 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
             }
         });
 
-        viewHolder.btn3.setOnClickListener(new View.OnClickListener() {
+        viewHolder.Click_all.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                new DeleteExecuteTask(view.getContext(),PID).execute();
+                int i = position;
+                PID =  ProjectHashMap.get(i);
+
+                Intent intent = new Intent(context, Comment_View_Activity.class);
+                intent.putExtra("postid",PID);
+                context.startActivity(intent);
+
             }
         });
 
-
-
-
-        viewHolder.etcomment.setOnTouchListener(new View.OnTouchListener() {
+        viewHolder.btn3.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                final int DRAWABLE_LEFT = 0;
-                final int DRAWABLE_TOP = 1;
-                final int DRAWABLE_RIGHT = 2;
-                final int DRAWABLE_BOTTOM = 3;
+            public void onClick(View view) {
+                final AlertDialog.Builder dialog = new AlertDialog.Builder(context).setTitle("The Oji")
+                        .setMessage("Are you sure, you want to delete this post");
 
-                if(event.getAction() == MotionEvent.ACTION_UP) {
-                    if(event.getRawX() >= (viewHolder.etcomment.getRight() - viewHolder.etcomment.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-                        // your action here
-
-//                        additemlistview();
-
-                        EditText etcomment=viewlike.findViewById(R.id.comment_post);
-                        recyclerView_comment=(RecyclerView)viewlike.findViewById(R.id.comment_view);
-
-
-                        String comment = etcomment.getText().toString();
-//                        commentList.add(new CommentModel(comment) );
-//
-//                        RecyclerCommentAdapter recyclerCommentAdapter = new RecyclerCommentAdapter(getContext(), commentList);
-//
-//                        recyclerView_comment.setAdapter(recyclerCommentAdapter);
-
-//                        new CommentExecuteTask().execute();
-
-                        return true;
+                dialog.setNegativeButton("no", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
                     }
-                }
-                return false;
+                });
+
+                dialog.setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        exitLauncher();
+                    }
+
+                    private void exitLauncher() {
+                        // String  PID = PostListModel.getPost_id();
+                        int i = position;
+                        PID =  ProjectHashMap.get(i);
+
+                        new DeleteExecuteTask(context,PID).execute();
+
+                    }
+                });
+                final AlertDialog alert = dialog.create();
+                alert.show();
+
+            }
+        });
+
+        viewHolder.img_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                viewHolder.et_comment.setVisibility(view.GONE);
+
             }
         });
 
@@ -304,10 +349,11 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
     //*************************************delete************************************************
     public class DeleteExecuteTask extends AsyncTask<String,Integer,String> {
         Context context;
-        //ProgressDialog dialog;
+        String PID1;
 
         public DeleteExecuteTask(Context context,String pid) {
             this.context=context;
+            this.PID1=pid;
 
         }
 
@@ -320,9 +366,54 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
         @Override
         protected String doInBackground(String... params) {
 
-            String res = PostData(params);
+            try {
 
-            return res;
+                URL url = new URL("https://jntrcpl.com/theoji/index.php/Api/deletepost");
+
+                JSONObject postDataParams = new JSONObject();
+                id= AppPreference.getUserid(context);
+
+                postDataParams.put("id",id);
+                postDataParams.put("pid",PID1);
+
+
+                Log.e("postDataParams", postDataParams.toString());
+
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setReadTimeout(15000 /* milliseconds*/);
+                conn.setConnectTimeout(15000  /*milliseconds*/);
+                conn.setRequestMethod("POST");
+                conn.setDoInput(true);
+                conn.setDoOutput(true);
+
+                OutputStream os = conn.getOutputStream();
+                BufferedWriter writer = new BufferedWriter(
+                        new OutputStreamWriter(os, "UTF-8"));
+                writer.write(getPostDataString(postDataParams));
+
+                writer.flush();
+                writer.close();
+                os.close();
+                int responseCode = conn.getResponseCode();
+
+                if (responseCode == HttpsURLConnection.HTTP_OK) {
+
+                    BufferedReader r = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    StringBuilder result = new StringBuilder();
+                    String line;
+                    while ((line = r.readLine()) != null) {
+                        result.append(line);
+                    }
+                    r.close();
+                    return result.toString();
+
+                } else {
+                    return new String("false : " + responseCode);
+                }
+            }
+            catch (Exception e) {
+                return new String("Exception: " + e.getMessage());
+            }
 
 
         }
@@ -340,6 +431,9 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
                     if (res.equals("true")) {
 
                         Toast.makeText(context, "delete success", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(context, ProjectActivity.class);
+                        context.startActivity(intent);
+                        ((Activity)context).finish();
 
                     } else {
                         Toast.makeText(context, "Some Problem post not delete", Toast.LENGTH_SHORT).show();
@@ -351,57 +445,7 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
             }
         }
     }
-    public String PostData(String[] values) {
-        try {
 
-            URL url = new URL("https://jntrcpl.com/theoji/index.php/Api/deletepost");
-
-            JSONObject postDataParams = new JSONObject();
-            PID = ProjectListModel.getPost_id();
-            id= AppPreference.getUserid(context);
-
-            postDataParams.put("id",id);
-            postDataParams.put("pid",PID);
-
-
-            Log.e("postDataParams", postDataParams.toString());
-
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setReadTimeout(15000 /* milliseconds*/);
-            conn.setConnectTimeout(15000  /*milliseconds*/);
-            conn.setRequestMethod("POST");
-            conn.setDoInput(true);
-            conn.setDoOutput(true);
-
-            OutputStream os = conn.getOutputStream();
-            BufferedWriter writer = new BufferedWriter(
-                    new OutputStreamWriter(os, "UTF-8"));
-            writer.write(getPostDataString(postDataParams));
-
-            writer.flush();
-            writer.close();
-            os.close();
-            int responseCode = conn.getResponseCode();
-
-            if (responseCode == HttpsURLConnection.HTTP_OK) {
-
-                BufferedReader r = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                StringBuilder result = new StringBuilder();
-                String line;
-                while ((line = r.readLine()) != null) {
-                    result.append(line);
-                }
-                r.close();
-                return result.toString();
-
-            } else {
-                return new String("false : " + responseCode);
-            }
-        }
-        catch (Exception e) {
-            return new String("Exception: " + e.getMessage());
-        }
-    }
     public String getPostDataString(JSONObject params) throws Exception {
 
         StringBuilder result = new StringBuilder();

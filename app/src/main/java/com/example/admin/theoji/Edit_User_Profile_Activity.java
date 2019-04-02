@@ -607,6 +607,7 @@ public class Edit_User_Profile_Activity extends AppCompatActivity {
 
         protected void onPreExecute() {
             dialog = new ProgressDialog(Edit_User_Profile_Activity.this);
+            dialog.setMessage("processing...");
             dialog.show();
 
         }
@@ -696,98 +697,6 @@ public class Edit_User_Profile_Activity extends AppCompatActivity {
             }
         }
     }
-//    public String PostData(String[] values) {
-//        try {
-//
-//            URL url = new URL("https://jntrcpl.com/theoji/index.php/Api/profile_update");
-//
-//            JSONObject postDataParams = new JSONObject();
-//            String id= AppPreference.getUserid(Edit_User_Profile_Activity.this);
-//
-//            postDataParams.put("user_id",id);
-//            postDataParams.put("user_type", user_type);
-//
-//            postDataParams.put("email", Sch_mail);
-//            postDataParams.put("firstname", Sch_name);
-//            postDataParams.put("mobileno", Sch_mobile);
-//            postDataParams.put("telno", Schtel_no);
-//            postDataParams.put("address", Sch_add1);
-//            postDataParams.put("address1", Sch_add2);
-//            postDataParams.put("city", Sch_city);
-//            postDataParams.put("country", Sch_country);
-//            postDataParams.put("school_code", Sch_schcode);
-//            postDataParams.put("websiteurl", Sch_web);
-//            postDataParams.put("pin_code", Sch_pincode);
-//            postDataParams.put("no_off_staff", Sch_staff);
-//            postDataParams.put("subtitle", Sch_subtitle);
-//            postDataParams.put("about", Sch_about);
-//            postDataParams.put("showpass", Sch_pww);
-//            postDataParams.put("board_name", Sch_board);
-//            postDataParams.put("state", Sch_state);
-//
-//
-//            Log.e("postDataParams", postDataParams.toString());
-//
-//            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-//            conn.setReadTimeout(15000 /* milliseconds*/);
-//            conn.setConnectTimeout(15000  /*milliseconds*/);
-//            conn.setRequestMethod("POST");
-//            conn.setDoInput(true);
-//            conn.setDoOutput(true);
-//
-//            OutputStream os = conn.getOutputStream();
-//            BufferedWriter writer = new BufferedWriter(
-//                    new OutputStreamWriter(os, "UTF-8"));
-//            writer.write(getPostDataString(postDataParams));
-//
-//            writer.flush();
-//            writer.close();
-//            os.close();
-//            int responseCode = conn.getResponseCode();
-//
-//            if (responseCode == HttpsURLConnection.HTTP_OK) {
-//
-//                BufferedReader r = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-//                StringBuilder result = new StringBuilder();
-//                String line;
-//                while ((line = r.readLine()) != null) {
-//                    result.append(line);
-//                }
-//                r.close();
-//                return result.toString();
-//
-//            } else {
-//                return new String("false : " + responseCode);
-//            }
-//        }
-//        catch (Exception e) {
-//            return new String("Exception: " + e.getMessage());
-//        }
-//    }
-//
-//    public String getPostDataString(JSONObject params) throws Exception {
-//
-//        StringBuilder result = new StringBuilder();
-//        boolean first = true;
-//
-//        Iterator<String> itr = params.keys();
-//
-//        while (itr.hasNext()) {
-//
-//            String key = itr.next();
-//            Object value = params.get(key);
-//
-//            if (first)
-//                first = false;
-//            else
-//                result.append("&");
-//
-//            result.append(URLEncoder.encode(key, "UTF-8"));
-//            result.append("=");
-//            result.append(URLEncoder.encode(value.toString(), "UTF-8"));
-//
-//        }
-//        return result.toString();
-//    }
+
 }
 

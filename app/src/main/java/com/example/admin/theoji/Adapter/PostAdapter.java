@@ -70,8 +70,6 @@ public class  PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     private ArrayList<String> _imagePaths;
 
     ArrayList<CommentModel>CommentList = new ArrayList<>();
-  // RecyclerView recyclerView_comment;
-   //RecyclerCommentAdapter recyclerCommentAdapter;
     String id;
     String Comment;
     public static HashMap<Integer , String> CountCheckHashMap = new HashMap<>();
@@ -80,13 +78,11 @@ public class  PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        //public ImageView img_person;
        public CircleImageView img_person;
         ImageView img2;
         public ImageView btn1, btn2, btn3, dis_like,img_close;
         public TextView txt1, txt2, txt3,txt_nm;
         public  TextView count1,count2;
-        public EditText etcomment;
         public LinearLayout et_comment;
         TextView Click_all;
         CardView cardeview;
@@ -102,7 +98,6 @@ public class  PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             txt2 = (TextView) viewlike.findViewById(R.id.txt2);
             txt3 = (TextView) viewlike.findViewById(R.id.txt3);
             Click_all = (TextView) view.findViewById(R.id.commentall);
-            etcomment=(EditText)viewlike.findViewById(R.id.commenttxt);
 
             txt_nm = (TextView) viewlike.findViewById(R.id.txt_nm);
             count1 = (TextView) viewlike.findViewById(R.id.badge_count1);
@@ -113,11 +108,9 @@ public class  PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             btn3 = (ImageView) viewlike.findViewById(R.id.btn3);
             dis_like=(ImageView)viewlike.findViewById(R.id.dis_btn);
             img_close=(ImageView) viewlike.findViewById(R.id.image_close);
-            //send_comment=(ImageView)viewlike.findViewById(R.id.btnSend);
 
 //            lin_vew = (LinearLayout)view.findViewById(R.id.lin_vew);
             et_comment = (LinearLayout) viewlike.findViewById(R.id.ll_comment);
-           // recyclerView_comment = (RecyclerView) viewlike.findViewById(R.id.comment_view);
             cardeview = (CardView)viewlike.findViewById(R.id.cardeview);
 
         }
@@ -147,7 +140,7 @@ public class  PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         viewHolder.txt2.setText(postListModel.getEmail());
         viewHolder.txt3.setText(postListModel.getDate());
         viewHolder.txt_nm.setText(postListModel.getContent());
-//        Picasso.get().load("https://jntrcpl.com/theoji/uploads/apex_school.jpg").into(viewHolder.img2);
+
         viewHolder.img_person.setImageResource(R.drawable.person);
         Picasso.get().load("https://jntrcpl.com/theoji/uploads/"+postListModel.getUserimg()).into(viewHolder.img_person);
 
@@ -166,8 +159,7 @@ public class  PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         viewHolder.img_close.setTag(viewHolder);
         viewHolder.img2.setTag(viewHolder);
        viewHolder.Click_all.setTag(viewHolder);
-       //viewHolder.send_comment.setTag(viewHolder);
-        viewHolder.pos = position;
+       viewHolder.pos = position;
 
         viewHolder.img2.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -175,9 +167,6 @@ public class  PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             public void onClick(View view) {
 
                 final AlertDialog.Builder alertadd = new AlertDialog.Builder(context,AlertDialog.THEME_HOLO_LIGHT);
-               // LayoutInflater factory = LayoutInflater.from(context);
-               // final View v = factory.inflate(R.layout.sample, null);
-                //ImageView dialogImage=viewlike.findViewById(R.id.dialog_imageview);
                 ImageView dialogImage = new ImageView(context);
                 final Dialog d = alertadd.setView(new View(context)).create();
                 WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
@@ -203,14 +192,6 @@ public class  PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                     }
                 });
 
-                //alertadd.setView(dialogImage);
-//                alertadd.setNeutralButton("back", new DialogInterface.OnClickListener() {
-//                    public void onClick(DialogInterface dlg, int sumthin) {
-//
-//
-//                    }
-//                });
-
             }
         });
 
@@ -219,8 +200,6 @@ public class  PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             @Override
             public void onClick(View view) {
 
-               // String PID = PostListModel.getPost_id();
-                //PID=PostList.get(position).getPost_id();
                 int i = position;
               PID =  postStringHashMap.get(i);
 
@@ -293,37 +272,6 @@ public class  PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 int i = position;
                 PID =  postStringHashMap.get(i);
 
-               // new CountStatusExcuteTask(view.getContext(),PID ).execute();
-
-
-                //((Activity)context).finish();
-
-//*************************************************************************
-//        viewHolder.etcomment.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                final int DRAWABLE_LEFT = 0;
-//                final int DRAWABLE_TOP = 1;
-//                final int DRAWABLE_RIGHT = 2;
-//                final int DRAWABLE_BOTTOM = 3;
-//
-//                if(event.getAction() == MotionEvent.ACTION_UP) {
-//                    if(event.getRawX() >= (viewHolder.etcomment.getRight() - viewHolder.etcomment.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-//                        // your action here
-//
-//                        EditText etcomment=viewlike.findViewById(R.id.comment_post);
-//                        Comment = etcomment.getText().toString();
-//
-//                        int i = position;
-//                        PID =  postStringHashMap.get(i);
-//                        new CommentExecuteTask(PID).execute();
-//
-//                        return true;
-//                    }
-//                }
-//                return false;
-//            }
-//        });
             }
         });
 
@@ -341,18 +289,6 @@ public class  PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             }
         });
 
-//        viewHolder.send_comment.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//                int i = position;
-//                PID =  postStringHashMap.get(i);
-//
-//               EditText etcomment=viewlike.findViewById(R.id.commenttxt);
-//                 Comment = etcomment.getText().toString();
-//                new CommentExecuteTask(PID,Comment).execute();
-//            }
-//        });
 
     }
 
@@ -428,172 +364,6 @@ public class  PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     }
 
-//*************************************comment**********************
-   public class CommentExecuteTask extends AsyncTask<String,Integer,String> {
-        String pid3;
-        String Comment1;
-
-    public CommentExecuteTask(String pid, String comment) {
-        this.pid3=pid;
-        this.Comment1=comment;
-    }
-//    ProgressDialog dialog;
-
-    protected void onPreExecute() {
-//        dialog = new ProgressDialog(getContext());
-//        dialog.show();
-
-    }
-
-    @Override
-    protected String doInBackground(String... params) {
-
-//        String res = PostData(pid3);
-//        return res;
-        try {
-
-            URL url = new URL("https://jntrcpl.com/theoji/index.php/Api/comment");
-
-            JSONObject postDataParams = new JSONObject();
-
-           // EditText etcomment=viewlike.findViewById(R.id.commenttxt);
-          //  Comment = etcomment.getText().toString();
-
-            id= AppPreference.getUserid(context);
-            //String PID = PostListModel.getPost_id();
-
-            postDataParams.put("id",id);
-            postDataParams.put("pid",pid3);
-            postDataParams.put("comment",Comment1);
-
-            Log.e("postDataParams", postDataParams.toString());
-
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setReadTimeout(15000 /* milliseconds*/);
-            conn.setConnectTimeout(15000  /*milliseconds*/);
-            conn.setRequestMethod("POST");
-            conn.setDoInput(true);
-            conn.setDoOutput(true);
-
-            OutputStream os = conn.getOutputStream();
-            BufferedWriter writer = new BufferedWriter(
-                    new OutputStreamWriter(os, "UTF-8"));
-            writer.write(getPostDataString(postDataParams));
-
-            writer.flush();
-            writer.close();
-            os.close();
-            int responseCode = conn.getResponseCode();
-
-            if (responseCode == HttpsURLConnection.HTTP_OK) {
-
-                BufferedReader r = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                StringBuilder result = new StringBuilder();
-                String line;
-                while ((line = r.readLine()) != null) {
-                    result.append(line);
-                }
-                r.close();
-                return result.toString();
-
-            } else {
-                return new String("false : " + responseCode);
-            }
-        }
-        catch (Exception e) {
-            return new String("Exception: " + e.getMessage());
-        }
-
-    }
-
-    @Override
-    protected void onPostExecute(String result) {
-
-        if (result != null) {
-//            dialog.dismiss();
-
-            try {
-                JSONObject responce = new JSONObject(result);
-                String res = responce.getString("responce");
-//
-//                JSONObject data= new JSONObject(result).getJSONObject("data");
-//                user_id=data.getString("user_id");
-//                String username1=data.getString("username");
-
-                if (res.equals("true")) {
-                      //Toast.makeText(context,"success"+ result, Toast.LENGTH_SHORT).show();
-                    Toast.makeText(context, "success" + result, Toast.LENGTH_SHORT).show();
-
-                } else {
-
-                     Toast.makeText(context,"unsuccess",Toast.LENGTH_SHORT).show();
-                }
-
-               // new CountStatusExcuteTask(getContext(),PID ).execute();
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-//        super.onPostExecute(s);
-        }
-    }
-}
-   // public String PostData(String values) {
-//        try {
-//
-//            URL url = new URL("https://jntrcpl.com/theoji/index.php/Api/comment");
-//
-//            JSONObject postDataParams = new JSONObject();
-//
-//            EditText etcomment=viewlike.findViewById(R.id.commenttxt);
-//            Comment = etcomment.getText().toString();
-//
-//            id= AppPreference.getUserid(context);
-//            //String PID = PostListModel.getPost_id();
-//
-//            postDataParams.put("id",id);
-//            postDataParams.put("pid",values);
-//            postDataParams.put("comment",Comment);
-//
-//            Log.e("postDataParams", postDataParams.toString());
-//
-//            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-//            conn.setReadTimeout(15000 /* milliseconds*/);
-//            conn.setConnectTimeout(15000  /*milliseconds*/);
-//            conn.setRequestMethod("POST");
-//            conn.setDoInput(true);
-//            conn.setDoOutput(true);
-//
-//            OutputStream os = conn.getOutputStream();
-//            BufferedWriter writer = new BufferedWriter(
-//                    new OutputStreamWriter(os, "UTF-8"));
-//            writer.write(getPostDataString(postDataParams));
-//
-//            writer.flush();
-//            writer.close();
-//            os.close();
-//            int responseCode = conn.getResponseCode();
-//
-//            if (responseCode == HttpsURLConnection.HTTP_OK) {
-//
-//                BufferedReader r = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-//                StringBuilder result = new StringBuilder();
-//                String line;
-//                while ((line = r.readLine()) != null) {
-//                    result.append(line);
-//                }
-//                r.close();
-//                return result.toString();
-//
-//            } else {
-//                return new String("false : " + responseCode);
-//            }
-//        }
-//        catch (Exception e) {
-//            return new String("Exception: " + e.getMessage());
-//        }
-  //  }
     public String getPostDataString(JSONObject params) throws Exception {
 
         StringBuilder result = new StringBuilder();
@@ -730,9 +500,6 @@ public class  PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             @Override
             protected String doInBackground(String... params) {
 
-//                String res = PostData2(PIDg2);
-//
-//                return res;
                 try {
 
                     URL url = new URL("https://jntrcpl.com/theoji/index.php/Api/like_check");

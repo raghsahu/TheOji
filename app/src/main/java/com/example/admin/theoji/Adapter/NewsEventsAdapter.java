@@ -1,7 +1,14 @@
 package com.example.admin.theoji.Adapter;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.CardView;
 
 import android.support.v7.widget.RecyclerView;
@@ -9,14 +16,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
+import com.example.admin.theoji.Comment_View_Activity;
 import com.example.admin.theoji.Connection.HttpHandler;
 import com.example.admin.theoji.ModelClass.NewsEventModel;
+import com.example.admin.theoji.NewsActivity;
 import com.example.admin.theoji.R;
 import com.example.admin.theoji.Shared_prefrence.AppPreference;
 import com.squareup.picasso.Picasso;
@@ -41,7 +50,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static com.androidquery.util.AQUtility.getContext;
+import static com.example.admin.theoji.NewsActivity.NewsHashMap;
 
 public class NewsEventsAdapter extends RecyclerView.Adapter<NewsEventsAdapter.ViewHolder> {
 
@@ -54,8 +63,8 @@ public class NewsEventsAdapter extends RecyclerView.Adapter<NewsEventsAdapter.Vi
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView newsName, newsEmail, newsTittle, newsContent, newsDate;
-        public ImageView  newsImg, btn1, btn2, btn3;
+        public TextView newsName, newsEmail, newsTittle, newsContent, newsDate,Click_all;
+        public ImageView  newsImg, btn1, btn2, btn3,img_close;
         public CircleImageView profileImg;
         public LinearLayout et_comment;
         CardView cardeview;
@@ -67,7 +76,7 @@ public class NewsEventsAdapter extends RecyclerView.Adapter<NewsEventsAdapter.Vi
             newsName = (TextView) view.findViewById(R.id.txtname);
             newsEmail = (TextView) view.findViewById(R.id.txt2);
             newsContent = (TextView) view.findViewById(R.id.news_description);
-//            newsTime = (TextView)view.findViewById(R.id.time);
+            Click_all = (TextView) view.findViewById(R.id.commentall);
             newsTittle = (TextView) view.findViewById(R.id.title_news);
             newsDate = (TextView) view.findViewById(R.id.date);
             profileImg = view.findViewById(R.id.img_person);
@@ -75,6 +84,7 @@ public class NewsEventsAdapter extends RecyclerView.Adapter<NewsEventsAdapter.Vi
             btn1 = (ImageView) view.findViewById(R.id.btn1);
             btn2 = (ImageView) view.findViewById(R.id.btn2);
             btn3 = (ImageView) view.findViewById(R.id.btn3);
+            img_close = (ImageView) view.findViewById(R.id.image_close);
             et_comment = (LinearLayout) view.findViewById(R.id.ll_comment);
             cardeview = (CardView) view.findViewById(R.id.cardeview);
 
@@ -122,10 +132,46 @@ public class NewsEventsAdapter extends RecyclerView.Adapter<NewsEventsAdapter.Vi
 
         viewHolder.cardeview.setTag(viewHolder);
         viewHolder.pos = position;
-
+        viewHolder.newsImg.setTag(viewHolder);
+        viewHolder.img_close.setTag(viewHolder);
         viewHolder.btn1.setTag(viewHolder);
         viewHolder.btn2.setTag(viewHolder);
+        viewHolder.Click_all.setTag(viewHolder);
 
+
+        viewHolder.newsImg.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onClick(View view) {
+
+                final AlertDialog.Builder alertadd = new AlertDialog.Builder(context,AlertDialog.THEME_HOLO_LIGHT);
+                ImageView dialogImage = new ImageView(context);
+                final Dialog d = alertadd.setView(new View(context)).create();
+                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                lp.copyFrom(d.getWindow().getAttributes());
+                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+
+                if (newsEventModel.getPostimg().length()!=0)
+                {
+                    Picasso.get().load("https://jntrcpl.com/theoji/uploads/"+newsEventModel.getPostimg())
+                            .into(dialogImage);
+                    d.show();
+                    d.getWindow().setAttributes(lp);
+                    d.setContentView(dialogImage);
+                }else {
+                    Toast.makeText(context, "no image found", Toast.LENGTH_SHORT).show();
+
+                }
+                ((AlertDialog) d).setButton("back", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        d.dismiss();
+                    }
+                });
+
+            }
+        });
 
         viewHolder.btn1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,8 +192,55 @@ public class NewsEventsAdapter extends RecyclerView.Adapter<NewsEventsAdapter.Vi
             @Override
             public void onClick(View view) {
 
+                final AlertDialog.Builder dialog = new AlertDialog.Builder(context).setTitle("The Oji")
+                        .setMessage("Are you sure, you want to delete this post");
 
-                new deleteTask(view.getContext(),PID).execute();
+                dialog.setNegativeButton("no", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+                dialog.setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        exitLauncher();
+                    }
+
+                    private void exitLauncher() {
+                        int i = position;
+                        PID =  NewsHashMap.get(i);
+                        new deleteTask(context,PID).execute();
+
+                    }
+                });
+                final AlertDialog alert = dialog.create();
+                alert.show();
+            }
+        });
+
+        viewHolder.img_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                viewHolder.et_comment.setVisibility(view.GONE);
+
+            }
+        });
+
+        viewHolder.Click_all.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                int i = position;
+                PID =  NewsHashMap.get(i);
+
+
+                Intent intent = new Intent(context, Comment_View_Activity.class);
+                intent.putExtra("postid",PID);
+                context.startActivity(intent);
+
             }
         });
 
@@ -246,8 +339,11 @@ public class NewsEventsAdapter extends RecyclerView.Adapter<NewsEventsAdapter.Vi
     }
 //*********************************************************************
 public class deleteTask extends AsyncTask<String,Integer,String>{
+
     Context context;
+    String PID1;
     public deleteTask(Context context, String pid) {
+        this.PID1=pid;
         this.context=context;
 
     }
@@ -262,50 +358,14 @@ public class deleteTask extends AsyncTask<String,Integer,String>{
 
     @Override
     protected String doInBackground(String... params) {
-
-        String res = PostData1(params);
-
-        return res;
-    }
-
-    @Override
-    protected void onPostExecute(String result) {
-
-//        Toast.makeText(context, "delete"+result, Toast.LENGTH_SHORT).show();
-
-        if (result != null) {
-            // dialog.dismiss();
-
-            try {
-                JSONObject object = new JSONObject(result);
-                String res = object.getString("responce");
-
-                if (res.equals("true")) {
-
-                    Toast.makeText(context, "delete success", Toast.LENGTH_SHORT).show();
-
-
-                } else {
-                    Toast.makeText(context, "Some Problem post not delete", Toast.LENGTH_SHORT).show();
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-//       super.onPostExecute(s);
-        }
-    }
-}
-    public String PostData1(String[] values) {
         try {
 
             URL url = new URL("https://jntrcpl.com/theoji/index.php/Api/deletepost");
 
             JSONObject postDataParams = new JSONObject();
             id= AppPreference.getUserid(context);
-            PID = NewsEventModel.getPost_id1();
 
-            postDataParams.put("pid",PID);
+            postDataParams.put("pid",PID1);
             postDataParams.put("id",id);
 
             Log.e("postDataParams", postDataParams.toString());
@@ -345,7 +405,40 @@ public class deleteTask extends AsyncTask<String,Integer,String>{
         catch (Exception e) {
             return new String("Exception: " + e.getMessage());
         }
+
     }
+
+    @Override
+    protected void onPostExecute(String result) {
+
+//        Toast.makeText(context, "delete"+result, Toast.LENGTH_SHORT).show();
+
+        if (result != null) {
+            // dialog.dismiss();
+
+            try {
+                JSONObject object = new JSONObject(result);
+                String res = object.getString("responce");
+
+                if (res.equals("true")) {
+
+                    Toast.makeText(context, "delete success", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(context, NewsActivity.class);
+                    context.startActivity(intent);
+                    ((Activity)context).finish();
+
+
+                } else {
+                    Toast.makeText(context, "Some Problem post not delete", Toast.LENGTH_SHORT).show();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+}
+
     public String getPostDataString(JSONObject params) throws Exception {
 
         StringBuilder result = new StringBuilder();

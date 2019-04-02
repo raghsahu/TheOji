@@ -91,6 +91,7 @@ public class AppPreference {
         SharedPreferences preferences = context.getSharedPreferences(SHARED_PREFERENCE_NAME, 0);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(EMAIL, email);
+        editor.clear();
         editor.commit();
     }
 

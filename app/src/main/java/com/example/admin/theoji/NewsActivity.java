@@ -2,8 +2,6 @@ package com.example.admin.theoji;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,7 +10,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,10 +24,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class NewsActivity extends AppCompatActivity {
+
     ImageView addNews;
     RecyclerView recyclerNews;
     String server_url;
@@ -38,7 +36,7 @@ public class NewsActivity extends AppCompatActivity {
     private NewsEventsAdapter newseventsadapter;
     TextView add_post_icon;
 
-//    Toolbar toolbar;
+    public static HashMap<Integer, String> NewsHashMap=new HashMap<Integer, String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,8 +140,8 @@ public class NewsActivity extends AppCompatActivity {
                             String postimg = c.getString("pmeta_value");
 
 
-                            NewsEventList.add(0, new NewsEventModel(post_id1,name, email, title, date, content, userimg, postimg));
-//
+                            NewsEventList.add(i, new NewsEventModel(post_id1,name, email, title, date, content, userimg, postimg));
+                            NewsHashMap.put(i ,post_id1);
                         }
 
                         newseventsadapter = new NewsEventsAdapter(NewsActivity.this, NewsEventList);
@@ -159,7 +157,6 @@ public class NewsActivity extends AppCompatActivity {
 
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    //  dialog.dismiss();
                 }
                 super.onPostExecute(output);
             }

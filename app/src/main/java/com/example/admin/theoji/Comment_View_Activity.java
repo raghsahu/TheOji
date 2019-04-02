@@ -293,10 +293,12 @@ public class Comment_View_Activity extends AppCompatActivity {
                 String res = responce.getString("responce");
 
                 if (res.equals("true")) {
+                    commenttxt.getText().clear();
                     Toast.makeText(Comment_View_Activity.this, "success", Toast.LENGTH_SHORT).show();
 //                    Intent intent = new Intent(Comment_View_Activity.this, Comment_View_Activity.class);
 //                    startActivity(intent);
 //                    finish();
+
                     reloadAllData();
                 
 
@@ -313,16 +315,20 @@ public class Comment_View_Activity extends AppCompatActivity {
 }
 
     private void reloadAllData() {
-       // ArrayList<CommentModel> CommentList = new ArrayList<>();
-        // update data in our adapter
-      //  recyclerCommentAdapter.notifyDataSetChanged();
-        //recyclerCommentAdapter.getData().addAll(CommentList);
-        CommentList.clear();
-        // fire the event
-        recyclerCommentAdapter.notifyDataSetChanged();
-        recyclerView_comment.removeAllViews();
-        new CommentGetExcuteTask().execute();
 
+        try {
+            if (CommentList.size() != 0) {
+                CommentList.clear();
+                recyclerCommentAdapter.notifyDataSetChanged();
+                recyclerView_comment.removeAllViews();
+                new CommentGetExcuteTask().execute();
+
+            }else {
+                new CommentGetExcuteTask().execute();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
     }
-
 }

@@ -2,17 +2,18 @@ package com.example.admin.theoji.Adapter;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -21,10 +22,10 @@ import android.widget.Toast;
 
 import com.example.admin.theoji.Comment_View_Activity;
 import com.example.admin.theoji.Connection.HttpHandler;
+import com.example.admin.theoji.HomeActivity;
+import com.example.admin.theoji.Main2Activity;
 import com.example.admin.theoji.ModelClass.CommentModel;
 import com.example.admin.theoji.ModelClass.HomeListModel;
-import com.example.admin.theoji.ModelClass.PostListModel;
-import com.example.admin.theoji.PostActivity;
 import com.example.admin.theoji.R;
 import com.example.admin.theoji.Shared_prefrence.AppPreference;
 import com.squareup.picasso.Picasso;
@@ -50,7 +51,7 @@ import javax.net.ssl.HttpsURLConnection;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.androidquery.util.AQUtility.getContext;
-import static com.example.admin.theoji.PostActivity.postStringHashMap;
+import static com.example.admin.theoji.Main2Activity.HomeHashMap;
 
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
 
@@ -105,7 +106,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
             btn3 = (ImageView) viewlike.findViewById(R.id.btn3);
             dis_like=(ImageView)viewlike.findViewById(R.id.dis_btn);
             img_close=(ImageView) viewlike.findViewById(R.id.image_close);
-            send_comment=(ImageView)viewlike.findViewById(R.id.btnSend);
+           // send_comment=(ImageView)viewlike.findViewById(R.id.btnSend);
 
 //            lin_vew = (LinearLayout)view.findViewById(R.id.lin_vew);
             et_comment = (LinearLayout) viewlike.findViewById(R.id.ll_comment);
@@ -163,16 +164,37 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         viewHolder.img_close.setTag(viewHolder);
         viewHolder.img2.setTag(viewHolder);
         viewHolder.Click_all.setTag(viewHolder);
-        viewHolder.send_comment.setTag(viewHolder);
         viewHolder.pos = position;
 
         viewHolder.img2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//               ImageView img2 = (ImageView)viewlike.findViewById(R.id.img2);
-//                FullScreenImageAdapter fullScreenImageAdapter = new FullScreenImageAdapter(context,_imagePaths);
-//                viewPager.setAdapter(fullScreenImageAdapter);
-                // TouchImageView();
+                final AlertDialog.Builder alertadd = new AlertDialog.Builder(context,AlertDialog.THEME_HOLO_LIGHT);
+                ImageView dialogImage = new ImageView(context);
+                final Dialog d = alertadd.setView(new View(context)).create();
+                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                lp.copyFrom(d.getWindow().getAttributes());
+                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+
+                if (homeListModel.getPostimg().length()!=0)
+                {
+                    Picasso.get().load("https://jntrcpl.com/theoji/uploads/"+homeListModel.getPostimg())
+                            .into(dialogImage);
+                    d.show();
+                    d.getWindow().setAttributes(lp);
+                    d.setContentView(dialogImage);
+                }else {
+                    Toast.makeText(context, "no image found", Toast.LENGTH_SHORT).show();
+
+                }
+                ((AlertDialog) d).setButton("back", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        d.dismiss();
+                    }
+                });
+
             }
         });
 
@@ -181,12 +203,10 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
             @Override
             public void onClick(View view) {
 
-                // String PID = PostListModel.getPost_id();
-                //PID=PostList.get(position).getPost_id();
                 int i = position;
-                PID =  postStringHashMap.get(i);
+                PID =  HomeHashMap.get(i).getPost_id();
 
-                new HomeAdapter.LikeUnlikeExcuteTask(view , PID).execute();
+                new LikeUnlikeExcuteTask(view , PID).execute();
 
                 viewHolder.dis_like.setVisibility(View.VISIBLE);
                 viewHolder.btn1.setVisibility(View.INVISIBLE);
@@ -218,10 +238,9 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
                     }
 
                     private void exitLauncher() {
-                        // String  PID = PostListModel.getPost_id();
                         int i = position;
-                        PID =  postStringHashMap.get(i);
-                        new HomeAdapter.deleteTask(context,PID).execute();
+                        PID =  HomeHashMap.get(i).getPost_id();
+                        new deleteTask(context,PID).execute();
 
                     }
                 });
@@ -246,39 +265,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
                 viewHolder.et_comment.setVisibility(View.VISIBLE);
 
                 int i = position;
-                PID =  postStringHashMap.get(i);
+                PID =  HomeHashMap.get(i).getPost_id();
 
-                // new CountStatusExcuteTask(view.getContext(),PID ).execute();
-
-
-                //((Activity)context).finish();
-
-//*************************************************************************
-//        viewHolder.etcomment.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                final int DRAWABLE_LEFT = 0;
-//                final int DRAWABLE_TOP = 1;
-//                final int DRAWABLE_RIGHT = 2;
-//                final int DRAWABLE_BOTTOM = 3;
-//
-//                if(event.getAction() == MotionEvent.ACTION_UP) {
-//                    if(event.getRawX() >= (viewHolder.etcomment.getRight() - viewHolder.etcomment.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-//                        // your action here
-//
-//                        EditText etcomment=viewlike.findViewById(R.id.comment_post);
-//                        Comment = etcomment.getText().toString();
-//
-//                        int i = position;
-//                        PID =  postStringHashMap.get(i);
-//                        new CommentExecuteTask(PID).execute();
-//
-//                        return true;
-//                    }
-//                }
-//                return false;
-//            }
-//        });
             }
         });
 
@@ -287,27 +275,15 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
             public void onClick(View view) {
 
                 int i = position;
-                PID =  postStringHashMap.get(i);
+             String PIDHome =  HomeHashMap.get(i).getPost_id();
 
                 Intent intent = new Intent(context, Comment_View_Activity.class);
-                intent.putExtra("postid",PID);
+                intent.putExtra("postid",PIDHome);
                 context.startActivity(intent);
 
             }
         });
 
-        viewHolder.send_comment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                int i = position;
-                PID =  postStringHashMap.get(i);
-
-                EditText etcomment=viewlike.findViewById(R.id.commenttxt);
-                Comment = etcomment.getText().toString();
-                new HomeAdapter.CommentExecuteTask(PID,Comment).execute();
-            }
-        });
 
     }
 
@@ -384,171 +360,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
     }
 
     //*************************************comment**********************
-    public class CommentExecuteTask extends AsyncTask<String,Integer,String> {
-        String pid3;
-        String Comment1;
 
-        public CommentExecuteTask(String pid, String comment) {
-            this.pid3=pid;
-            this.Comment1=comment;
-        }
-//    ProgressDialog dialog;
-
-        protected void onPreExecute() {
-//        dialog = new ProgressDialog(getContext());
-//        dialog.show();
-
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-
-//        String res = PostData(pid3);
-//        return res;
-            try {
-
-                URL url = new URL("https://jntrcpl.com/theoji/index.php/Api/comment");
-
-                JSONObject postDataParams = new JSONObject();
-
-                // EditText etcomment=viewlike.findViewById(R.id.commenttxt);
-                //  Comment = etcomment.getText().toString();
-
-                id= AppPreference.getUserid(context);
-                //String PID = PostListModel.getPost_id();
-
-                postDataParams.put("id",id);
-                postDataParams.put("pid",pid3);
-                postDataParams.put("comment",Comment1);
-
-                Log.e("postDataParams", postDataParams.toString());
-
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setReadTimeout(15000 /* milliseconds*/);
-                conn.setConnectTimeout(15000  /*milliseconds*/);
-                conn.setRequestMethod("POST");
-                conn.setDoInput(true);
-                conn.setDoOutput(true);
-
-                OutputStream os = conn.getOutputStream();
-                BufferedWriter writer = new BufferedWriter(
-                        new OutputStreamWriter(os, "UTF-8"));
-                writer.write(getPostDataString(postDataParams));
-
-                writer.flush();
-                writer.close();
-                os.close();
-                int responseCode = conn.getResponseCode();
-
-                if (responseCode == HttpsURLConnection.HTTP_OK) {
-
-                    BufferedReader r = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                    StringBuilder result = new StringBuilder();
-                    String line;
-                    while ((line = r.readLine()) != null) {
-                        result.append(line);
-                    }
-                    r.close();
-                    return result.toString();
-
-                } else {
-                    return new String("false : " + responseCode);
-                }
-            }
-            catch (Exception e) {
-                return new String("Exception: " + e.getMessage());
-            }
-
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-
-            if (result != null) {
-//            dialog.dismiss();
-
-                try {
-                    JSONObject responce = new JSONObject(result);
-                    String res = responce.getString("responce");
-//
-//                JSONObject data= new JSONObject(result).getJSONObject("data");
-//                user_id=data.getString("user_id");
-//                String username1=data.getString("username");
-
-                    if (res.equals("true")) {
-                        //Toast.makeText(context,"success"+ result, Toast.LENGTH_SHORT).show();
-                        Toast.makeText(context, "success" + result, Toast.LENGTH_SHORT).show();
-
-                    } else {
-
-                        Toast.makeText(context,"unsuccess",Toast.LENGTH_SHORT).show();
-                    }
-
-                    // new CountStatusExcuteTask(getContext(),PID ).execute();
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-//        super.onPostExecute(s);
-            }
-        }
-    }
-    // public String PostData(String values) {
-//        try {
-//
-//            URL url = new URL("https://jntrcpl.com/theoji/index.php/Api/comment");
-//
-//            JSONObject postDataParams = new JSONObject();
-//
-//            EditText etcomment=viewlike.findViewById(R.id.commenttxt);
-//            Comment = etcomment.getText().toString();
-//
-//            id= AppPreference.getUserid(context);
-//            //String PID = PostListModel.getPost_id();
-//
-//            postDataParams.put("id",id);
-//            postDataParams.put("pid",values);
-//            postDataParams.put("comment",Comment);
-//
-//            Log.e("postDataParams", postDataParams.toString());
-//
-//            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-//            conn.setReadTimeout(15000 /* milliseconds*/);
-//            conn.setConnectTimeout(15000  /*milliseconds*/);
-//            conn.setRequestMethod("POST");
-//            conn.setDoInput(true);
-//            conn.setDoOutput(true);
-//
-//            OutputStream os = conn.getOutputStream();
-//            BufferedWriter writer = new BufferedWriter(
-//                    new OutputStreamWriter(os, "UTF-8"));
-//            writer.write(getPostDataString(postDataParams));
-//
-//            writer.flush();
-//            writer.close();
-//            os.close();
-//            int responseCode = conn.getResponseCode();
-//
-//            if (responseCode == HttpsURLConnection.HTTP_OK) {
-//
-//                BufferedReader r = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-//                StringBuilder result = new StringBuilder();
-//                String line;
-//                while ((line = r.readLine()) != null) {
-//                    result.append(line);
-//                }
-//                r.close();
-//                return result.toString();
-//
-//            } else {
-//                return new String("false : " + responseCode);
-//            }
-//        }
-//        catch (Exception e) {
-//            return new String("Exception: " + e.getMessage());
-//        }
-    //  }
     public String getPostDataString(JSONObject params) throws Exception {
 
         StringBuilder result = new StringBuilder();
@@ -589,8 +401,53 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         }
         @Override
         protected String doInBackground(String... params) {
-            String res = PostData1(PID1);
-            return res;
+            try {
+
+                URL url = new URL("https://jntrcpl.com/theoji/index.php/Api/deletepost");
+
+                JSONObject postDataParams = new JSONObject();
+                id= AppPreference.getUserid(context);
+
+                postDataParams.put("pid",PID1);
+                postDataParams.put("id",id);
+
+                Log.e("postDataParams", postDataParams.toString());
+
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setReadTimeout(15000 /* milliseconds*/);
+                conn.setConnectTimeout(15000  /*milliseconds*/);
+                conn.setRequestMethod("POST");
+                conn.setDoInput(true);
+                conn.setDoOutput(true);
+
+                OutputStream os = conn.getOutputStream();
+                BufferedWriter writer = new BufferedWriter(
+                        new OutputStreamWriter(os, "UTF-8"));
+                writer.write(getPostDataString(postDataParams));
+
+                writer.flush();
+                writer.close();
+                os.close();
+                int responseCode = conn.getResponseCode();
+
+                if (responseCode == HttpsURLConnection.HTTP_OK) {
+
+                    BufferedReader r = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    StringBuilder result = new StringBuilder();
+                    String line;
+                    while ((line = r.readLine()) != null) {
+                        result.append(line);
+                    }
+                    r.close();
+                    return result.toString();
+
+                } else {
+                    return new String("false : " + responseCode);
+                }
+            }
+            catch (Exception e) {
+                return new String("Exception: " + e.getMessage());
+            }
         }
 
         @Override
@@ -605,7 +462,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
                     if (res.equals("true")) {
 
                         Toast.makeText(context, "delete success", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(context, PostActivity.class);
+                        Intent intent = new Intent(context, Main2Activity.class);
                         context.startActivity(intent);
                         ((Activity)context).finish();
 
@@ -620,56 +477,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
             }
         }
     }
-    public String PostData1(String values) {
-        try {
 
-            URL url = new URL("https://jntrcpl.com/theoji/index.php/Api/deletepost");
-
-            JSONObject postDataParams = new JSONObject();
-            id= AppPreference.getUserid(context);
-            // String PID = PostListModel.getPost_id();
-
-            postDataParams.put("pid",values);
-            postDataParams.put("id",id);
-
-            Log.e("postDataParams", postDataParams.toString());
-
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setReadTimeout(15000 /* milliseconds*/);
-            conn.setConnectTimeout(15000  /*milliseconds*/);
-            conn.setRequestMethod("POST");
-            conn.setDoInput(true);
-            conn.setDoOutput(true);
-
-            OutputStream os = conn.getOutputStream();
-            BufferedWriter writer = new BufferedWriter(
-                    new OutputStreamWriter(os, "UTF-8"));
-            writer.write(getPostDataString(postDataParams));
-
-            writer.flush();
-            writer.close();
-            os.close();
-            int responseCode = conn.getResponseCode();
-
-            if (responseCode == HttpsURLConnection.HTTP_OK) {
-
-                BufferedReader r = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                StringBuilder result = new StringBuilder();
-                String line;
-                while ((line = r.readLine()) != null) {
-                    result.append(line);
-                }
-                r.close();
-                return result.toString();
-
-            } else {
-                return new String("false : " + responseCode);
-            }
-        }
-        catch (Exception e) {
-            return new String("Exception: " + e.getMessage());
-        }
-    }
 //***********************************************************************************************
 
     public class CountStatusExcuteTask extends AsyncTask<String,Integer,String>{

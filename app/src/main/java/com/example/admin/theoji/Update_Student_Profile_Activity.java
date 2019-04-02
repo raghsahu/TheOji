@@ -689,9 +689,6 @@ public class Update_Student_Profile_Activity extends AppCompatActivity {
                             }
 
 
-//                           Picasso.get().load("https://jntrcpl.com/theoji/uploads/"+postListModel.getPostimg()).into(viewHolder.);
-
-
                         }else {
 
                             Toast.makeText(Update_Student_Profile_Activity.this, "no details update now, please refresh after some time!", Toast.LENGTH_LONG).show();

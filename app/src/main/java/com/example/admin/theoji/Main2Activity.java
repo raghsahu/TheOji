@@ -55,7 +55,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
     String server_url;
     ArrayList<HomeListModel> HomeList= new ArrayList<>();
     private HomeAdapter homeAdapter;
-    public static HashMap<Integer , String> postStringHashMap = new HashMap<>();
+    public static HashMap<Integer, HomeListModel> HomeHashMap = new HashMap<Integer, HomeListModel>();
 
     TextView Nav_text_name,Nav_text_email;
     CircleImageView Profile_img;
@@ -503,8 +503,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
 
 
                             HomeList.add(i, new HomeListModel(post_id, name, email, date, content, userimg, postimg,firstname));
-                            postStringHashMap.put(i , post_id);
-//                AppPreference.setPostid(PostActivity.this,post_id);
+                            HomeHashMap.put(i ,new HomeListModel(post_id, name, email, date, content, userimg, postimg,firstname));
                         }
 
 
