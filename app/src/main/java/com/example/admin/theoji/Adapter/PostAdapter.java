@@ -142,7 +142,9 @@ public class  PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         viewHolder.txt_nm.setText(postListModel.getContent());
 
         viewHolder.img_person.setImageResource(R.drawable.person);
-        Picasso.get().load("https://jntrcpl.com/theoji/uploads/"+postListModel.getUserimg()).into(viewHolder.img_person);
+        Picasso.get().load("https://jntrcpl.com/theoji/uploads/"+postListModel.getUserimg())
+                .placeholder(R.drawable.person)
+                .into(viewHolder.img_person);
 
         viewHolder.img2.setImageResource(R.drawable.img);
       Picasso.get()
