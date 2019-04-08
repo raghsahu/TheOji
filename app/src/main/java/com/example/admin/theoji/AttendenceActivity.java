@@ -7,6 +7,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -20,6 +22,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.admin.theoji.Adapter.StudentListAdapter;
+import com.example.admin.theoji.Adapter.StudentListAdapter_Recycler;
 import com.example.admin.theoji.Connection.HttpHandler;
 import com.example.admin.theoji.ModelClass.ClassModel;
 import com.example.admin.theoji.ModelClass.SectionModel;
@@ -47,15 +50,15 @@ import java.util.Locale;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import static com.androidquery.util.AQUtility.getContext;
-import static com.example.admin.theoji.Adapter.StudentListAdapter.multiselected;
+import static com.example.admin.theoji.Adapter.StudentListAdapter_Recycler.multiselected_stud;
 
 public class AttendenceActivity extends AppCompatActivity {
 
-    Spinner spin_student;
+   // Spinner spin_student;
+    RecyclerView spin_student;
     //ArrayList<String> ChooseStudent =new ArrayList<>();
     private ArrayList<StudentModel> studentList=new ArrayList<>();
-    private StudentListAdapter studentListAdapter;
+    private StudentListAdapter_Recycler studentListAdapter_recycler;
 
     Spinner spin_class;
     ArrayList<String> ChooseClass =new ArrayList<>();
@@ -84,7 +87,7 @@ public class AttendenceActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attendence);
 
-        spin_student = (Spinner)findViewById(R.id.class_students);
+        spin_student = findViewById(R.id.class_students);
         spin_class=(Spinner)findViewById(R.id.spin_class);
         attend_date=(EditText)findViewById(R.id.attendence_date);
         attend_remark=(EditText)findViewById(R.id.attendence_remark);
@@ -105,14 +108,10 @@ public class AttendenceActivity extends AppCompatActivity {
                // Spin_Student=spin_student.getSelectedItem().toString();
                 StringBuilder commaSepValueBuilder = new StringBuilder();
 
-                //Looping through the list
-                for ( int i = 0; i< multiselected.size(); i++){
-                    //append the value into the builder
-                    commaSepValueBuilder.append(multiselected.get(i));
+                for ( int i = 0; i< multiselected_stud.size(); i++){
+                    commaSepValueBuilder.append(multiselected_stud.get(i));
 
-                    //if the value is not the last element of the list
-                    //then append the comma(,) as well
-                    if ( i != multiselected.size()-1){
+                    if ( i != multiselected_stud.size()-1){
                         commaSepValueBuilder.append(", ");
                     }
                 }
@@ -309,20 +308,25 @@ public class AttendenceActivity extends AppCompatActivity {
 
                         }
 
-                        studentListAdapter = new StudentListAdapter(AttendenceActivity.this, android.R.layout.simple_spinner_item, studentList);
-                        //StudentListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-                        // spin_student.setAdapter(StudentAdapter,false, onSelectedListener);
+//                        studentListAdapter_recycler = new StudentListAdapter_Recycler(AttendenceActivity.this, android.R.layout.simple_spinner_item, studentList);
+//                        spin_student.setAdapter(studentListAdapter_recycler);
 
-                        spin_student.setAdapter(studentListAdapter);
+                        studentListAdapter_recycler = new StudentListAdapter_Recycler(AttendenceActivity.this, studentList);
+                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(AttendenceActivity.this);
+                        spin_student.setLayoutManager(mLayoutManager);
+                        spin_student.setItemAnimator(new DefaultItemAnimator());
+                        spin_student.setAdapter(studentListAdapter_recycler);
 
                     }else {
                         try{
 
-                               // ChooseStudent.clear();
                                 studentList.clear();
-                            studentListAdapter = new StudentListAdapter(AttendenceActivity.this, android.R.layout.simple_spinner_item, studentList);
-                                spin_student.setAdapter(studentListAdapter);
-                                studentListAdapter.notifyDataSetChanged();
+                            studentListAdapter_recycler = new StudentListAdapter_Recycler(AttendenceActivity.this, studentList);
+                            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(AttendenceActivity.this);
+                            spin_student.setLayoutManager(mLayoutManager);
+                            spin_student.setItemAnimator(new DefaultItemAnimator());
+                                spin_student.setAdapter(studentListAdapter_recycler);
+                                studentListAdapter_recycler.notifyDataSetChanged();
 
                         }catch (Exception e)
                         {
