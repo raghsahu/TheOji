@@ -400,7 +400,7 @@ public class LoginActivity extends AppCompatActivity {
                      email=data.getString("email");
                     String mobileno1=data.getString("mobileno");
                     String date1=data.getString("date");
-                    String user_type1=data.getString("user_type");
+                    String user_type=data.getString("user_type");
                     String gender1=data.getString("gender");
                     String dob1=data.getString("dob");
                     String city1=data.getString("city");
@@ -429,6 +429,7 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(LoginActivity.this, "Invalid details login error", Toast.LENGTH_SHORT).show();
                     } else {
                         manager.setLogin(true);
+                        AppPreference.setuser_type(LoginActivity.this,user_type);
 
                         AppPreference.setProfileImage(LoginActivity.this,profileimage);
                         Toast.makeText(LoginActivity.this, "pp" + AppPreference.getProfileImage(LoginActivity.this), Toast.LENGTH_SHORT).show();
@@ -443,6 +444,13 @@ public class LoginActivity extends AppCompatActivity {
                         startActivity(intent);
                         finish();
                         Toast.makeText(LoginActivity.this, "login success", Toast.LENGTH_SHORT).show();
+
+                        //**********************************hide/ view action************************************************
+//                        if (AppPreference.getUser_Type(LoginActivity.this).equals(2)){
+//                            add_attendence
+//
+//                        }
+
                     }
 
 

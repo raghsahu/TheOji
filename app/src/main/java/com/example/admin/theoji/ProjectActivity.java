@@ -43,6 +43,10 @@ public class ProjectActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_project);
 
+        if (AppPreference.getUser_Type(ProjectActivity.this).equals("4")) {
+            viewProjects.setVisibility(View.GONE);
+        }
+
         viewProjects = (ImageView)findViewById(R.id.viewProjects);
         et_post=findViewById(R.id.et_post);
 

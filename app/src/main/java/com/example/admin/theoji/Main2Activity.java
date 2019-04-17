@@ -130,6 +130,22 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                 startActivity(i);
             }
         });
+        //********************************************************************************************
+
+        if (AppPreference.getUser_Type(Main2Activity.this).equals("4")){
+
+            navigationView = (NavigationView)findViewById(R.id.nav_view);
+            Menu nav_Menu = navigationView.getMenu();
+            nav_Menu.findItem(R.id.nav_student).setVisible(false);
+            nav_Menu.findItem(R.id.nav_class).setVisible(false);
+            nav_Menu.findItem(R.id.nav_teacher).setVisible(false);
+            nav_Menu.findItem(R.id.nav_chat).setVisible(false);
+
+
+        }
+
+
+
     }
 
     @Override

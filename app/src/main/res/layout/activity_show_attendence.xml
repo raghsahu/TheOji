@@ -35,7 +35,7 @@
             <ImageView
             android:id="@+id/add_attendence"
             android:layout_weight="0.80"
-            android:src="@drawable/people"
+            android:src="@drawable/view"
             android:layout_width="match_parent"
             android:layout_height="30dp" />
         </LinearLayout>

@@ -69,6 +69,14 @@ public class ShowAttendenceActivity extends AppCompatActivity {
             spin_class=findViewById(R.id.search_class1);
             btn_seach_attend=findViewById(R.id.find_seach);
 
+
+            //***********2=school**********4=parent***********
+        if (AppPreference.getUser_Type(ShowAttendenceActivity.this).equals("2")){
+            add_attendence.setVisibility(View.GONE);
+        } if (AppPreference.getUser_Type(ShowAttendenceActivity.this).equals("4")) {
+            add_attendence.setVisibility(View.GONE);
+        }
+
              add_attendence.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

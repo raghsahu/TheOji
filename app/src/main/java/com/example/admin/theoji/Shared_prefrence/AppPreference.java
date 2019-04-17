@@ -18,6 +18,7 @@ public class AppPreference {
     public static final String EMAIL = "email";
     public static final String SchoolCode = "schoolcode";
     public static final String ProfileImage = "profileImg";
+    public static final String User_Type = "userType";
 
     Context context;
     SharedPreferences prefs;
@@ -122,6 +123,18 @@ public class AppPreference {
         return preferences.getString(ProfileImage, "");
     }
 
+
+    public static void setuser_type(Context context, String value) {
+        SharedPreferences preferences = context.getSharedPreferences(SHARED_PREFERENCE_NAME, 0);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(User_Type, value);
+        editor.commit();
+    }
+
+    public static String getUser_Type(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences(SHARED_PREFERENCE_NAME, 0);
+        return preferences.getString(User_Type, "");
+    }
 
 
     public void logoutSession() {

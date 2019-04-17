@@ -70,6 +70,10 @@ public class PayFeesActivity  extends AppCompatActivity {
         spin_section = (Spinner)findViewById(R.id.search_section1);
         find_seach=findViewById(R.id.find_seach);
 
+        if (AppPreference.getUser_Type(PayFeesActivity.this).equals("4")) {
+            viewpayfees.setVisibility(View.GONE);
+        }
+
         viewpayfees.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

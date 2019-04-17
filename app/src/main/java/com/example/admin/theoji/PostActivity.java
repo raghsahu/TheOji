@@ -60,6 +60,11 @@ public class PostActivity extends AppCompatActivity {
         et_post=findViewById(R.id.et_post);
        // et_post.setEnabled(false);
 
+
+        if (AppPreference.getUser_Type(PostActivity.this).equals("4")) {
+            addPost.setVisibility(View.GONE);
+        }
+
         addPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

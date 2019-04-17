@@ -39,6 +39,9 @@ public class LibraryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_library);
 
         viewlibrary = (ImageView)findViewById(R.id.viewlibrary);
+        if (AppPreference.getUser_Type(LibraryActivity.this).equals("4")) {
+            viewlibrary.setVisibility(View.GONE);
+        }
 
         viewlibrary.setOnClickListener(new View.OnClickListener() {
             @Override
