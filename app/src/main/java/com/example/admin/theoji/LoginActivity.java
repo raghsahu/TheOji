@@ -337,7 +337,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 //******************************************************************************
-private  boolean checkAndRequestPermissions() {
+   private  boolean checkAndRequestPermissions() {
     int permissionCamara = ContextCompat.checkSelfPermission(this,Manifest.permission.CAMERA);
     int permissionStorage = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
     int permissionStorage1 = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
@@ -392,16 +392,10 @@ private  boolean checkAndRequestPermissions() {
                     String res = responce.getString("responce");
                     String profileimage = responce.getString("profileimage");
 
-                    if(!(profileimage==null)) {
-                        AppPreference.setProfileImage(LoginActivity.this, profileimage);
-                        Toast.makeText(LoginActivity.this, "pp" + AppPreference.getProfileImage(LoginActivity.this), Toast.LENGTH_SHORT).show();
-                    }else {
-                       // AppPreference.setProfileImage(LoginActivity.this, getDrawable(R.id.img_person));
-                    }
                     JSONObject data= new JSONObject(result).getJSONObject("data");
                      user_id=data.getString("user_id");
                     String username1=data.getString("username");
-                     firstname=data.getString("firstname");
+                    String firstname=data.getString("firstname");
                     String lastname1=data.getString("lastname");
                      email=data.getString("email");
                     String mobileno1=data.getString("mobileno");
@@ -428,19 +422,21 @@ private  boolean checkAndRequestPermissions() {
                     String sturemainfee1=data.getString("sturemainfee");
                     String stulastfee1=data.getString("stulastfee");
 
-
+                    AppPreference.setFirstname(LoginActivity.this,firstname);
 
 
                     if (!res.equalsIgnoreCase("true")) {
-
                         Toast.makeText(LoginActivity.this, "Invalid details login error", Toast.LENGTH_SHORT).show();
-
                     } else {
                         manager.setLogin(true);
+
+                        AppPreference.setProfileImage(LoginActivity.this,profileimage);
+                        Toast.makeText(LoginActivity.this, "pp" + AppPreference.getProfileImage(LoginActivity.this), Toast.LENGTH_SHORT).show();
+
                         AppPreference.setRefid(LoginActivity.this,ref_id);
-                        AppPreference.setFirstname(LoginActivity.this,firstname);
                         AppPreference.setEmail(LoginActivity.this,email);
                         AppPreference.setSchoolCode(LoginActivity.this,school_code1);
+                       // Toast.makeText(LoginActivity.this, ""+AppPreference.getRefid(LoginActivity.this), Toast.LENGTH_SHORT).show();
 
                         AppPreference.setUserid(LoginActivity.this,user_id);
                         Intent intent = new Intent(LoginActivity.this, Main2Activity.class);
@@ -589,7 +585,7 @@ private  boolean checkAndRequestPermissions() {
         InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         in.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
-
+//*****************************************
     private class Search_Stud_Task extends AsyncTask<String, Integer, String> {
         ProgressDialog dialog;
 

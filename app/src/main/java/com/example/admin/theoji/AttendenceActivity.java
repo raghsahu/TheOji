@@ -499,7 +499,7 @@ public class AttendenceActivity extends AppCompatActivity {
                 JSONObject postDataParams = new JSONObject();
                 String id = AppPreference.getUserid(AttendenceActivity.this);
                 String Sch_id = AppPreference.getRefid(AttendenceActivity.this);
-               // Toast.makeText(AttendenceActivity.this, "sch_id="+Sch_id, Toast.LENGTH_SHORT).show();
+                Toast.makeText(AttendenceActivity.this, "sch_id="+Sch_id, Toast.LENGTH_SHORT).show();
 
                 postDataParams.put("id", id);
 

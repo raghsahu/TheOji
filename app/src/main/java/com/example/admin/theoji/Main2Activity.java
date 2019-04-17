@@ -103,14 +103,25 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
 
         Nav_text_name=findViewById(R.id.nav_hedder_name);
         Nav_text_email=findViewById(R.id.nav_hedder_email);
-        Profile_img=findViewById(R.id.profile_image);
+        Profile_img=findViewById(R.id.profile_image12);
 
         Nav_text_name.setText(AppPreference.getFirstname(Main2Activity.this));
         Nav_text_email.setText(AppPreference.getEmail(Main2Activity.this));
 
-        Picasso.get()
-                .load("https://jntrcpl.com/theoji/uploads/"+AppPreference.getProfileImage(Main2Activity.this))
-                .into(Main2Activity.this.Profile_img);
+        if (AppPreference.getProfileImage(Main2Activity.this).length()!=0)
+        {
+//            Picasso.get()
+//                    .load("https://jntrcpl.com/theoji/uploads/"+AppPreference.getProfileImage(Main2Activity.this))
+//                    .into(Main2Activity.this.Profile_img);
+            Picasso.get()
+                    .load("https://jntrcpl.com/theoji/uploads/IMG_20190330_1400452.jpg")
+                    .into(Main2Activity.this.Profile_img);
+        }else {
+            Picasso.get()
+                    .load(R.drawable.person)
+                    .into(Main2Activity.this.Profile_img);
+        }
+
 
         Profile_img.setOnClickListener(new View.OnClickListener() {
             @Override

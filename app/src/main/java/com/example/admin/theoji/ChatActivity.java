@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.admin.theoji.Adapter.HomeAdapter;
 import com.example.admin.theoji.Adapter.StudentListAdapter;
 import com.example.admin.theoji.Adapter.Student_Chat_Adapter;
+import com.example.admin.theoji.Connection.Connectivity;
 import com.example.admin.theoji.Connection.HttpHandler;
 import com.example.admin.theoji.ModelClass.ChatStudent_Model;
 import com.example.admin.theoji.ModelClass.ClassModel;
@@ -61,7 +62,12 @@ public class ChatActivity extends AppCompatActivity {
         spin_section = (Spinner)findViewById(R.id.search_section1);
         recyclerchat = (RecyclerView) findViewById(R.id.recycler_chat_stud);
 
-        new spinnerClassExecuteTask().execute();
+
+        if (Connectivity.isNetworkAvailable(ChatActivity.this)){
+            new spinnerClassExecuteTask().execute();
+        }else {
+            Toast.makeText(this, "No Internet", Toast.LENGTH_SHORT).show();
+        }
 //***************************************************************
         spin_class.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
