@@ -38,11 +38,11 @@ public class HomeworkActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homework);
 
+        viewhomeWork = (ImageView)findViewById(R.id.viewhomeWork);
+
         if (AppPreference.getUser_Type(HomeworkActivity.this).equals("4")) {
             viewhomeWork.setVisibility(View.GONE);
         }
-
-        viewhomeWork = (ImageView)findViewById(R.id.viewhomeWork);
 
         viewhomeWork.setOnClickListener(new View.OnClickListener() {
             @Override

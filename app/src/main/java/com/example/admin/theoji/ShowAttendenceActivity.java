@@ -28,6 +28,7 @@ import com.example.admin.theoji.Connection.Connectivity;
 import com.example.admin.theoji.Connection.HttpHandler;
 import com.example.admin.theoji.ModelClass.AttendanceListModel;
 import com.example.admin.theoji.ModelClass.ClassModel;
+import com.example.admin.theoji.ModelClass.PayfeesListModel;
 import com.example.admin.theoji.ModelClass.StudentListModel;
 import com.example.admin.theoji.Shared_prefrence.AppPreference;
 import com.example.admin.theoji.Utils.CustomAlert;
@@ -39,7 +40,9 @@ import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.concurrent.BlockingQueue;
 
 public class ShowAttendenceActivity extends AppCompatActivity {
     ImageView add_attendence;
@@ -57,6 +60,7 @@ public class ShowAttendenceActivity extends AppCompatActivity {
     EditText tv_date1;
     Button btn_seach_attend;
    String Tv_Date,Select_Class;
+    public static HashMap<Integer, AttendanceListModel> AttendanceHasMap=new HashMap<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -91,13 +95,14 @@ public class ShowAttendenceActivity extends AppCompatActivity {
         AttendanceList = new ArrayList<>();
 
         if (Connectivity.isNetworkAvailable(ShowAttendenceActivity.this)){
-            new GetAttendanceList().execute();
+           // new GetAttendanceList().execute();
+            new spinnerClassExecuteTask().execute();
         }else {
             Toast.makeText(this, "No Internet", Toast.LENGTH_SHORT).show();
 
         }
 
-        new spinnerClassExecuteTask().execute();
+
         //****************************************
 
         tv_date.setOnTouchListener(new View.OnTouchListener() {
@@ -239,7 +244,9 @@ public class ShowAttendenceActivity extends AppCompatActivity {
                             String present = c.getString("present");
                             String absent = c.getString("absent");
 
-                            AttendanceList.add(i, new AttendanceListModel(date, attendance_id, section_name, class_name,remark,
+                            AttendanceList.add( new AttendanceListModel(date, attendance_id, section_name, class_name,remark,
+                                    teacher_name,student_all,present,absent));
+                            AttendanceHasMap.put(i, new AttendanceListModel(date, attendance_id, section_name, class_name,remark,
                                     teacher_name,student_all,present,absent));
 
                         }

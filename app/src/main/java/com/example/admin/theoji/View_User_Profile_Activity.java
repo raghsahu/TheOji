@@ -109,6 +109,7 @@ public class View_User_Profile_Activity extends AppCompatActivity {
     int Gallery_view = 2;
 
     CardView card_total,card_request,card_conf;
+    LinearLayout ll_below_profile;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -119,6 +120,15 @@ public class View_User_Profile_Activity extends AppCompatActivity {
         tv_request_std=(TextView)findViewById(R.id.tv_request_std);
         tv_conferm_std=(TextView)findViewById(R.id.tv_conferm_std);
         tv_sch_code=(TextView)findViewById(R.id.sch_code);
+
+        ll_below_profile=findViewById(R.id.ll_below_profile);
+
+        if (AppPreference.getUser_Type(View_User_Profile_Activity.this).equals("4"))
+        {
+            ll_below_profile.setVisibility(View.GONE);
+        }if (AppPreference.getUser_Type(View_User_Profile_Activity.this).equals("5")){
+            ll_below_profile.setVisibility(View.GONE);
+        }
 
         et_discription=findViewById(R.id.about_description);
         et_title=findViewById(R.id.title_about);

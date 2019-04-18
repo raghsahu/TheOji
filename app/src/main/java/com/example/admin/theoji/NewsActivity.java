@@ -43,11 +43,11 @@ public class NewsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
 
+        addNews = (ImageView)findViewById(R.id.viewNews);
         if (AppPreference.getUser_Type(NewsActivity.this).equals("4")) {
             addNews.setVisibility(View.GONE);
         }
 
-        addNews = (ImageView)findViewById(R.id.viewNews);
         add_post_icon=findViewById(R.id.et_post);
 //        add_post_icon.setEnabled(false);
         addNews.setOnClickListener(new View.OnClickListener() {

@@ -210,18 +210,31 @@
                 android:gravity="center"
                 android:orientation="vertical"
                 android:layout_weight="0.8"
+                android:weightSum="1"
                 >
 
                 <Button
-                    android:id="@+id/atte_details"
+                    android:id="@+id/present_btn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
                     android:background="@color/colorPrimary"
-                    android:text="Details"
+                    android:text="Present"
+                    android:layout_margin="5dp"
                     android:textAllCaps="false"
                     android:textColor="#fff"
-                    android:layout_weight="0.33"
+                    android:layout_weight="0.5"
+                    />
+
+                <Button
+                    android:layout_margin="5dp"
+                    android:id="@+id/absent_btm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#E24848"
+                    android:text="Absent"
+                    android:textAllCaps="false"
+                    android:textColor="#fff"
+                    android:layout_weight="0.5"
                     />
 
             </LinearLayout>

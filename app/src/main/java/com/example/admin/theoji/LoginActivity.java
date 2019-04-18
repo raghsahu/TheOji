@@ -69,7 +69,7 @@ public class LoginActivity extends AppCompatActivity {
     private ArrayAdapter<String> typeAdapter;
     private ArrayList<String> typeList;
     String Type;
-    String ref_id;
+    //String ref_id;
 
     public static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 1;
      Toolbar toolbar;
@@ -407,7 +407,7 @@ public class LoginActivity extends AppCompatActivity {
                     String address1=data.getString("address");
                     String status1=data.getString("status");
                     String block_unblock1=data.getString("block_unblock");
-                    ref_id=data.getString("ref_id");
+                    String ref_id=data.getString("ref_id");
                     String about1=data.getString("about");
                     school_code1=data.getString("school_code");
                     String profileupdate1=data.getString("profileupdate");
@@ -437,7 +437,7 @@ public class LoginActivity extends AppCompatActivity {
                         AppPreference.setRefid(LoginActivity.this,ref_id);
                         AppPreference.setEmail(LoginActivity.this,email);
                         AppPreference.setSchoolCode(LoginActivity.this,school_code1);
-                       // Toast.makeText(LoginActivity.this, ""+AppPreference.getRefid(LoginActivity.this), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "ref"+AppPreference.getRefid(LoginActivity.this), Toast.LENGTH_SHORT).show();
 
                         AppPreference.setUserid(LoginActivity.this,user_id);
                         Intent intent = new Intent(LoginActivity.this, Main2Activity.class);

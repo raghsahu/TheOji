@@ -20,7 +20,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:windowSoftInputMode="stateHidden">
-        <activity android:name=".Student_fees_submit_detals"></activity>
+        <activity android:name=".P_A_Details_Activity"></activity>
+        <activity android:name=".Student_fees_submit_detals" />
         <activity android:name=".Main2Activity" />
         <activity android:name=".SplashActivity">
             <intent-filter>
@@ -63,6 +64,7 @@
         <activity android:name=".Update_Class_Section_Activity" />
         <activity android:name=".ChatActivity" />
         <activity android:name=".Add_Chatting" />
+        <activity android:name=".AbsentActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

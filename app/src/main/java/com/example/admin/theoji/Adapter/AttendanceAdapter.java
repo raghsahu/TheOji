@@ -14,10 +14,14 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.admin.theoji.AbsentActivity;
 import com.example.admin.theoji.ModelClass.AttendanceListModel;
+import com.example.admin.theoji.P_A_Details_Activity;
 import com.example.admin.theoji.R;
 
 import java.util.ArrayList;
+
+import static com.example.admin.theoji.ShowAttendenceActivity.AttendanceHasMap;
 
 public class AttendanceAdapter extends RecyclerView.Adapter<AttendanceAdapter.ViewHolder> {
 
@@ -29,10 +33,11 @@ public class AttendanceAdapter extends RecyclerView.Adapter<AttendanceAdapter.Vi
     String id;
     String SID= "";
     public  int pos;
+    String AttendanceID;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        public Button btn1;
+        public Button btn_present, btn_absent;
         public TextView txt_date, txt_classe, txt_section,txt_teacher, txt_preesent,txt_absent,txt_remark;
         CardView cardeview;
         int pos;
@@ -49,7 +54,8 @@ public class AttendanceAdapter extends RecyclerView.Adapter<AttendanceAdapter.Vi
             txt_remark = (TextView) viewlike.findViewById(R.id.txt_remark);
 
             cardeview=(CardView)viewlike.findViewById(R.id.cardeview);
-            btn1 = (Button) viewlike.findViewById(R.id.atte_details);
+            btn_present = (Button) viewlike.findViewById(R.id.present_btn);
+            btn_absent = (Button) viewlike.findViewById(R.id.absent_btm);
 
         }
     }
@@ -84,19 +90,37 @@ public class AttendanceAdapter extends RecyclerView.Adapter<AttendanceAdapter.Vi
         viewHolder.txt_remark.setText(attendanceListModel.getRemark());
 
         viewHolder.cardeview.setTag(viewHolder);
-        viewHolder.btn1.setTag(viewHolder);
+        viewHolder.btn_present.setTag(viewHolder);
+        viewHolder.btn_absent.setTag(viewHolder);
         viewHolder.pos = position;
 
-        viewHolder.btn1.setOnClickListener(new View.OnClickListener() {
+        viewHolder.btn_present.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-//                    pos = position;
-//                    SID =  studentStringHashMap.get(pos);
-//
-//                    new StudentAdapter.approveTask(view.getContext(),SID , viewHolder.btn1.getTag()).execute();
+             int i=position;
+                AttendanceID= (AttendanceHasMap.get(i).getAttendance_id());
+
+                Intent intent = new Intent(context, P_A_Details_Activity.class);
+                intent.putExtra("AttendanceID",AttendanceID);
+                context.startActivity(intent);
+                Toast.makeText(context, "PrId"+AttendanceID, Toast.LENGTH_SHORT).show();
             }
         });
+
+        viewHolder.btn_absent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int i=position;
+                AttendanceID= (AttendanceHasMap.get(i).getAttendance_id());
+
+                Intent intent = new Intent(context, AbsentActivity.class);
+                intent.putExtra("AttendanceID",AttendanceID);
+                context.startActivity(intent);
+                Toast.makeText(context, "AbId"+AttendanceID, Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
     }
 

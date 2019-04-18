@@ -499,9 +499,8 @@ public class AttendenceActivity extends AppCompatActivity {
                 JSONObject postDataParams = new JSONObject();
                 String id = AppPreference.getUserid(AttendenceActivity.this);
                 String Sch_id = AppPreference.getRefid(AttendenceActivity.this);
-                Toast.makeText(AttendenceActivity.this, "sch_id="+Sch_id, Toast.LENGTH_SHORT).show();
 
-                postDataParams.put("id", id);
+                //postDataParams.put("id", id);
 
                 postDataParams.put("school_id", Sch_id);
                 postDataParams.put("teacher_id", id);
@@ -561,27 +560,19 @@ public class AttendenceActivity extends AppCompatActivity {
 
                     JSONObject responce = new JSONObject(result);
                     String res = responce.getString("responce");
+                    String date = responce.getString("date");
 
-//                    JSONObject data= new JSONObject(result).getJSONObject("data");
-//                    user_id=data.getString("user_id");
-//                    String name=data.getString("username");
-//                    String email=data.getString("firstname");
-//                    String mobile=data.getString("lastname");
-//                    String pass=data.getString("email");
-//                    String alotclass=data.getString("mobileno");
-//                    String address=data.getString("date");
+                    Toast.makeText(AttendenceActivity.this, "ss"+res, Toast.LENGTH_SHORT).show();
 
+                    if (res.equals("true")) {
 
-
-                    if (!res.equalsIgnoreCase("true")) {
-
-                        Toast.makeText(AttendenceActivity.this, "unsuccess", Toast.LENGTH_SHORT).show();
-
-                    } else {
                         Toast.makeText(AttendenceActivity.this, "success", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(AttendenceActivity.this, ShowAttendenceActivity.class);
                         startActivity(intent);
                         finish();
+
+                    } else {
+                        Toast.makeText(AttendenceActivity.this, "unsuccess", Toast.LENGTH_SHORT).show();
 
                     }
 
@@ -618,5 +609,12 @@ public class AttendenceActivity extends AppCompatActivity {
         }
         return result.toString();
     }
+//***********************************
 
+
+    @Override
+    protected void onDestroy() {
+        multiselected_stud.equals(null);
+        super.onDestroy();
+    }
 }

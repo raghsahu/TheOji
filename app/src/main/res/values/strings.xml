@@ -31,7 +31,7 @@
     </string-array>
 
     <string-array name="class_section">
-        <item>Select Section  </item>
+        <item>-select section-</item>
         <item>A  </item>
         <item> B </item>
         <item> C </item>
