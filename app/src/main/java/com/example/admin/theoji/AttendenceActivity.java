@@ -614,7 +614,7 @@ public class AttendenceActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        multiselected_stud.equals(null);
+        multiselected_stud = null;
         super.onDestroy();
     }
 }

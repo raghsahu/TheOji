@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -47,11 +48,16 @@ public class ChatActivity extends AppCompatActivity {
     public HashMap<Integer, SectionModel> SectionHashMap = new HashMap<Integer, SectionModel>();
 
     RecyclerView recyclerchat;
+    Button find_stud;
     String server_url;
     String Student;
     private ArrayList<ChatStudent_Model> studentList=new ArrayList<>();
     private Student_Chat_Adapter student_chat_adapter;
     public static HashMap<Integer , String> studentHashMap = new HashMap<>();
+     String SectionID;
+    int btnInt=0;
+     String sever_url;
+     String ClassID;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,12 +67,20 @@ public class ChatActivity extends AppCompatActivity {
         spin_class=(Spinner)findViewById(R.id.search_class1);
         spin_section = (Spinner)findViewById(R.id.search_section1);
         recyclerchat = (RecyclerView) findViewById(R.id.recycler_chat_stud);
+        find_stud =findViewById(R.id.find_seach);
 
 
         if (Connectivity.isNetworkAvailable(ChatActivity.this)){
             new spinnerClassExecuteTask().execute();
         }else {
             Toast.makeText(this, "No Internet", Toast.LENGTH_SHORT).show();
+        }
+//*****************************
+        if (Connectivity.isNetworkAvailable(ChatActivity.this)){
+            new spinnerStudentExecuteTask().execute();
+
+        }else {
+            Toast.makeText(ChatActivity.this, "No Internet", Toast.LENGTH_SHORT).show();
         }
 //***************************************************************
         spin_class.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -91,6 +105,7 @@ public class ChatActivity extends AppCompatActivity {
                 {
                     if (ClassHashMap.get(i).getM_name().equals(spin_class.getItemAtPosition(position)))
                     {
+                        ClassID=ClassHashMap.get(i).getM_id();
                         new SectionExecuteTask(ClassHashMap.get(i).getM_id()).execute();
                     }
                 }
@@ -104,8 +119,40 @@ public class ChatActivity extends AppCompatActivity {
         spin_section.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                try{
+//
+//                    if(studentList.size() !=0)
+//                    {
+//                        studentList.clear();
+//
+//                        recyclerchat.setAdapter(null);
+//                        student_chat_adapter.notifyDataSetChanged();
+//                    }
+//                }catch (Exception e)
+//                {
+//                    e.printStackTrace();
+//                }
 
-                //strSid = stateList.get(position).getState_id();
+                for (int i = 0; i < SectionHashMap.size(); i++)
+                {
+
+                    if (SectionHashMap.get(i).getM_name().equals(spin_section.getItemAtPosition(position)))
+                    {
+                       // new spinnerStudentExecuteTask(SectionHashMap.get(i).getM_id()).execute();
+                        SectionID=SectionHashMap.get(i).getM_id();
+                    }
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+
+            }
+        });
+//***********************************************************
+        find_stud.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btnInt=1;
                 try{
 
                     if(studentList.size() !=0)
@@ -120,20 +167,18 @@ public class ChatActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                for (int i = 0; i < SectionHashMap.size(); i++)
-                {
+                if (Connectivity.isNetworkAvailable(ChatActivity.this)){
+                    new spinnerStudentExecuteTask().execute();
 
-                    if (SectionHashMap.get(i).getM_name().equals(spin_section.getItemAtPosition(position)))
-                    {
-                        new spinnerStudentExecuteTask(SectionHashMap.get(i).getM_id()).execute();
-                    }
+                }else {
+                    Toast.makeText(ChatActivity.this, "No Internet", Toast.LENGTH_SHORT).show();
                 }
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
 
             }
         });
+
+
+
 
     }
 
@@ -274,11 +319,11 @@ public class ChatActivity extends AppCompatActivity {
     public class spinnerStudentExecuteTask extends AsyncTask<String, Integer,String> {
 
         String output = "";
-        String M_id;
+       // String M_id;
 
-        public spinnerStudentExecuteTask(String m_id) {
-            this.M_id=m_id;
-        }
+//        public spinnerStudentExecuteTask(String m_id) {
+//            this.M_id=m_id;
+//        }
         @Override
         protected void onPreExecute() {
 
@@ -288,9 +333,18 @@ public class ChatActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
 
-            String sever_url = "https://jntrcpl.com/theoji/index.php/Api/get_student_by_section?section_id="+ M_id;
+            if (btnInt==1){
+                server_url = "https://jntrcpl.com/theoji/index.php/Api/get_chat_user?login_id="+
+                        AppPreference.getUserid(ChatActivity.this)+"&class="+
+                        ClassID+"&section="+SectionID;
+            }
+            else {
+                sever_url = "https://jntrcpl.com/theoji/index.php/Api/get_chat_user?login_id="+
+                        AppPreference.getUserid(ChatActivity.this);
+            }
 
             output = HttpHandler.makeServiceCall(sever_url);
+
             System.out.println("getcomment_url" + output);
             return output;
         }
@@ -307,16 +361,17 @@ public class ChatActivity extends AppCompatActivity {
 
                     if (res.equals("true")) {
 
-                        JSONArray jsonArray = object.getJSONArray("student");
+                        JSONArray jsonArray = object.getJSONArray("data");
 
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject1 = jsonArray.getJSONObject(i);
 
                             String user_id = jsonObject1.getString("user_id");
                             String firstname = jsonObject1.getString("firstname");
-                            String lastname = jsonObject1.getString("lastname");
+                            String online_status = jsonObject1.getString("online_status");
+                            String umeta_value = jsonObject1.getString("umeta_value");
 
-                            studentList.add(new ChatStudent_Model(user_id, firstname,lastname));
+                            studentList.add(new ChatStudent_Model(user_id, firstname,online_status,umeta_value));
                             studentHashMap.put(i , user_id);
                         }
                         student_chat_adapter = new Student_Chat_Adapter(ChatActivity.this, studentList);

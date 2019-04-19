@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.admin.theoji.Adapter.TeacherAdapter;
 import com.example.admin.theoji.Connection.Connectivity;
 import com.example.admin.theoji.Connection.HttpHandler;
+import com.example.admin.theoji.ModelClass.ClassModel;
 import com.example.admin.theoji.ModelClass.TeacherListModel;
 import com.example.admin.theoji.Shared_prefrence.AppPreference;
 
@@ -24,6 +25,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class TeacherActivity extends AppCompatActivity {
    ImageView viewTeacher;
@@ -31,7 +33,7 @@ public class TeacherActivity extends AppCompatActivity {
     String server_url;
     ArrayList<TeacherListModel> TeacherList;
     private TeacherAdapter teacherAdapter;
-
+    public static HashMap<Integer,TeacherListModel>TeacherHashMap=new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,7 +126,7 @@ public class TeacherActivity extends AppCompatActivity {
                         String umeta_value = c.getString("umeta_value");
 
                             TeacherList.add(0, new TeacherListModel(user_id, email, firstname, address,mobileno, umeta_value));
-//                AppPreference.setPostid(PostActivity.this,post_id);
+                           TeacherHashMap.put(i, new TeacherListModel(user_id, email, firstname, address,mobileno, umeta_value));
                         }
 
 

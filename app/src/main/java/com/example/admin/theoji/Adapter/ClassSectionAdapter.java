@@ -1,6 +1,7 @@
 package com.example.admin.theoji.Adapter;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -14,10 +15,12 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.admin.theoji.Add_Chatting;
 import com.example.admin.theoji.ModelClass.ClassSectionListModel;
 import com.example.admin.theoji.ModelClass.TeacherListModel;
 import com.example.admin.theoji.R;
 import com.example.admin.theoji.Shared_prefrence.AppPreference;
+import com.example.admin.theoji.ShowClassActivity;
 import com.example.admin.theoji.Update_Class_Section_Activity;
 
 import org.json.JSONException;
@@ -126,8 +129,10 @@ public class ClassSectionAdapter extends RecyclerView.Adapter<ClassSectionAdapte
             @Override
             public void onClick(View view) {
 
-                // PID = ClassSectionListModel.get(position).getUser_id();
-//                new deleteTask(view.getContext(),PID).execute();
+                int i = position;
+                Class_ID=classSectionHashMap.get(i).getClass_id();
+                Toast.makeText(context, "delC_Id"+Class_ID, Toast.LENGTH_SHORT).show();
+                new deleteTask(view.getContext(),Class_ID).execute();
 
             }
         });
@@ -142,34 +147,78 @@ public class ClassSectionAdapter extends RecyclerView.Adapter<ClassSectionAdapte
     //******************************************************
     public class deleteTask extends AsyncTask<String,Integer,String> {
         Context context;
-        public deleteTask(Context context, String pid) {
-            this.context=context;
+        ProgressDialog dialog;
+        String CLASS_Id;
+
+        protected void onPreExecute() {
+            dialog = new ProgressDialog(context);
+            dialog.show();
 
         }
-
-        //    ProgressDialog dialog;
-//
-        protected void onPreExecute() {
-//       dialog = new ProgressDialog(getContext());
-//       dialog.show();
+        public deleteTask(Context context, String classId) {
+            this.context=context;
+            this.CLASS_Id=classId;
 
         }
 
         @Override
         protected String doInBackground(String... params) {
 
-            String res = PostData1(params);
+            try {
 
-            return res;
+                URL url = new URL("https://jntrcpl.com/theoji/index.php/Api/delete_class");
+
+                JSONObject postDataParams = new JSONObject();
+                //id= AppPreference.getUserid(context);
+
+                postDataParams.put("m_id",Class_ID);
+
+                Log.e("postDataParams", postDataParams.toString());
+
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setReadTimeout(15000 /* milliseconds*/);
+                conn.setConnectTimeout(15000  /*milliseconds*/);
+                conn.setRequestMethod("POST");
+                conn.setDoInput(true);
+                conn.setDoOutput(true);
+
+                OutputStream os = conn.getOutputStream();
+                BufferedWriter writer = new BufferedWriter(
+                        new OutputStreamWriter(os, "UTF-8"));
+                writer.write(getPostDataString(postDataParams));
+
+                writer.flush();
+                writer.close();
+                os.close();
+                int responseCode = conn.getResponseCode();
+
+                if (responseCode == HttpsURLConnection.HTTP_OK) {
+
+                    BufferedReader r = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    StringBuilder result = new StringBuilder();
+                    String line;
+                    while ((line = r.readLine()) != null) {
+                        result.append(line);
+                    }
+                    r.close();
+                    return result.toString();
+
+                } else {
+                    return new String("false : " + responseCode);
+                }
+            }
+            catch (Exception e) {
+                return new String("Exception: " + e.getMessage());
+            }
         }
 
         @Override
         protected void onPostExecute(String result) {
 
-            // Toast.makeText(context, "delete"+result, Toast.LENGTH_SHORT).show();
+             Toast.makeText(context, "delete"+result, Toast.LENGTH_SHORT).show();
 
             if (result != null) {
-                // dialog.dismiss();
+                dialog.dismiss();
 
                 try {
                     JSONObject object = new JSONObject(result);
@@ -178,10 +227,12 @@ public class ClassSectionAdapter extends RecyclerView.Adapter<ClassSectionAdapte
                     if (res.equals("true")) {
 
                         Toast.makeText(context, "delete success", Toast.LENGTH_SHORT).show();
-
+                        Intent intent = new Intent(context, ShowClassActivity.class);
+                        context.startActivity(intent);
+                        ((Activity)context).finish();
 
                     } else {
-                        Toast.makeText(context, "Some Problem post not delete", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Some Problem not delete", Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -189,56 +240,6 @@ public class ClassSectionAdapter extends RecyclerView.Adapter<ClassSectionAdapte
 
 //       super.onPostExecute(s);
             }
-        }
-    }
-    public String PostData1(String[] values) {
-        try {
-
-            URL url = new URL("https://jntrcpl.com/theoji/index.php/Api/deletepost");
-
-            JSONObject postDataParams = new JSONObject();
-            id= AppPreference.getUserid(context);
-            //PID = ClassSectionListModel.get;
-
-           // postDataParams.put("pid",PID);
-            postDataParams.put("id",id);
-
-            Log.e("postDataParams", postDataParams.toString());
-
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setReadTimeout(15000 /* milliseconds*/);
-            conn.setConnectTimeout(15000  /*milliseconds*/);
-            conn.setRequestMethod("POST");
-            conn.setDoInput(true);
-            conn.setDoOutput(true);
-
-            OutputStream os = conn.getOutputStream();
-            BufferedWriter writer = new BufferedWriter(
-                    new OutputStreamWriter(os, "UTF-8"));
-            writer.write(getPostDataString(postDataParams));
-
-            writer.flush();
-            writer.close();
-            os.close();
-            int responseCode = conn.getResponseCode();
-
-            if (responseCode == HttpsURLConnection.HTTP_OK) {
-
-                BufferedReader r = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                StringBuilder result = new StringBuilder();
-                String line;
-                while ((line = r.readLine()) != null) {
-                    result.append(line);
-                }
-                r.close();
-                return result.toString();
-
-            } else {
-                return new String("false : " + responseCode);
-            }
-        }
-        catch (Exception e) {
-            return new String("Exception: " + e.getMessage());
         }
     }
     public String getPostDataString(JSONObject params) throws Exception {

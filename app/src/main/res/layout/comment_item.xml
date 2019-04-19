@@ -26,6 +26,7 @@
 
 
             <TextView
+                android:text="rrrr"
                 android:layout_weight="0.4"
                 android:id="@+id/comment_name"
                 android:layout_width="match_parent"
@@ -34,6 +35,7 @@
                 android:textColor="#FF3360DC"
                 android:textSize="14sp" />
             <TextView
+                android:text="12-04-2011"
                 android:layout_weight="0.6"
                 android:id="@+id/tv_date_comment"
                 android:layout_width="match_parent"
@@ -50,6 +52,7 @@
             android:gravity="center"
             android:orientation="horizontal">
     <TextView
+        android:text="hi llllll"
         android:id="@+id/tv_comment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

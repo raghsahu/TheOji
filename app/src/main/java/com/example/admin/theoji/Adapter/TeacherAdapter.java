@@ -1,6 +1,9 @@
 package com.example.admin.theoji.Adapter;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -15,9 +18,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.admin.theoji.Add_Chatting;
 import com.example.admin.theoji.ModelClass.TeacherListModel;
 import com.example.admin.theoji.R;
 import com.example.admin.theoji.Shared_prefrence.AppPreference;
+import com.example.admin.theoji.TeacherActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,6 +41,7 @@ import java.util.Iterator;
 import javax.net.ssl.HttpsURLConnection;
 
 import static com.androidquery.util.AQUtility.getContext;
+import static com.example.admin.theoji.TeacherActivity.TeacherHashMap;
 
 public class TeacherAdapter  extends RecyclerView.Adapter<TeacherAdapter.ViewHolder> {
 
@@ -43,12 +49,12 @@ public class TeacherAdapter  extends RecyclerView.Adapter<TeacherAdapter.ViewHol
     private ArrayList<TeacherListModel> TeacherList;
     public Context context;
     View viewlike;
-    String PID = "";
      String id;
+    String TeacherID;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        public Button btn1;
+        public Button btn_teacher_delet;
         public TextView txt1, txt2, txt3,txt4, txt_nm;
         CardView cardeview;
         int pos;
@@ -62,7 +68,7 @@ public class TeacherAdapter  extends RecyclerView.Adapter<TeacherAdapter.ViewHol
            txt4 = (TextView) view.findViewById(R.id.txt_address);
             txt_nm = (TextView) viewlike.findViewById(R.id.txt_class);
             cardeview=(CardView)viewlike.findViewById(R.id.cardeview);
-            btn1 = (Button) viewlike.findViewById(R.id.delete);
+            btn_teacher_delet = (Button) viewlike.findViewById(R.id.delete);
 
 
         }
@@ -96,15 +102,17 @@ public class TeacherAdapter  extends RecyclerView.Adapter<TeacherAdapter.ViewHol
         viewHolder.txt_nm.setText(teacherListModel.getUmeta_value());
 
         viewHolder.cardeview.setTag(viewHolder);
-        viewHolder.btn1.setTag(viewHolder);
+        viewHolder.btn_teacher_delet.setTag(viewHolder);
         viewHolder.pos = position;
 
-        viewHolder.btn1.setOnClickListener(new View.OnClickListener() {
+        viewHolder.btn_teacher_delet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int i=position;
+                TeacherID = TeacherHashMap.get(i).getUser_id();
 
-                PID = TeacherList.get(position).getUser_id();
-//                new deleteTask(view.getContext(),PID).execute();
+              new deleteTask(view.getContext(),TeacherID).execute();
+                Toast.makeText(context, "tID"+TeacherID, Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -118,35 +126,76 @@ public class TeacherAdapter  extends RecyclerView.Adapter<TeacherAdapter.ViewHol
 
     //******************************************************
     public class deleteTask extends AsyncTask<String,Integer,String> {
+        ProgressDialog dialog;
         Context context;
-        public deleteTask(Context context, String pid) {
-            this.context=context;
+        String Teacher_ID;
 
-        }
-
-        //    ProgressDialog dialog;
-//
         protected void onPreExecute() {
-//       dialog = new ProgressDialog(getContext());
-//       dialog.show();
-
+          dialog = new ProgressDialog(context);
+           dialog.show();
         }
 
+        public deleteTask(Context context, String teacher_Id) {
+            this.context=context;
+            this.Teacher_ID=teacher_Id;
+        }
         @Override
         protected String doInBackground(String... params) {
 
-            String res = PostData1(params);
+            try {
 
-            return res;
+                URL url = new URL("https://jntrcpl.com/theoji/index.php/Api/delete_teacher");
+
+                JSONObject postDataParams = new JSONObject();
+
+                postDataParams.put("id",Teacher_ID);
+
+                Log.e("postDataParams", postDataParams.toString());
+
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setReadTimeout(15000 /* milliseconds*/);
+                conn.setConnectTimeout(15000  /*milliseconds*/);
+                conn.setRequestMethod("POST");
+                conn.setDoInput(true);
+                conn.setDoOutput(true);
+
+                OutputStream os = conn.getOutputStream();
+                BufferedWriter writer = new BufferedWriter(
+                        new OutputStreamWriter(os, "UTF-8"));
+                writer.write(getPostDataString(postDataParams));
+
+                writer.flush();
+                writer.close();
+                os.close();
+                int responseCode = conn.getResponseCode();
+
+                if (responseCode == HttpsURLConnection.HTTP_OK) {
+
+                    BufferedReader r = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    StringBuilder result = new StringBuilder();
+                    String line;
+                    while ((line = r.readLine()) != null) {
+                        result.append(line);
+                    }
+                    r.close();
+                    return result.toString();
+
+                } else {
+                    return new String("false : " + responseCode);
+                }
+            }
+            catch (Exception e) {
+                return new String("Exception: " + e.getMessage());
+            }
         }
 
         @Override
         protected void onPostExecute(String result) {
 
-           // Toast.makeText(context, "delete"+result, Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "delete"+result, Toast.LENGTH_SHORT).show();
 
             if (result != null) {
-                // dialog.dismiss();
+                 dialog.dismiss();
 
                 try {
                     JSONObject object = new JSONObject(result);
@@ -155,10 +204,13 @@ public class TeacherAdapter  extends RecyclerView.Adapter<TeacherAdapter.ViewHol
                     if (res.equals("true")) {
 
                         Toast.makeText(context, "delete success", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(context, TeacherActivity.class);
+                        context.startActivity(intent);
+                        ((Activity)context).finish();
 
 
                     } else {
-                        Toast.makeText(context, "Some Problem post not delete", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Some Problem not delete", Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -168,56 +220,7 @@ public class TeacherAdapter  extends RecyclerView.Adapter<TeacherAdapter.ViewHol
             }
         }
     }
-    public String PostData1(String[] values) {
-        try {
 
-            URL url = new URL("https://jntrcpl.com/theoji/index.php/Api/deletepost");
-
-            JSONObject postDataParams = new JSONObject();
-            id= AppPreference.getUserid(context);
-            PID = TeacherListModel.getUser_id();
-
-            postDataParams.put("pid",PID);
-            postDataParams.put("id",id);
-
-            Log.e("postDataParams", postDataParams.toString());
-
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setReadTimeout(15000 /* milliseconds*/);
-            conn.setConnectTimeout(15000  /*milliseconds*/);
-            conn.setRequestMethod("POST");
-            conn.setDoInput(true);
-            conn.setDoOutput(true);
-
-            OutputStream os = conn.getOutputStream();
-            BufferedWriter writer = new BufferedWriter(
-                    new OutputStreamWriter(os, "UTF-8"));
-            writer.write(getPostDataString(postDataParams));
-
-            writer.flush();
-            writer.close();
-            os.close();
-            int responseCode = conn.getResponseCode();
-
-            if (responseCode == HttpsURLConnection.HTTP_OK) {
-
-                BufferedReader r = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                StringBuilder result = new StringBuilder();
-                String line;
-                while ((line = r.readLine()) != null) {
-                    result.append(line);
-                }
-                r.close();
-                return result.toString();
-
-            } else {
-                return new String("false : " + responseCode);
-            }
-        }
-        catch (Exception e) {
-            return new String("Exception: " + e.getMessage());
-        }
-    }
     public String getPostDataString(JSONObject params) throws Exception {
 
         StringBuilder result = new StringBuilder();
