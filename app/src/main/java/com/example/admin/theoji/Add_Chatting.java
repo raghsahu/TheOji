@@ -48,9 +48,11 @@ public class Add_Chatting extends AppCompatActivity {
 
     RecyclerView recyclerView_chat_rec;
     String server_url;
-    ArrayList<Add_Chat_Model> AddChatList;
+    ArrayList<Add_Chat_Model> AddChatList=new ArrayList<>();
     private AddChatAdapter addChatAdapter;
     public static HashMap<Integer , Add_Chat_Model> AddChatHashMap = new HashMap<>();
+
+    public String loggedInUserName = "";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,6 +65,14 @@ public class Add_Chatting extends AppCompatActivity {
         iv_send=findViewById(R.id.img_chat_send);
         recyclerView_chat_rec=findViewById(R.id.recycler_chat_recev);
 
+        if (Connectivity.isNetworkAvailable(Add_Chatting.this)){
+            new ChatSendExecuteTask().execute();
+
+        }else {
+            Toast.makeText(Add_Chatting.this, "No Internet", Toast.LENGTH_SHORT).show();
+        }
+
+
         iv_send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -70,12 +80,31 @@ public class Add_Chatting extends AppCompatActivity {
                 CHAT_EDIT=chat_edit.getText().toString();
                 if (!CHAT_EDIT.isEmpty()){
 
+                    try{
+
+                        if(AddChatList.size() !=0)
+                        {
+                            AddChatList.clear();
+
+                            recyclerView_chat_rec.setAdapter(null);
+                            addChatAdapter.notifyDataSetChanged();
+                        }
+                    }catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
+
+
+
+
                     if (Connectivity.isNetworkAvailable(Add_Chatting.this)){
                         new ChatSendExecuteTask().execute();
 
                     }else {
                         Toast.makeText(Add_Chatting.this, "No Internet", Toast.LENGTH_SHORT).show();
                     }
+                }else{
+                    Toast.makeText(Add_Chatting.this, "Please fill comments", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -147,11 +176,11 @@ public class Add_Chatting extends AppCompatActivity {
                 dialog.dismiss();
 
                 try {
-                    Toast.makeText(Add_Chatting.this, "result is" + result, Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(Add_Chatting.this, "result is" + result, Toast.LENGTH_SHORT).show();
 
                     JSONObject object = new JSONObject(result);
                     String res = object.getString("responce");
-                    String msg = object.getString("msg");
+                   // String msg = object.getString("msg");
 
                     JSONArray Data_array = object.getJSONArray("chat");
                     for (int i = 0; i < Data_array.length(); i++) {
@@ -173,6 +202,9 @@ public class Add_Chatting extends AppCompatActivity {
                     }
 
                     if (res.equals("true")) {
+                        loggedInUserName=AppPreference.getUserid(Add_Chatting.this);
+                       // Toast.makeText(Add_Chatting.this, "ll "+loggedInUserName, Toast.LENGTH_SHORT).show();
+                        chat_edit.getText().clear();
 
                         Toast.makeText(Add_Chatting.this, "Send Successfully", Toast.LENGTH_SHORT).show();
 //                        Intent intent = new Intent(Forgot_activity.this, ShowAttendenceActivity.class);
@@ -183,6 +215,7 @@ public class Add_Chatting extends AppCompatActivity {
                         recyclerView_chat_rec.setLayoutManager(mLayoutManager);
                         recyclerView_chat_rec.setItemAnimator(new DefaultItemAnimator());
                         recyclerView_chat_rec.setAdapter(addChatAdapter);
+
 
 
                     } else {
@@ -223,4 +256,10 @@ public class Add_Chatting extends AppCompatActivity {
         }
         return result.toString();
     }
+
+    public String getLoggedInUserName(){
+        return loggedInUserName;
+    }
+
+
 }
