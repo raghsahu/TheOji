@@ -49,7 +49,7 @@ public class ChatActivity extends AppCompatActivity {
 
     RecyclerView recyclerchat;
     Button find_stud;
-    String server_url;
+
     String Student;
     private ArrayList<ChatStudent_Model> studentList=new ArrayList<>();
     private Student_Chat_Adapter student_chat_adapter;
@@ -334,7 +334,7 @@ public class ChatActivity extends AppCompatActivity {
         protected String doInBackground(String... params) {
 
             if (btnInt==1){
-                server_url = "https://jntrcpl.com/theoji/index.php/Api/get_chat_user?login_id="+
+                sever_url = "https://jntrcpl.com/theoji/index.php/Api/get_chat_user?login_id="+
                         AppPreference.getUserid(ChatActivity.this)+"&class="+
                         ClassID+"&section="+SectionID;
             }

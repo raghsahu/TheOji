@@ -30,8 +30,8 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/chat_stud_iv"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:src="@drawable/person"
                 />
@@ -93,7 +93,7 @@
                     android:layout_width="15dp"
                     android:layout_height="15dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/person"
+                    android:src="@drawable/circle"
                     />
 
             </LinearLayout>
