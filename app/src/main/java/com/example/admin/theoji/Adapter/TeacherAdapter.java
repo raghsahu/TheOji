@@ -54,7 +54,7 @@ public class TeacherAdapter  extends RecyclerView.Adapter<TeacherAdapter.ViewHol
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        public Button btn_teacher_delet;
+        public Button btn_teacher_delet, teacher_edit,teacher_approve;
         public TextView txt1, txt2, txt3,txt4, txt_nm;
         CardView cardeview;
         int pos;
@@ -69,6 +69,8 @@ public class TeacherAdapter  extends RecyclerView.Adapter<TeacherAdapter.ViewHol
             txt_nm = (TextView) viewlike.findViewById(R.id.txt_class);
             cardeview=(CardView)viewlike.findViewById(R.id.cardeview);
             btn_teacher_delet = (Button) viewlike.findViewById(R.id.delete);
+            teacher_approve = (Button) viewlike.findViewById(R.id.tea_approve);
+            teacher_edit = (Button) viewlike.findViewById(R.id.tea_edit);
 
 
         }
@@ -103,6 +105,8 @@ public class TeacherAdapter  extends RecyclerView.Adapter<TeacherAdapter.ViewHol
 
         viewHolder.cardeview.setTag(viewHolder);
         viewHolder.btn_teacher_delet.setTag(viewHolder);
+        viewHolder.teacher_edit.setTag(viewHolder);
+        viewHolder.teacher_approve.setTag(viewHolder);
         viewHolder.pos = position;
 
         viewHolder.btn_teacher_delet.setOnClickListener(new View.OnClickListener() {
@@ -113,6 +117,29 @@ public class TeacherAdapter  extends RecyclerView.Adapter<TeacherAdapter.ViewHol
 
               new deleteTask(view.getContext(),TeacherID).execute();
                 Toast.makeText(context, "tID"+TeacherID, Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+        viewHolder.teacher_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int i=position;
+                TeacherID = TeacherHashMap.get(i).getUser_id();
+
+                //new deleteTask(view.getContext(),TeacherID).execute();
+              //  Toast.makeText(context, "tID"+TeacherID, Toast.LENGTH_SHORT).show();
+
+            }
+        });
+        viewHolder.teacher_approve.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int i=position;
+                TeacherID = TeacherHashMap.get(i).getUser_id();
+
+                //new deleteTask(view.getContext(),TeacherID).execute();
+               // Toast.makeText(context, "tID"+TeacherID, Toast.LENGTH_SHORT).show();
 
             }
         });

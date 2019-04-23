@@ -3,6 +3,7 @@ package com.example.admin.theoji;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -10,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -20,6 +22,8 @@ import com.example.admin.theoji.Connection.Connectivity;
 import com.example.admin.theoji.ModelClass.Add_Chat_Model;
 import com.example.admin.theoji.ModelClass.PostListModel;
 import com.example.admin.theoji.Shared_prefrence.AppPreference;
+import com.github.nkzawa.socketio.client.IO;
+import com.github.nkzawa.socketio.client.Socket;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,6 +35,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -49,30 +54,73 @@ public class Add_Chatting extends AppCompatActivity {
     RecyclerView recyclerView_chat_rec;
     String server_url;
     ArrayList<Add_Chat_Model> AddChatList=new ArrayList<>();
-    private AddChatAdapter addChatAdapter;
+    AddChatAdapter addChatAdapter;
     public static HashMap<Integer , Add_Chat_Model> AddChatHashMap = new HashMap<>();
 
     public String loggedInUserName = "";
 
+//************************************************
+//    private Socket mSocket;
+//    {
+//        try {
+//            mSocket = IO.socket("http://chat.socket.io");
+//        } catch (URISyntaxException e) {}
+//    }
+//*********************************************************
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_chatting);
+       // mSocket.connect();
 
         ChatUserID=getIntent().getStringExtra("ChatUserID");
 
         chat_edit=findViewById(R.id.et_chat_post);
         iv_send=findViewById(R.id.img_chat_send);
         recyclerView_chat_rec=findViewById(R.id.recycler_chat_recev);
+//*************************************
 
+//        final Handler handler = new Handler();
+//        handler.postDelayed( new Runnable() {
+//
+//            @Override
+//            public void run() {
+////                addChatAdapter.notifyDataSetChanged();
+//
+//                try {
+//                if (!CHAT_EDIT.isEmpty()) {
+//
+//                        if (AddChatList.size() != 0) {
+//                            AddChatList.clear();
+//
+//                            recyclerView_chat_rec.setAdapter(null);
+//                            addChatAdapter.notifyDataSetChanged();
+//                        }
+//                    }
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//                    if (Connectivity.isNetworkAvailable(Add_Chatting.this)){
+//                    new ChatSendExecuteTask().execute();
+//
+//                }else {
+//                    Toast.makeText(Add_Chatting.this, "No Internet", Toast.LENGTH_SHORT).show();
+//                }
+//                handler.postDelayed( this, 5*1000 );
+//                Toast.makeText(Add_Chatting.this, "run", Toast.LENGTH_SHORT).show();
+//            }
+//        }, 5*1000 );
+
+       //***************************************************
         if (Connectivity.isNetworkAvailable(Add_Chatting.this)){
             new ChatSendExecuteTask().execute();
+
 
         }else {
             Toast.makeText(Add_Chatting.this, "No Internet", Toast.LENGTH_SHORT).show();
         }
 
-
+//******************************************************************
         iv_send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -110,12 +158,13 @@ public class Add_Chatting extends AppCompatActivity {
         });
     }
 
+
     private class ChatSendExecuteTask extends AsyncTask<String, Integer, String> {
-        ProgressDialog dialog;
+        //ProgressDialog dialog;
 
         protected void onPreExecute() {
-            dialog = new ProgressDialog(Add_Chatting.this);
-            dialog.show();
+//            dialog = new ProgressDialog(Add_Chatting.this);
+//            dialog.show();
 
         }
 
@@ -173,7 +222,7 @@ public class Add_Chatting extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             if (result != null) {
-                dialog.dismiss();
+               // dialog.dismiss();
 
                 try {
                    // Toast.makeText(Add_Chatting.this, "result is" + result, Toast.LENGTH_SHORT).show();
@@ -206,7 +255,7 @@ public class Add_Chatting extends AppCompatActivity {
                        // Toast.makeText(Add_Chatting.this, "ll "+loggedInUserName, Toast.LENGTH_SHORT).show();
                         chat_edit.getText().clear();
 
-                        Toast.makeText(Add_Chatting.this, "Send Successfully", Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(Add_Chatting.this, "Send Successfully", Toast.LENGTH_SHORT).show();
 //                        Intent intent = new Intent(Forgot_activity.this, ShowAttendenceActivity.class);
 //                        startActivity(intent);
 //                        finish();
@@ -216,7 +265,11 @@ public class Add_Chatting extends AppCompatActivity {
                         recyclerView_chat_rec.setItemAnimator(new DefaultItemAnimator());
                         recyclerView_chat_rec.setAdapter(addChatAdapter);
 
+                        LinearLayoutManager layoutManager = new LinearLayoutManager(Add_Chatting.this);
+                        layoutManager.setStackFromEnd(true);
+                        recyclerView_chat_rec.setLayoutManager(layoutManager);
 
+                       // scrollMyListViewToBottom();
 
                     } else {
                         Toast.makeText(Add_Chatting.this, "Please try again", Toast.LENGTH_SHORT).show();
@@ -260,6 +313,19 @@ public class Add_Chatting extends AppCompatActivity {
     public String getLoggedInUserName(){
         return loggedInUserName;
     }
+
+    private void scrollMyListViewToBottom() {
+
+        recyclerView_chat_rec.post(new Runnable() {
+            @Override
+            public void run() {
+                // Select the last row so it will scroll into view...
+               // recyclerView_chat_rec.setSelection(myListAdapter.getCount() - 1);
+                recyclerView_chat_rec.smoothScrollToPosition(addChatAdapter.getItemCount()-1);
+            }
+        });
+    }
+
 
 
 }

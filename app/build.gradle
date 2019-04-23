@@ -59,5 +59,6 @@ dependencies {
     implementation 'com.thomashaertel:multispinner:0.1.1'
     implementation 'com.commit451:PhotoView:1.2.4'
     implementation 'de.hdodenhof:circleimageview:3.0.0'
+    implementation 'com.github.nkzawa:socket.io-client:0.6.0'
 
 }

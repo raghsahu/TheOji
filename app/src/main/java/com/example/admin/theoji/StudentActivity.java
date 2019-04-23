@@ -35,7 +35,7 @@ public class StudentActivity extends AppCompatActivity {
     ArrayList<StudentListModel> StudentList;
     private StudentAdapter studentAdapter;
 
-    public static HashMap<Integer , String> studentStringHashMap = new HashMap<>();
+    public static HashMap<Integer , StudentListModel> studentStringHashMap = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,8 +135,8 @@ public class StudentActivity extends AppCompatActivity {
 //                            }
 
 
-                            StudentList.add(i, new StudentListModel(user_id, email, firstname, address,mobileno, city,st_class,status));
-                           studentStringHashMap.put(i,user_id);
+                            StudentList.add(new StudentListModel(user_id, email, firstname, address,mobileno, city,st_class,status));
+                           studentStringHashMap.put(i, new StudentListModel(user_id, email, firstname, address,mobileno, city,st_class,status));
                            //  AppPreference.setPostid(PostActivity.this,post_id);
                         }
 

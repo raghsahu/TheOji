@@ -2,6 +2,7 @@ package com.example.admin.theoji.Adapter;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -119,22 +120,21 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
 
             viewHolder.btn1.setText("Approved");
             viewHolder.btn1.setBackgroundColor(Color.GREEN);
-
-        }else {
-            viewHolder.btn1.setText("Approve");
         }
+//        else {
+//            viewHolder.btn1.setText("Approve");
+//        }
 
         viewHolder.btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 if(viewHolder.btn1.getText() == "Approve"){
-//                    pos = position;
-//                SID =  studentStringHashMap.get(pos);
-                    int i = position;
-                    SID =  studentStringHashMap.get(i);
 
-               new approveTask(view.getContext(),SID , viewHolder.btn1.getTag()).execute();
+                    int i = position;
+                    SID =  studentStringHashMap.get(i).getUser_id();
+
+               new approveTask(context,SID ).execute();
                 }
                 else {
                     Toast.makeText(context, "already approve", Toast.LENGTH_SHORT).show();
@@ -147,8 +147,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
             public void onClick(View view) {
 
                 int i = position;
-                SID =  studentStringHashMap.get(i);
-               // new editStudentTask(view.getContext(),PID).execute();
+                SID =  studentStringHashMap.get(i).getUser_id();
                 Intent intent = new Intent(context, Update_Student_Profile_Activity.class);
                 intent.putExtra("uid",SID);
                 context.startActivity(intent);
@@ -179,7 +178,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
 
                     private void exitLauncher() {
                         int i = position;
-                        SID =  studentStringHashMap.get(i);
+                        SID =  studentStringHashMap.get(i).getUser_id();
                         new deleteTask(context,SID).execute();
 
                     }
@@ -331,19 +330,20 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
     }
 //********************************************************************************************
     private class approveTask extends AsyncTask<String,Integer,String> {
+        ProgressDialog dialog;
         Context context;
         String SID2;
-        Object tag1;
-        public approveTask(Context context, String SID, Object tag) {
+
+        public approveTask(Context context, String SID) {
             this.SID2=SID;
             this.context=context;
-            this.tag1=tag;
 
         }
-        //    ProgressDialog dialog;
+
         protected void onPreExecute() {
-//       dialog = new ProgressDialog(getContext());
-//       dialog.show();
+       dialog = new ProgressDialog(getContext());
+       dialog.setMessage("processing");
+       dialog.show();
 
         }
 
@@ -361,7 +361,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
             // Toast.makeText(context, "delete"+result, Toast.LENGTH_SHORT).show();
 
             if (result != null) {
-                // dialog.dismiss();
+                 dialog.dismiss();
 
                 try {
                     JSONObject object = new JSONObject(result);

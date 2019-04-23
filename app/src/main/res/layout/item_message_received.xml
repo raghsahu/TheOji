@@ -10,8 +10,8 @@
 
     <ImageView
         android:id="@+id/image_message_profile"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:background="@drawable/circle"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginLeft="8dp"
@@ -44,8 +44,8 @@
 
     <TextView
         android:id="@+id/chat_date"
-        android:text="11:40"
-        android:layout_width="wrap_content"
+        android:text="2019-04-21 11:40:47"
+        android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:textSize="10sp"
         app:layout_constraintLeft_toRightOf="@+id/chat_comment"
