@@ -278,7 +278,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                 //finish();
             }else {
                 Toast.makeText(Main2Activity.this, "No Internet", Toast.LENGTH_SHORT).show();
-                CustomAlert.alertDialogShow(getApplicationContext(),"Please Check Internet!");
+//                CustomAlert.alertDialogShow(getApplicationContext(),"Please Check Internet!");
             }
 
         } else if (id == R.id.nav_project) {
@@ -334,12 +334,19 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
 
     } else if (id == R.id.nav_attendance) {
             if (Connectivity.isNetworkAvailable(Main2Activity.this)){
-                Intent intent = new Intent(Main2Activity.this,ShowAttendenceActivity.class);
-                startActivity(intent);
-                //finish();
+
+                if (AppPreference.getUser_Type(Main2Activity.this).equals("4")) {
+                    Intent intent = new Intent(Main2Activity.this,Student_get_Attendence.class);
+                    startActivity(intent);
+                }else {
+                    Intent intent = new Intent(Main2Activity.this,ShowAttendenceActivity.class);
+                    startActivity(intent);
+                    //finish();
+                }
+
             }else {
                 Toast.makeText(Main2Activity.this, "No Internet", Toast.LENGTH_SHORT).show();
-                CustomAlert.alertDialogShow(getApplicationContext(),"Please Check Internet!");
+                //CustomAlert.alertDialogShow(getApplicationContext(),"Please Check Internet!");
             }
 
     } else if (id == R.id.nav_class) {

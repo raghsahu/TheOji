@@ -24,6 +24,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.regex.Pattern;
 
 public class HomeworkActivity extends AppCompatActivity {
@@ -32,6 +33,7 @@ public class HomeworkActivity extends AppCompatActivity {
     String server_url;
     ArrayList<HomeworkModel> HomeworkList;
     private HomeworkAdapter homeworkAdapter;
+    public static HashMap<Integer , String> HomeworkHashMap = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +88,6 @@ public class HomeworkActivity extends AppCompatActivity {
             try {
                 server_url = "https://jntrcpl.com/theoji/index.php/Api/get_post_activity_student?id="+ AppPreference.getUserid(HomeworkActivity.this);
 
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -106,8 +107,6 @@ public class HomeworkActivity extends AppCompatActivity {
                 try {
                     dialog.dismiss();
 
-//                    JSONObject responce = new JSONObject(output);
-//                    String res = responce.getString("responce");
                     JSONObject object = new JSONObject(output);
 
 
@@ -132,14 +131,15 @@ public class HomeworkActivity extends AppCompatActivity {
                         String[] seperateData = pmeta_value.split(Pattern.quote(","));
                         String  actvitydate = seperateData[0];
                         String  imagename = seperateData[1];
-                        String participant  = seperateData[2];
-                        String  studentclass = seperateData[3];
+                       // String participant  = seperateData[2];
+                        String  studentclass = seperateData[2];
 //
 
 
                             HomeworkList.add(0, new HomeworkModel(post_id, post_date, post_title, post_content,email,umeta_value,
-                                    participant,studentclass,actvitydate,imagename,firstname));
+                                    studentclass,actvitydate,imagename,firstname));
 
+                        HomeworkHashMap.put(i , post_id);
                         }
 
                         homeworkAdapter = new HomeworkAdapter(HomeworkActivity.this, HomeworkList);

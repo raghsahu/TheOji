@@ -50,6 +50,7 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
 import org.apache.http.client.HttpClient;
+import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.FileBody;
@@ -78,6 +79,8 @@ import java.util.Map;
 import java.util.Random;
 
 import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
 
 import static java.net.Authenticator.RequestorType.SERVER;
 
@@ -296,6 +299,7 @@ public class AddPostActivity extends AppCompatActivity {
                 entity.addPart("file", new FileBody(Image));
                 entity.addPart("Share_update_post", new StringBody(Share_test));
                 entity.addPart("id",new StringBody(id));
+
 
                 result = Utilities.postEntityAndFindJson("https://jntrcpl.com/theoji/index.php/Api/posts", entity);
 

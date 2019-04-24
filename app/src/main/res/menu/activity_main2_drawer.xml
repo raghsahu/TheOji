@@ -98,7 +98,7 @@
             <item
                 android:id="@+id/nav_performance"
                 android:icon="@drawable/perform"
-                android:title="Test Performance" />
+                android:title="Performance" />
         </group>
     </group>
 

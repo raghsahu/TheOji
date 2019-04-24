@@ -7,7 +7,7 @@ public class HomeworkModel {
     private String post_content;
     private String email;
     private String umeta_value;
-    private String participant;
+   // private String participant;
     private String studentclass;
     private String actvitydate;
     private String imagename;
@@ -15,14 +15,14 @@ public class HomeworkModel {
 
 
     public HomeworkModel(String post_id, String post_date, String post_title, String post_content, String email, String umeta_value,
-                         String participant, String studentclass, String actvitydate, String imagename, String firstname) {
+                          String studentclass, String actvitydate, String imagename, String firstname) {
         this.post_id=post_id;
         this.post_date=post_date;
         this.post_title=post_title;
         this.post_content=post_content;
         this.email=email;
         this.umeta_value=umeta_value;
-        this.participant=participant;
+       // this.participant=participant;
         this.studentclass=studentclass;
         this.actvitydate=actvitydate;
         this.imagename=imagename;
@@ -31,9 +31,7 @@ public class HomeworkModel {
 
     }
 
-    public String getParticipant() {
-        return participant;
-    }
+
 
     public String getImagename() {
         return imagename;
@@ -67,9 +65,6 @@ public class HomeworkModel {
         this.studentclass = studentclass;
     }
 
-    public void setParticipant(String participant) {
-        this.participant = participant;
-    }
 
     public String getUmeta_value() {
         return umeta_value;

@@ -3,6 +3,7 @@ package com.example.admin.theoji.Adapter;
 import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,24 +53,36 @@ public class AddChatAdapter extends RecyclerView.Adapter<AddChatAdapter.ViewHold
     public AddChatAdapter(Add_Chatting mContext, ArrayList<Add_Chat_Model> addchatList) {
         context = mContext;
         add_chatting=mContext;
+
         AddChatList = addchatList;
 
     }
 
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Add_Chat_Model add_chat_model = AddChatList.get(viewType);
+
         View itemView;
-        if (add_chat_model.getTo().equals(AppPreference.getUserid(context)))
-            itemView= LayoutInflater.from(parent.getContext())
+
+        String ChatId = AddChatHashMap.get(viewType).getTo();
+        String userId = AppPreference.getUserid(context);
+        if (ChatId.equals(userId)) {
+            itemView = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.item_message_sent, parent, false);
-        else
+        } else {
             itemView = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.item_message_received, parent, false);
+        }
 
-       // Toast.makeText(context, "gg "+add_chat_model.getTo()+ (AppPreference.getUserid(context)), Toast.LENGTH_SHORT).show();
-//        View itemView = LayoutInflater.from(parent.getContext())
-//                .inflate(R.layout.item_message_sent, parent, false);
+//            final ViewHolder holder = new ViewHolder(itemView);
+//              position = holder.getAdapterPosition();
+//            Log.d("pos", String.valueOf(++position));
+//        Add_Chat_Model add_chat_model = AddChatList.get(position);
+
+
+
+
+        Toast.makeText(context, "gg " + viewType + " " + AddChatHashMap.get(viewType).getTo() + " " + (AppPreference.getUserid(context)), Toast.LENGTH_SHORT).show();
 
         return new ViewHolder(itemView);
     }

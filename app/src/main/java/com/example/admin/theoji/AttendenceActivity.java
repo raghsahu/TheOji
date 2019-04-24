@@ -358,7 +358,7 @@ public class AttendenceActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
 
-            String sever_url = "https://jntrcpl.com/theoji/index.php/Api/get_class?school_id="
+            String sever_url = "https://jntrcpl.com/theoji/index.php/Api/get_alot_class?user_id="
                     +AppPreference.getUserid(AttendenceActivity.this);
 
 
@@ -379,7 +379,7 @@ public class AttendenceActivity extends AppCompatActivity {
 
                     if (res.equals("true")) {
 
-                    JSONArray jsonArray = object.getJSONArray("class");
+                    JSONArray jsonArray = object.getJSONArray("data");
 
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject1 = jsonArray.getJSONObject(i);
@@ -422,7 +422,8 @@ public class AttendenceActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... params) {
-            String sever_url = "https://jntrcpl.com/theoji/index.php/Api/get_section?m_id="+strMId;
+            String sever_url = "https://jntrcpl.com/theoji/index.php/Api/get_alot_section?class_id="+strMId+"&teacher_id="+
+                    AppPreference.getUserid(AttendenceActivity.this);
 
             output = HttpHandler.makeServiceCall(sever_url);
             System.out.println("getcomment_url" + output);
@@ -441,7 +442,7 @@ public class AttendenceActivity extends AppCompatActivity {
 
                     if (res.equals("true")) {
 
-                        JSONArray jsonArray = object.getJSONArray("section");
+                        JSONArray jsonArray = object.getJSONArray("data");
 
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject1 = jsonArray.getJSONObject(i);
@@ -611,10 +612,10 @@ public class AttendenceActivity extends AppCompatActivity {
     }
 //***********************************
 
-
-    @Override
-    protected void onDestroy() {
-        multiselected_stud = null;
-        super.onDestroy();
-    }
+//
+//    @Override
+//    protected void onDestroy() {
+//        multiselected_stud = null;
+//        super.onDestroy();
+//    }
 }

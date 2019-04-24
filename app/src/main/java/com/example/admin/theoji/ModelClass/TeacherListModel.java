@@ -1,7 +1,7 @@
 package com.example.admin.theoji.ModelClass;
 
 public class TeacherListModel {
-    private static String user_id;
+    private String user_id;
     private String email;
     private String firstname;
     private String address;
@@ -51,6 +51,10 @@ public class TeacherListModel {
         this.firstname = firstname;
     }
 
+    public String getUser_id() {
+        return user_id;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -59,9 +63,6 @@ public class TeacherListModel {
         this.email = email;
     }
 
-    public static String getUser_id() {
-        return user_id;
-    }
 
     public void setUser_id(String user_id) {
         this.user_id = user_id;

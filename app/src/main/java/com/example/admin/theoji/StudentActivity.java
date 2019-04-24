@@ -135,11 +135,10 @@ public class StudentActivity extends AppCompatActivity {
 //                            }
 
 
-                            StudentList.add(new StudentListModel(user_id, email, firstname, address,mobileno, city,st_class,status));
+                            StudentList.add(i, new StudentListModel(user_id, email, firstname, address,mobileno, city,st_class,status));
                            studentStringHashMap.put(i, new StudentListModel(user_id, email, firstname, address,mobileno, city,st_class,status));
-                           //  AppPreference.setPostid(PostActivity.this,post_id);
+                          //  Toast.makeText(StudentActivity.this, "stI "+studentStringHashMap.get(i).getUser_id(), Toast.LENGTH_SHORT).show();
                         }
-
 
                         studentAdapter = new StudentAdapter(StudentActivity.this, StudentList);
                         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(StudentActivity.this);

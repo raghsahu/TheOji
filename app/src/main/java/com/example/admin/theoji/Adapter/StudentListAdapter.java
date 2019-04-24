@@ -23,9 +23,8 @@ public class StudentListAdapter extends ArrayAdapter<StudentModel> {
         ArrayList<StudentModel> studentList;
         private StudentListAdapter studentListAdapter;
         private boolean isFromView = false;
-      public static String present_students = "";
 
-    private ArrayList<CheckBox> checkBoxes = new ArrayList<>();
+   // private ArrayList<CheckBox> checkBoxes = new ArrayList<>();
 
    public static ArrayList<String> multiselected = new ArrayList<String>();
      boolean isChecked1;
@@ -83,6 +82,7 @@ public class StudentListAdapter extends ArrayAdapter<StudentModel> {
             }
 
                 holder.mCheckBox.setTag(position);
+
             holder.mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
                 @Override
@@ -94,64 +94,64 @@ public class StudentListAdapter extends ArrayAdapter<StudentModel> {
                         studentList.get(position).setSelected(isChecked);
                     }
 //*****************************************************************
-                    if (getPosition==0) {
-                        try {
-                            isChecked1 = studentList.get(0).isSelected();
-
-                            if (isChecked1 == true) {
-                                Toast.makeText(mContext, "all select", Toast.LENGTH_SHORT).show();
-
-                                for (int i = 0; i < studentList.size(); i++) {
-                                    studentList.get(i).setSelected(true);
-
-                                    multiselected.add(studentList.get(i).getUser_id());
-                                    Toast.makeText(mContext, "all+ " + multiselected, Toast.LENGTH_SHORT).show();
-                                }
-                                notifyDataSetChanged();
-
-                            }
-                            //*****************************************************************
-                            else if (isChecked1 == false) {
-                                for (int i = 0; i < studentList.size(); i++) {
-                                    studentList.get(i).setSelected(false);
-
-                                    multiselected.remove(studentList.get(i).getUser_id());
-                                    Toast.makeText(mContext, "remo all- " + multiselected, Toast.LENGTH_SHORT).show();
-                                }
-                                notifyDataSetChanged();
-                            }
-
-                        } catch (Exception e) {
-                            Toast.makeText(mContext, "" + e, Toast.LENGTH_SHORT).show();
-                            e.printStackTrace();
-                        }
-                    }
-//**********************************************************
-                    else {
-
-                        try{
-                            boolean isChecked2 = !(studentList.get(0).isSelected());
-
-                            if(isChecked2==true)
-                            {
-                                if (holder.mCheckBox.isChecked()) {
-                                    multiselected.add(studentList.get(position).getUser_id());
-                                    Toast.makeText(mContext, "multi+ "+multiselected, Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                            //***************************************************************
-                            else if(isChecked2==false)
-                            {
-                           // if (multiselected.contains(studentList.get(position).getUser_id())){
-
-                                multiselected.remove(studentList.get(position).getUser_id());
-                                Toast.makeText(mContext, "Removechecked+ "+multiselected, Toast.LENGTH_SHORT).show();
-                                }
-                           // }
-                        }catch (Exception e){
-                            Toast.makeText(mContext, ""+e, Toast.LENGTH_SHORT).show();
-                        }
-                    }
+//                    if (getPosition==0) {
+//                        try {
+//                            isChecked1 = studentList.get(0).isSelected();
+//
+//                            if (isChecked1 == true) {
+//                                Toast.makeText(mContext, "all select", Toast.LENGTH_SHORT).show();
+//
+//                                for (int i = 0; i < studentList.size(); i++) {
+//                                    studentList.get(i).setSelected(true);
+//
+//                                    multiselected.add(studentList.get(i).getUser_id());
+//                                    Toast.makeText(mContext, "all+ " + multiselected, Toast.LENGTH_SHORT).show();
+//                                }
+//                                notifyDataSetChanged();
+//
+//                            }
+//                            //*****************************************************************
+//                            else if (isChecked1 == false) {
+//                                for (int i = 0; i < studentList.size(); i++) {
+//                                    studentList.get(i).setSelected(false);
+//
+//                                    multiselected.remove(studentList.get(i).getUser_id());
+//                                    Toast.makeText(mContext, "remo all- " + multiselected, Toast.LENGTH_SHORT).show();
+//                                }
+//                                notifyDataSetChanged();
+//                            }
+//
+//                        } catch (Exception e) {
+//                            Toast.makeText(mContext, "" + e, Toast.LENGTH_SHORT).show();
+//                            e.printStackTrace();
+//                        }
+//                    }
+////**********************************************************
+//                    else {
+//
+//                        try{
+//                            boolean isChecked2 = !(studentList.get(0).isSelected());
+//
+//                            if(isChecked2==true)
+//                            {
+//                                if (holder.mCheckBox.isChecked()) {
+//                                    multiselected.add(studentList.get(position).getUser_id());
+//                                    Toast.makeText(mContext, "multi+ "+multiselected, Toast.LENGTH_SHORT).show();
+//                                }
+//                            }
+//                            //***************************************************************
+//                            else if(isChecked2==false)
+//                            {
+//                           // if (multiselected.contains(studentList.get(position).getUser_id())){
+//
+//                                multiselected.remove(studentList.get(position).getUser_id());
+//                                Toast.makeText(mContext, "Removechecked+ "+multiselected, Toast.LENGTH_SHORT).show();
+//                                }
+//                           // }
+//                        }catch (Exception e){
+//                            Toast.makeText(mContext, ""+e, Toast.LENGTH_SHORT).show();
+//                        }
+                   // }
                 }
             });
             return convertView;

@@ -429,7 +429,6 @@ public class AddStudentActivity extends AppCompatActivity{
                     Student_sex=Female.getText().toString();
                    // Toast.makeText(getContext(), ""+Female.getText().toString(), Toast.LENGTH_SHORT).show();
                 }
-               // Student_sex=Male.getText().toString();
 
                 Student_gardian_name=student_fathername.getText().toString();
               Student_mother_name=student_mother_name.getText().toString();
@@ -447,7 +446,16 @@ public class AddStudentActivity extends AppCompatActivity{
 
                 School_code =std_sch_code.getText().toString();
                 Student_class_type =spin_st_class.getSelectedItem().toString();
-                Student_section =std_section.getSelectedItem().toString();
+
+                try {
+                    if (sectionList.size()!=0){
+                        Student_section =std_section.getSelectedItem().toString();
+                    }
+                }catch (Exception e){
+                    Student_section =null;
+                }
+
+
                 Student_session=std_session.getText().toString();
                 Student_admission_no=std_admission_no.getText().toString();
                 Student_admission_date=std_admission_date.getText().toString();

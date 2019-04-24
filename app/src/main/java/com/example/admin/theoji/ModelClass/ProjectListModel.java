@@ -7,7 +7,7 @@ public class ProjectListModel {
     private String userimg;
     private String postimg;
     private String date;
-    private static String post_id;
+    private String post_id;
     private String title;
 
 
@@ -57,7 +57,7 @@ public class ProjectListModel {
         this.title = title;
     }
 
-    public static String getPost_id() {
+    public String getPost_id() {
         return post_id;
     }
 

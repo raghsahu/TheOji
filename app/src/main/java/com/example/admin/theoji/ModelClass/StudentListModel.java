@@ -2,7 +2,7 @@ package com.example.admin.theoji.ModelClass;
 
 public class StudentListModel {
 
-    private static String user_id;
+    private String user_id;
     private String email;
     private String firstname;
     private String address;
@@ -22,10 +22,6 @@ public class StudentListModel {
         this.city=city;
         this.st_class=st_class;
         this.status=status;
-    }
-
-    public static String getUser_id() {
-        return user_id;
     }
 
     public String getEmail() {
@@ -84,7 +80,11 @@ public class StudentListModel {
         this.address = address;
     }
 
-    public static void setUser_id(String user_id) {
-        StudentListModel.user_id = user_id;
+    public String getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
     }
 }

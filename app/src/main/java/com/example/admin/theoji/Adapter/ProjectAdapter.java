@@ -134,7 +134,8 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
         Picasso.get().load("https://jntrcpl.com/theoji/uploads/"+projectListModel.getUserimg()).into(viewHolder.img_person);
 
         viewHolder.img2.setImageResource(R.drawable.img);
-        Picasso.get().load("https://jntrcpl.com/theoji/uploads/"+projectListModel.getPostimg())
+        Picasso.get()
+                .load("https://jntrcpl.com/theoji/uploads/"+projectListModel.getPostimg())
                 .placeholder(R.drawable.img)
                 .into(viewHolder.img2);
 
@@ -154,6 +155,7 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
             @Override
             public void onClick(View view) {
 
+                Toast.makeText(context, "iii "+projectListModel.getPostimg(), Toast.LENGTH_SHORT).show();
                 final AlertDialog.Builder alertadd = new AlertDialog.Builder(context,AlertDialog.THEME_HOLO_LIGHT);
                 ImageView dialogImage = new ImageView(context);
                 final Dialog d = alertadd.setView(new View(context)).create();
@@ -187,7 +189,8 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
             @Override
             public void onClick(View view) {
 
-                PID = ProjectListModel.getPost_id();
+                int i=position;
+                PID = ProjectHashMap.get(i);
                 new GetLikeCount(view, PID).execute();
                 viewHolder.dis_like.setVisibility(View.VISIBLE);
                 viewHolder.btn1.setVisibility(View.INVISIBLE);

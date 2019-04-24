@@ -178,7 +178,7 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.ViewHolder> 
 
             JSONObject postDataParams = new JSONObject();
             id= AppPreference.getUserid(context);
-            PID = TeacherListModel.getUser_id();
+            //PID = TeacherListModel.ge;
 
             postDataParams.put("pid",PID);
             postDataParams.put("id",id);

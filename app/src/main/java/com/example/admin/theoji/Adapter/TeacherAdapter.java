@@ -1,9 +1,12 @@
 package com.example.admin.theoji.Adapter;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -23,6 +26,7 @@ import com.example.admin.theoji.ModelClass.TeacherListModel;
 import com.example.admin.theoji.R;
 import com.example.admin.theoji.Shared_prefrence.AppPreference;
 import com.example.admin.theoji.TeacherActivity;
+import com.example.admin.theoji.Teacher_Edit_Activity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -41,6 +45,7 @@ import java.util.Iterator;
 import javax.net.ssl.HttpsURLConnection;
 
 import static com.androidquery.util.AQUtility.getContext;
+import static com.example.admin.theoji.StudentActivity.studentStringHashMap;
 import static com.example.admin.theoji.TeacherActivity.TeacherHashMap;
 
 public class TeacherAdapter  extends RecyclerView.Adapter<TeacherAdapter.ViewHolder> {
@@ -109,14 +114,45 @@ public class TeacherAdapter  extends RecyclerView.Adapter<TeacherAdapter.ViewHol
         viewHolder.teacher_approve.setTag(viewHolder);
         viewHolder.pos = position;
 
+//        if (teacherListModel.get.equals("1")){
+//
+//            viewHolder.btn1.setText("Approved");
+//            viewHolder.btn1.setBackgroundColor(Color.GREEN);
+//        }
+//
+
+
         viewHolder.btn_teacher_delet.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                int i=position;
-                TeacherID = TeacherHashMap.get(i).getUser_id();
+            public void onClick(final View view) {
 
-              new deleteTask(view.getContext(),TeacherID).execute();
-                Toast.makeText(context, "tID"+TeacherID, Toast.LENGTH_SHORT).show();
+                final AlertDialog.Builder dialog = new AlertDialog.Builder(context).setTitle("The Oji")
+                        .setMessage("Are you sure, you want to delete this student");
+
+                dialog.setNegativeButton("no", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+                dialog.setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        exitLauncher();
+                    }
+
+                    private void exitLauncher() {
+                        int i=position;
+                        TeacherID = TeacherHashMap.get(i).getUser_id();
+
+                        new deleteTask(view.getContext(),TeacherID).execute();
+                        Toast.makeText(context, "tID"+TeacherID, Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+                final AlertDialog alert = dialog.create();
+                alert.show();
 
             }
         });
@@ -127,7 +163,10 @@ public class TeacherAdapter  extends RecyclerView.Adapter<TeacherAdapter.ViewHol
                 int i=position;
                 TeacherID = TeacherHashMap.get(i).getUser_id();
 
-                //new deleteTask(view.getContext(),TeacherID).execute();
+                Intent intent = new Intent(context, Teacher_Edit_Activity.class);
+                //intent.putExtra("uid",TeacherID);
+                context.startActivity(intent);
+                ((Activity)context).finish();
               //  Toast.makeText(context, "tID"+TeacherID, Toast.LENGTH_SHORT).show();
 
             }
@@ -138,8 +177,8 @@ public class TeacherAdapter  extends RecyclerView.Adapter<TeacherAdapter.ViewHol
                 int i=position;
                 TeacherID = TeacherHashMap.get(i).getUser_id();
 
-                //new deleteTask(view.getContext(),TeacherID).execute();
-               // Toast.makeText(context, "tID"+TeacherID, Toast.LENGTH_SHORT).show();
+                new TeacherApprove(view.getContext(),TeacherID).execute();
+                Toast.makeText(context, "tID"+TeacherID, Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -271,5 +310,111 @@ public class TeacherAdapter  extends RecyclerView.Adapter<TeacherAdapter.ViewHol
 
         }
         return result.toString();
+    }
+//********************************************************
+    private class TeacherApprove extends AsyncTask<String,Integer,String> {
+    ProgressDialog dialog;
+    Context context;
+    String TeachID2;
+
+        public TeacherApprove(Context context, String teacherID) {
+            this.context=context;
+            this.TeachID2=teacherID;
+        }
+
+    protected void onPreExecute() {
+        dialog = new ProgressDialog(context);
+        dialog.setMessage("processing");
+        dialog.show();
+
+    }
+
+    @Override
+    protected String doInBackground(String... params) {
+
+        try {
+
+            URL url = new URL("https://jntrcpl.com/theoji/index.php/Api/confirm_student");
+
+            JSONObject postDataParams = new JSONObject();
+            id= AppPreference.getUserid(context);
+
+            postDataParams.put("id",TeachID2);
+
+            Log.e("postDataParams", postDataParams.toString());
+
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setReadTimeout(15000 /* milliseconds*/);
+            conn.setConnectTimeout(15000  /*milliseconds*/);
+            conn.setRequestMethod("POST");
+            conn.setDoInput(true);
+            conn.setDoOutput(true);
+
+            OutputStream os = conn.getOutputStream();
+            BufferedWriter writer = new BufferedWriter(
+                    new OutputStreamWriter(os, "UTF-8"));
+            writer.write(getPostDataString(postDataParams));
+
+            writer.flush();
+            writer.close();
+            os.close();
+            int responseCode = conn.getResponseCode();
+
+            if (responseCode == HttpsURLConnection.HTTP_OK) {
+
+                BufferedReader r = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                StringBuilder result = new StringBuilder();
+                String line;
+                while ((line = r.readLine()) != null) {
+                    result.append(line);
+                }
+                r.close();
+                return result.toString();
+
+            } else {
+                return new String("false : " + responseCode);
+            }
+        }
+        catch (Exception e) {
+            return new String("Exception: " + e.getMessage());
+        }
+    }
+
+    @Override
+    protected void onPostExecute(String result) {
+
+        // Toast.makeText(context, "delete"+result, Toast.LENGTH_SHORT).show();
+
+        if (result != null) {
+            dialog.dismiss();
+
+            try {
+                JSONObject object = new JSONObject(result);
+                String res = object.getString("responce");
+
+                if (res.equals("true")) {
+                    Toast.makeText(context, "approve success", Toast.LENGTH_SHORT).show();
+
+                    Button  btn1 = (Button) viewlike.findViewById(R.id.tea_approve);
+                    btn1.setText("Approved");
+                    btn1.setBackgroundColor(Color.GREEN);
+
+
+
+                } else {
+                    Toast.makeText(context, "Some Problem not approve", Toast.LENGTH_SHORT).show();
+                    Button  btn1 = (Button) viewlike.findViewById(R.id.tea_approve);
+                    btn1.setText("Approve");btn1.setBackgroundColor(Color.RED);
+
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+//       super.onPostExecute(s);
+        }
+    }
+
+
     }
 }

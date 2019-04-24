@@ -1,6 +1,7 @@
 package com.example.admin.theoji;
 
 import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -66,18 +67,25 @@ public class AddPayFeesActivity extends AppCompatActivity {
     Spinner spin_student;
     private ArrayList<StudentModel> studentList=new ArrayList<>();
     private StudentListAdapter studentListAdapter;
+    String StudentID;
+
+    ArrayList<String> ChooseStudent=new ArrayList<>();
+    private ArrayAdapter<String> ParentAdapter;
+
 
     public HashMap<Integer, ClassModel> ClassHashMap = new HashMap<Integer, ClassModel>();
     public HashMap<Integer, SectionModel> SectionHashMap = new HashMap<Integer, SectionModel>();
 
     LinearLayout layout;
     Button btn_submit, btn_payfees;
+    int btn_submit_Int=0, btn_pay_fees_Int=0;
     EditText annual_fees, pay_fees;
 //    Spinner spin_class_type;
 
   String Anual_fees,Pay_fees;
 
     String user_id="";
+    HashMap<Integer, StudentModel> ParentHashMap=new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,8 +113,6 @@ public class AddPayFeesActivity extends AppCompatActivity {
         spin_section = (Spinner)findViewById(R.id.stud_section);
 
         //**********************************************
-        studentList = new ArrayList<>();
-       // new spinnerStudentExecuteTask().execute();
 
         new spinnerClassExecuteTask().execute();
 
@@ -151,22 +157,21 @@ public class AddPayFeesActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                //strSid = stateList.get(position).getState_id();
-//                try{
-//
-//                    if(studentList.size() !=0)
-//                    {
-//                        ChooseStudent.clear();
-//
-//                        spin_student.setAdapter(null);
-//                        studentListAdapter.notifyDataSetChanged();
-//
-//                    }
-//
-//                }catch (Exception e)
-//                {
-//                    e.printStackTrace();
-//                }
+                try{
+
+                    if(studentList.size() !=0)
+                    {
+                        ChooseStudent.clear();
+                        spin_student.setAdapter(null);
+                       ParentAdapter.notifyDataSetChanged();
+
+                    }
+
+                }catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+
                 for (int i = 0; i < SectionHashMap.size(); i++)
                 {
 
@@ -174,7 +179,7 @@ public class AddPayFeesActivity extends AppCompatActivity {
                     {
                         new spinnerStudentExecuteTask(SectionHashMap.get(i).getM_id()).execute();
                     }
-                    // else (StateHashMap.get(i).getState_name().equals(spin_state.getItemAtPosition(position))
+
                 }
             }
 
@@ -185,6 +190,31 @@ public class AddPayFeesActivity extends AppCompatActivity {
             }
         });
 
+        //********************************************************
+        spin_student.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                for (int i = 0; i < ParentHashMap.size(); i++)
+                {
+
+                    if (ParentHashMap.get(i).getFirstname().equals(spin_student.getItemAtPosition(position)))
+                    {
+                        StudentID=ParentHashMap.get(i).getUser_id();
+                         Toast.makeText(AddPayFeesActivity.this, "s_Id"+StudentID, Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+
+            }
+        });
+
+
+
 //****************************************************************************************
 
         btn_submit  = (Button)findViewById(R.id.btn_class_addfees);
@@ -193,8 +223,10 @@ public class AddPayFeesActivity extends AppCompatActivity {
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                btn_submit_Int=1;
+
               Anual_fees =annual_fees.getText().toString();
-           Class=spin_class.getSelectedItem().toString();
+             Class=spin_class.getSelectedItem().toString();
 
                 if (Connectivity.isNetworkAvailable(AddPayFeesActivity.this)) {
                     if (validate()) {
@@ -212,37 +244,30 @@ public class AddPayFeesActivity extends AppCompatActivity {
         btn_payfees.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                btn_pay_fees_Int=1;
                 Pay_fees =pay_fees.getText().toString();
                 Class1=spin_class1.getSelectedItem().toString();
                 Spin_Section=spin_section.getSelectedItem().toString();
                // Student=spin_student.getSelectedItem().toString();
-                StringBuilder commaSepValueBuilder = new StringBuilder();
+                try{
+                    if (studentList.size()!=0){
+                        if (Connectivity.isNetworkAvailable(AddPayFeesActivity.this)) {
+                            if (!Pay_fees.isEmpty() && !Class1.isEmpty() && !StudentID.isEmpty()) {
+//                                Pay_fees =pay_fees.getText().toString();
+//                                Class1=spin_class1.getSelectedItem().toString();
+//                                Student=spin_student.getSelectedItem().toString();
 
-                //Looping through the list
-                for ( int i = 0; i< multiselected.size(); i++){
-                    //append the value into the builder
-                    commaSepValueBuilder.append(multiselected.get(i));
+                                new PayFeesExecuteTask().execute();
+                            }else {
+                                Toast.makeText(AddPayFeesActivity.this, "Please fill All field", Toast.LENGTH_SHORT).show();
+                            }
+                        }else {
+                            Toast.makeText(AddPayFeesActivity.this, "No Internet", Toast.LENGTH_SHORT).show();
+                        }
 
-                    //if the value is not the last element of the list
-                    //then append the comma(,) as well
-                    if ( i != multiselected.size()-1){
-                        commaSepValueBuilder.append(", ");
                     }
-                }
-                System.out.println(commaSepValueBuilder.toString());
-                Student=commaSepValueBuilder.toString();
-                Toast.makeText(AddPayFeesActivity.this, ""+Student , Toast.LENGTH_SHORT).show();
+                }catch (Exception e){
 
-                if (Connectivity.isNetworkAvailable(AddPayFeesActivity.this)) {
-                    if (validate1()) {
-                        Pay_fees =annual_fees.getText().toString();
-                        Class1=spin_class1.getSelectedItem().toString();
-                        Student=spin_student.getSelectedItem().toString();
-
-                        new PayFeesExecuteTask().execute();
-                    }
-                }else {
-                    Toast.makeText(AddPayFeesActivity.this, "No Internet", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -313,7 +338,7 @@ public class AddPayFeesActivity extends AppCompatActivity {
             JSONObject postDataParams = new JSONObject();
             postDataParams.put("Class_type", spin_class.getSelectedItem().toString());
             postDataParams.put("Annual_fees", annual_fees.getText().toString());
-            postDataParams.put("Select_student_name",spin_student.getSelectedItem().toString());
+           // postDataParams.put("Select_student_name",spin_student.getSelectedItem().toString());
             postDataParams.put("id",id);
 
 
@@ -434,26 +459,21 @@ public class AddPayFeesActivity extends AppCompatActivity {
                             String lastname = jsonObject1.getString("lastname");
 
                             studentList.add(new StudentModel(user_id, firstname));
-                            // ChooseStudent.add(firstname);
-//                            if ( i==0){
-//                                studentList.add("select all");
-//                            }
+                             ChooseStudent.add(firstname);
+                            ParentHashMap.put(i, new StudentModel(user_id, firstname));
 
                         }
-
-                        studentListAdapter = new StudentListAdapter(AddPayFeesActivity.this, android.R.layout.simple_spinner_item, studentList);
-                        //StudentListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-                        // spin_student.setAdapter(StudentAdapter,false, onSelectedListener);
-                        spin_student.setAdapter(studentListAdapter);
+                        ParentAdapter = new ArrayAdapter<String>(AddPayFeesActivity.this, android.R.layout.simple_spinner_dropdown_item, ChooseStudent);
+                        ParentAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spin_student.setAdapter(ParentAdapter);
 
                     }else {
                         try{
 
-                            // ChooseStudent.clear();
-                            studentList.clear();
-                            studentListAdapter = new StudentListAdapter(AddPayFeesActivity.this, android.R.layout.simple_spinner_item, studentList);
-                            spin_student.setAdapter(studentListAdapter);
-                            studentListAdapter.notifyDataSetChanged();
+                            ChooseStudent.clear();
+                            ParentAdapter = new ArrayAdapter<String>(AddPayFeesActivity.this, android.R.layout.simple_spinner_dropdown_item, ChooseStudent);
+                            spin_student.setAdapter(ParentAdapter);
+                            ParentAdapter.notifyDataSetChanged();
 
                         }catch (Exception e)
                         {
@@ -482,9 +502,64 @@ public class AddPayFeesActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
 
-            String res = PostData1(params);
+            try {
+                URL url = new URL("https://jntrcpl.com/theoji/index.php/Api/feesaddbyclass");
 
-            return res;
+                String id= AppPreference.getUserid(AddPayFeesActivity.this);
+                JSONObject postDataParams = new JSONObject();
+
+//                    if (btn_submit_Int == 1){
+//                        postDataParams.put("Class_type", Class);
+//                        postDataParams.put("Annual_fees", Anual_fees);
+//                        postDataParams.put("id",id);
+//                    }
+//                    if (btn_pay_fees_Int==1){
+                        postDataParams.put("Class_type", Class1);
+                        postDataParams.put("Annual_fees", Pay_fees);
+                        postDataParams.put("Select_student_name",StudentID);
+                        postDataParams.put("section",Spin_Section);
+                        postDataParams.put("id",id);
+                  //  }
+
+
+                Log.e("postDataParams", postDataParams.toString());
+
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setReadTimeout(15000 /* milliseconds*/);
+                conn.setConnectTimeout(15000  /*milliseconds*/);
+                conn.setRequestMethod("POST");
+                conn.setDoInput(true);
+                conn.setDoOutput(true);
+
+                OutputStream os = conn.getOutputStream();
+                BufferedWriter writer = new BufferedWriter(
+                        new OutputStreamWriter(os, "UTF-8"));
+                writer.write(getPostDataString(postDataParams));
+
+                writer.flush();
+                writer.close();
+                os.close();
+                int responseCode = conn.getResponseCode();
+
+                if (responseCode == HttpsURLConnection.HTTP_OK) {
+
+                    BufferedReader r = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    StringBuilder result = new StringBuilder();
+                    String line;
+                    while ((line = r.readLine()) != null) {
+                        result.append(line);
+                    }
+                    r.close();
+                    return result.toString();
+
+                } else {
+                    return new String("false : " + responseCode);
+                }
+            }
+            catch (Exception e) {
+                return new String("Exception: " + e.getMessage());
+            }
+
         }
         @Override
         protected void onPostExecute(String result) {
@@ -492,7 +567,7 @@ public class AddPayFeesActivity extends AppCompatActivity {
                 dialog.dismiss();
 
                 try {
-                    // Toast.makeText(AddPayFeesActivity.this, "result is" + result, Toast.LENGTH_SHORT).show();
+                     Toast.makeText(AddPayFeesActivity.this, "result is" + result, Toast.LENGTH_SHORT).show();
 
 
                     JSONObject object = new JSONObject(result);
@@ -502,18 +577,16 @@ public class AddPayFeesActivity extends AppCompatActivity {
 //                    user_id=data.getString("user_id");
 //                    String name=data.getString("username");
 //
+                    if (res.equals("true")) {
 
-
-
-                    if (!res.equalsIgnoreCase("true")) {
-
-                        Toast.makeText(AddPayFeesActivity.this, "unsuccess", Toast.LENGTH_SHORT).show();
-
-                    } else {
                         Toast.makeText(AddPayFeesActivity.this, "success", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(AddPayFeesActivity.this, PayFeesActivity.class);
                         startActivity(intent);
                         finish();
+
+
+                    } else {
+                        Toast.makeText(AddPayFeesActivity.this, "unsuccess", Toast.LENGTH_SHORT).show();
 
                     }
 
@@ -525,58 +598,6 @@ public class AddPayFeesActivity extends AppCompatActivity {
             }
         }
     }
-    public String PostData1(String[] values) {
-        try {
-
-            URL url = new URL("https://jntrcpl.com/theoji/index.php/Api/feesaddbyclass");
-
-            String id= AppPreference.getUserid(AddPayFeesActivity.this);
-            JSONObject postDataParams = new JSONObject();
-            postDataParams.put("Class_type", spin_class1.getSelectedItem().toString());
-            postDataParams.put("Annual_fees", pay_fees.getText().toString());
-            postDataParams.put("Select_student_name",Student);
-            postDataParams.put("section",Spin_Section);
-            postDataParams.put("id",id);
-
-            Log.e("postDataParams", postDataParams.toString());
-
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setReadTimeout(15000 /* milliseconds*/);
-            conn.setConnectTimeout(15000  /*milliseconds*/);
-            conn.setRequestMethod("POST");
-            conn.setDoInput(true);
-            conn.setDoOutput(true);
-
-            OutputStream os = conn.getOutputStream();
-            BufferedWriter writer = new BufferedWriter(
-                    new OutputStreamWriter(os, "UTF-8"));
-            writer.write(getPostDataString(postDataParams));
-
-            writer.flush();
-            writer.close();
-            os.close();
-            int responseCode = conn.getResponseCode();
-
-            if (responseCode == HttpsURLConnection.HTTP_OK) {
-
-                BufferedReader r = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                StringBuilder result = new StringBuilder();
-                String line;
-                while ((line = r.readLine()) != null) {
-                    result.append(line);
-                }
-                r.close();
-                return result.toString();
-
-            } else {
-                return new String("false : " + responseCode);
-            }
-        }
-        catch (Exception e) {
-            return new String("Exception: " + e.getMessage());
-        }
-    }
-
 
 
     //***************************************************
@@ -623,7 +644,7 @@ public boolean validate1() {
     }
     if (Pay_fees.isEmpty()) {
         valid = false;
-        pay_fees.setError("Please enter annual fees!");
+        pay_fees.setError("Please enter fees!");
         return false;
     } else {
         valid = true;
@@ -761,8 +782,6 @@ public boolean validate1() {
                         spin_section.setAdapter(sectionListAdapter);
 
 
-                        // reloadAllData();
-
                     }else {
                         Toast.makeText(AddPayFeesActivity.this, "no section found", Toast.LENGTH_SHORT).show();
                     }
@@ -774,4 +793,10 @@ public boolean validate1() {
 
         }
     }
+//    @Override
+//    protected void onDestroy() {
+//        multiselected = null;
+//        super.onDestroy();
+//    }
+
 }

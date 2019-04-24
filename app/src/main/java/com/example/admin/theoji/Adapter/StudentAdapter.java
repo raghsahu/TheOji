@@ -37,6 +37,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -52,8 +53,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
     View viewlike;
     String PID = "";
     String id;
-    String SID= "";
-    public  int pos;
+    String SID;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -132,9 +132,9 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
                 if(viewHolder.btn1.getText() == "Approve"){
 
                     int i = position;
-                    SID =  studentStringHashMap.get(i).getUser_id();
+                   String SID1 =  studentStringHashMap.get(i).getUser_id();
 
-               new approveTask(context,SID ).execute();
+               new approveTask(view.getContext(),SID1 ).execute();
                 }
                 else {
                     Toast.makeText(context, "already approve", Toast.LENGTH_SHORT).show();
@@ -147,9 +147,10 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
             public void onClick(View view) {
 
                 int i = position;
-                SID =  studentStringHashMap.get(i).getUser_id();
+               String SID3 =  studentStringHashMap.get(i).getUser_id();
+                Toast.makeText(view.getContext(), "ss2 id "+SID3, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(context, Update_Student_Profile_Activity.class);
-                intent.putExtra("uid",SID);
+                intent.putExtra("uid",SID3);
                 context.startActivity(intent);
                 ((Activity)context).finish();
 
@@ -158,7 +159,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
 
         viewHolder.btn3.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(final View view) {
 
                 final AlertDialog.Builder dialog = new AlertDialog.Builder(context).setTitle("The Oji")
                         .setMessage("Are you sure, you want to delete this student");
@@ -178,8 +179,11 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
 
                     private void exitLauncher() {
                         int i = position;
-                        SID =  studentStringHashMap.get(i).getUser_id();
-                        new deleteTask(context,SID).execute();
+
+                     //   SID =  studentStringHashMap.get(i).getFirstname();
+                       String SID2 =  studentStringHashMap.get(i).getUser_id();
+                        Toast.makeText(view.getContext(), "ss2 "+SID2, Toast.LENGTH_SHORT).show();
+                        new deleteTask(view.getContext(),SID2).execute();
 
                     }
                 });
