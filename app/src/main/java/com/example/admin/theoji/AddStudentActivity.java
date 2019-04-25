@@ -25,6 +25,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.admin.theoji.Connection.Connectivity;
 import com.example.admin.theoji.Connection.HttpHandler;
 import com.example.admin.theoji.ModelClass.ClassModel;
 import com.example.admin.theoji.ModelClass.FirstStepModel;
@@ -58,14 +59,16 @@ import javax.net.ssl.HttpsURLConnection;
 import static com.androidquery.util.AQUtility.getContext;
 
 public class AddStudentActivity extends AppCompatActivity{
-
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
     Button btn_final_submit;
 
     ArrayList<String> ChooseClass =new ArrayList<>();
     private ArrayList<ClassModel> classList=new ArrayList<>();
     private ArrayAdapter<String> classListAdapter;
+
+    Spinner  std_board_name;
+    ArrayList<String> ChooseBoard =new ArrayList<>();
+    //private ArrayList<BoardModel> BoardList=new ArrayList<>();
+    private ArrayAdapter<String> BoardListAdapter;
 
     ArrayList<String> ChooseSection =new ArrayList<>();
     private ArrayList<SectionModel> sectionList=new ArrayList<>();
@@ -93,7 +96,7 @@ public class AddStudentActivity extends AppCompatActivity{
     RadioGroup Radio_group_sex;
      EditText email,password,student_name,student_dob,student_pre_sch_name,student_aadhar,student_category,student_bank_name,
             student_bank_account;
-    Spinner spin_st_class, std_section, std_board_name;
+    Spinner spin_st_class, std_section;
 
     EditText std_sch_code,std_session,std_admission_no,std_admission_date,std_about  ;
     EditText student_fathername,student_mother_name,student_city,student_address,student_pincode,student_mobile,
@@ -202,7 +205,20 @@ public class AddStudentActivity extends AppCompatActivity{
         });
 
 //******************************************************************************************
-        new spinnerClassExecuteTask().execute();
+
+        if (Connectivity.isNetworkAvailable(AddStudentActivity.this)){
+            new spinnerClassExecuteTask().execute();
+
+        }else {
+            Toast.makeText(AddStudentActivity.this, "No Internet", Toast.LENGTH_SHORT).show();
+        }
+
+        if (Connectivity.isNetworkAvailable(AddStudentActivity.this)){
+            new spinnerBoardExecuteTask().execute();
+
+        }else {
+            Toast.makeText(AddStudentActivity.this, "No Internet", Toast.LENGTH_SHORT).show();
+        }
 
         spin_st_class.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -462,7 +478,26 @@ public class AddStudentActivity extends AppCompatActivity{
                 Student_board_name=std_board_name.getSelectedItem().toString();
                 Student_about=std_about.getText().toString();
 
-                 new StudentCreatExecuteTask().execute();
+                if (Connectivity.isNetworkAvailable(AddStudentActivity.this)){
+
+                    if (!Student_Email.isEmpty() && !Student_Password.isEmpty()&&!Student_Name.isEmpty()&&!Student_pre_school_name.isEmpty()
+                    && !Student_Dob.isEmpty()&&!Student_Aadhar.isEmpty()&&!Student_category.isEmpty()&& !Student_cast.isEmpty()
+                    &&!Student_Bank_Account.isEmpty()&&!Student_Bank_Name.isEmpty()&&!Student_bank_ifsc_code.isEmpty()
+                    &&!Student_sex.isEmpty()&&!Student_gardian_name.isEmpty() &&!Student_city.isEmpty() && !Student_pincode.isEmpty()
+                    &&!Student_Address.isEmpty()&&!Student_mobile.isEmpty() &&!Student_Alternate_mobile.isEmpty()&&!Student_state.isEmpty()
+                    &&!Student_country.isEmpty() &&!Student_rte_type.isEmpty() &&!Student_sssmid.isEmpty()&& !Student_mother_name.isEmpty()
+                    && !School_code.isEmpty() && !Student_class_type.isEmpty() && !Student_section.isEmpty()&&!Student_session.isEmpty()
+                    &&Student_admission_date.isEmpty() && !Student_board_name.isEmpty() &&!Student_about.isEmpty())
+
+                    {
+                        new StudentCreatExecuteTask().execute();
+                    }else {
+                        Toast.makeText(AddStudentActivity.this, "Please Fill All Details", Toast.LENGTH_SHORT).show();
+                    }
+                }else {
+                    Toast.makeText(AddStudentActivity.this, "No Internet", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
     }
@@ -568,10 +603,10 @@ public class AddStudentActivity extends AppCompatActivity{
 
                         if (!res.equalsIgnoreCase("true")) {
 
-                            Toast.makeText(getContext(), "unsuccess", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AddStudentActivity.this, "unsuccess", Toast.LENGTH_SHORT).show();
 
                         } else {
-                            Toast.makeText(getContext(), "success", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AddStudentActivity.this, "success", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(AddStudentActivity.this, StudentActivity.class);
                             startActivity(intent);
                             finish();
@@ -818,6 +853,67 @@ public class AddStudentActivity extends AppCompatActivity{
 
                     }else {
                         Toast.makeText(AddStudentActivity.this, "no section found", Toast.LENGTH_SHORT).show();
+                    }
+                    super.onPostExecute(output);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
+    }
+
+    private class spinnerBoardExecuteTask extends AsyncTask<String,Integer,String> {
+
+        String output = "";
+
+
+        @Override
+        protected String doInBackground(String... params) {
+            String sever_url = "https://jntrcpl.com/theoji/index.php/Api/get_board";
+
+            output = HttpHandler.makeServiceCall(sever_url);
+            System.out.println("getcomment_url" + output);
+            return output;
+        }
+
+        @Override
+        protected void onPostExecute(String output) {
+            if (output == null) {
+            } else {
+                try {
+
+                    //  Toast.makeText(Service_provider_reg.this, "result is" + output, Toast.LENGTH_SHORT).show();
+                    JSONObject object = new JSONObject(output);
+                    String res = object.getString("responce");
+
+                    if (res.equals("true")) {
+
+                        JSONArray jsonArray = object.getJSONArray("class");
+
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+                            String m_id = jsonObject1.getString("m_id");
+                            String m_name = jsonObject1.getString("m_name");
+                            String type = jsonObject1.getString("type");
+                            String parent = jsonObject1.getString("parent");
+                            String school_id = jsonObject1.getString("school_id");
+
+                           // BoardList.add(new BoardModel(m_id, m_name));
+                           // SectionHashMap.put(i, new SectionModel(m_id, m_name));
+                            ChooseBoard.add(m_name);
+
+                        }
+
+                        BoardListAdapter = new ArrayAdapter<String>(AddStudentActivity.this, android.R.layout.simple_spinner_dropdown_item, ChooseBoard);
+                        BoardListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        std_board_name.setAdapter(BoardListAdapter);
+
+
+                        // reloadAllData();
+
+                    } else {
+                        Toast.makeText(AddStudentActivity.this, "No Board found", Toast.LENGTH_SHORT).show();
                     }
                     super.onPostExecute(output);
                 } catch (JSONException e) {

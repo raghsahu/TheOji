@@ -74,6 +74,22 @@
             android:layout_height="wrap_content" />
     </android.support.design.widget.TextInputLayout>
 
+    <android.support.design.widget.TextInputLayout
+        android:textColorHint="#FF3360DC"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp">
+
+        <EditText
+            android:id="@+id/reference_library"
+            android:hint="Reference Link"
+            android:textSize="13dp"
+            android:textColor="#FF3360DC"
+            android:inputType="textMultiLine"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </android.support.design.widget.TextInputLayout>
+
     <Button
         android:id ="@+id/upload_button"
         android:layout_width="match_parent"

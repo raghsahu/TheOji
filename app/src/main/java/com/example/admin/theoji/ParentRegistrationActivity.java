@@ -196,7 +196,7 @@ public class ParentRegistrationActivity extends AppCompatActivity {
                 dialog.dismiss();
 
                 try {
-                   // Toast.makeText(ParentRegistrationActivity.this, "result is" + result, Toast.LENGTH_SHORT).show();
+                   Toast.makeText(ParentRegistrationActivity.this, "result is" + result, Toast.LENGTH_SHORT).show();
                     JSONObject object = new JSONObject(result);
                     String res = object.getString("responce");
 
@@ -238,7 +238,7 @@ public class ParentRegistrationActivity extends AppCompatActivity {
             postDataParams.put("mobileno",St_mobile);
             postDataParams.put("firstname",St_fullname);
             postDataParams.put("password",St_pw);
-            postDataParams.put("school_code",State);
+            postDataParams.put("school_code",Sch_code);
             postDataParams.put("sclass",Class_ID);
             postDataParams.put("lastname",St_fater);
 

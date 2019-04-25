@@ -6,53 +6,28 @@
 
     <string-array name="class_entries">
 
-        <item>    -select class-    </item>
-        <item>    Nursery    </item>
-        <item>    KG1    </item>
-        <item>    KG2    </item>
-        <item>       1 </item>
-        <item>        2</item>
-        <item>    3    </item>
-        <item>     4   </item>
-        <item>      5  </item>
-        <item>   6    </item>
-        <item>    7    </item>
-        <item>     8   </item>
-        <item>      9  </item>
-        <item>       10 </item>
-        <item> 11 Maths       </item>
-        <item>     11 Bio  </item>
-        <item>      11 Commerce  </item>
-        <item>      11 other  </item>
-        <item>      12 maths  </item>
-        <item>      12 bio  </item>
-        <item>      12 commerce  </item>
-        <item>      12 other  </item>
+        <item>-select class-</item>
+
     </string-array>
 
     <string-array name="class_section">
         <item>-select section-</item>
-        <item>A  </item>
-        <item> B </item>
-        <item> C </item>
-        <item> D </item>
-        <item> E </item>
-        <item> F </item>
+
     </string-array>
 
     <string-array name="board_name">
-        <item>Select Board  </item>
-        <item>CBSE Board  </item>
-        <item> MP Board </item>
-        <item> UP Board </item>
-        <item> CG Board </item>
-        <item> other </item>
+        <item>Select Board</item>
+        <!--<item>CBSE Board  </item>-->
+        <!--<item> MP Board </item>-->
+        <!--<item> UP Board </item>-->
+        <!--<item> CG Board </item>-->
+        <!--<item> other </item>-->
     </string-array>
 
     <string-array name="P_A">
-        <item>Select Attendance  </item>
-        <item>P </item>
-        <item> A </item>
+        <item>Select Attendance</item>
+        <item>P</item>
+        <item>A</item>
 
     </string-array>
     <string name="title_activity_main2">Dashboard</string>

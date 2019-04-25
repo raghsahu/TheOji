@@ -46,7 +46,7 @@ import java.util.List;
 public class AddLibraryActivity extends AppCompatActivity {
 
     ImageView postimage;
-    EditText title, description;
+    EditText title, description,reference_link;
     Button choose_img, btn_post;
 
 
@@ -62,7 +62,7 @@ public class AddLibraryActivity extends AppCompatActivity {
     private Bundle savedInstanceState;
     private Boolean upflag = false;
     int Gallery_view = 2;
-    String Title_library, Description_library;
+    String Title_library, Description_library,Reference_Link;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -75,6 +75,7 @@ public class AddLibraryActivity extends AppCompatActivity {
         postimage = (ImageView) findViewById(R.id.post_image);
         title = (EditText) findViewById(R.id.title_library);
         description = (EditText) findViewById(R.id.description_library);
+        reference_link = (EditText) findViewById(R.id.reference_library);
 
         choose_img.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,9 +96,10 @@ public class AddLibraryActivity extends AppCompatActivity {
                 if (validate()  )  {
                     Title_library = title.getText().toString();
                     Description_library = description.getText().toString();
+                    Reference_Link = reference_link.getText().toString();
 
-
-                    previewCapturedImage();
+                    new ImageUploadTask().execute();
+                  //  previewCapturedImage();
                 }
 
             }
@@ -231,10 +233,10 @@ public class AddLibraryActivity extends AppCompatActivity {
         String result = "";
         File Image;
 
-        public ImageUploadTask(File imgFile) {
-            this.Image = imgFile;
-
-        }
+//        public ImageUploadTask(File imgFile) {
+//            this.Image = imgFile;
+//
+//        }
 
         @Override
         protected void onPreExecute() {
@@ -255,9 +257,10 @@ public class AddLibraryActivity extends AppCompatActivity {
                         HttpMultipartMode.BROWSER_COMPATIBLE);
 
                 String id= AppPreference.getUserid(AddLibraryActivity.this);
-                entity.addPart("file", new FileBody(Image));
+               // entity.addPart("file", new FileBody(Image));
                 entity.addPart("Library_title", new StringBody(Title_library));
                 entity.addPart("Library_description", new StringBody(Description_library));
+               // entity.addPart("Library_Reference_Link", new StringBody(Reference_Link));
                 entity.addPart("id",new StringBody(id));
 
                 result = Utilities.postEntityAndFindJson("https://jntrcpl.com/theoji/index.php/Api/library",entity);
@@ -413,7 +416,7 @@ public class AddLibraryActivity extends AppCompatActivity {
             if (imagePath != null) {
                 File imgFile = new File(imagePath);
                 if (imgFile.exists()) {
-                    new ImageUploadTask(imgFile).execute();
+                    //new ImageUploadTask(imgFile).execute();
                 }
             } else {
                 AlertDialogCreate();

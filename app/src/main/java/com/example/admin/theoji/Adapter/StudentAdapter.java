@@ -121,9 +121,9 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
             viewHolder.btn1.setText("Approved");
             viewHolder.btn1.setBackgroundColor(Color.GREEN);
         }
-//        else {
-//            viewHolder.btn1.setText("Approve");
-//        }
+        else {
+            viewHolder.btn1.setText("Approve");
+        }
 
         viewHolder.btn1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -345,7 +345,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
         }
 
         protected void onPreExecute() {
-       dialog = new ProgressDialog(getContext());
+       dialog = new ProgressDialog(context);
        dialog.setMessage("processing");
        dialog.show();
 
@@ -374,6 +374,10 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
                     if (res.equals("true")) {
                         Toast.makeText(context, "approve success", Toast.LENGTH_SHORT).show();
 
+                        Intent intent=new Intent(context,StudentActivity.class);
+                        context.startActivity(intent);
+                        ((Activity)context).finish();
+
                       Button  btn1 = (Button) viewlike.findViewById(R.id.st_approve);
                       btn1.setText("Approved");
                       btn1.setBackgroundColor(Color.GREEN);
@@ -383,7 +387,8 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
                     } else {
                         Toast.makeText(context, "Some Problem not approve", Toast.LENGTH_SHORT).show();
                         Button  btn1 = (Button) viewlike.findViewById(R.id.st_approve);
-                        btn1.setText("Approve");btn1.setBackgroundColor(Color.RED);
+                        btn1.setText("Approve");
+                        btn1.setBackgroundColor(Color.RED);
 
                     }
                 } catch (JSONException e) {
