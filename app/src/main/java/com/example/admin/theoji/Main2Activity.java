@@ -201,8 +201,8 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                     alert.show();
 
                 } else {
-                    //Toast.makeText(Main2Activity.this, "No Internet", Toast.LENGTH_SHORT).show();
-                    CustomAlert.alertDialogShow(getApplicationContext(),"Please Check Internet!");
+                    Toast.makeText(Main2Activity.this, "No Internet", Toast.LENGTH_SHORT).show();
+                   // CustomAlert.alertDialogShow(getApplicationContext(),"Please Check Internet!");
                 }
                 return true;
 
@@ -213,7 +213,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
 
                 } else {
                     Toast.makeText(Main2Activity.this, "No Internet", Toast.LENGTH_SHORT).show();
-                    CustomAlert.alertDialogShow(getApplicationContext(),"Please Check Internet!");
+                   // CustomAlert.alertDialogShow(getApplicationContext(),"Please Check Internet!");
                 }
                 return true;
 
@@ -224,7 +224,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
 
                 } else {
                     Toast.makeText(Main2Activity.this, "No Internet", Toast.LENGTH_SHORT).show();
-                    CustomAlert.alertDialogShow(getApplicationContext(),"Please Check Internet!");
+                   // CustomAlert.alertDialogShow(getApplicationContext(),"Please Check Internet!");
                 }
 
                 return true;
@@ -248,7 +248,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                 finish();
             }else {
                 Toast.makeText(Main2Activity.this, "No Internet", Toast.LENGTH_SHORT).show();
-                CustomAlert.alertDialogShow(getApplicationContext(),"Please Check Internet!");
+               // CustomAlert.alertDialogShow(getApplicationContext(),"Please Check Internet!");
             }
 
         } else if (id == R.id.nav_post) {
@@ -258,7 +258,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                 //finish();
             }else {
                 Toast.makeText(Main2Activity.this, "No Internet", Toast.LENGTH_SHORT).show();
-                CustomAlert.alertDialogShow(getApplicationContext(),"Please Check Internet!");
+               // CustomAlert.alertDialogShow(getApplicationContext(),"Please Check Internet!");
             }
 
         } else if (id == R.id.nav_buy_news) {
@@ -268,7 +268,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                 //finish();
             }else {
                 Toast.makeText(Main2Activity.this, "No Internet", Toast.LENGTH_SHORT).show();
-                CustomAlert.alertDialogShow(getApplicationContext(),"Please Check Internet!");
+               // CustomAlert.alertDialogShow(getApplicationContext(),"Please Check Internet!");
             }
 
         } else if (id == R.id.nav_homework) {
@@ -298,7 +298,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                 //finish();
             }else {
                 Toast.makeText(Main2Activity.this, "No Internet", Toast.LENGTH_SHORT).show();
-                CustomAlert.alertDialogShow(getApplicationContext(),"Please Check Internet!");
+               // CustomAlert.alertDialogShow(getApplicationContext(),"Please Check Internet!");
             }
 
         }else if (id == R.id.nav_teacher) {
@@ -309,7 +309,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                 //finish();
             }else {
                 Toast.makeText(Main2Activity.this, "No Internet", Toast.LENGTH_SHORT).show();
-                CustomAlert.alertDialogShow(getApplicationContext(),"Please Check Internet!");
+                //CustomAlert.alertDialogShow(getApplicationContext(),"Please Check Internet!");
             }
 
     } else if (id == R.id.nav_fees_details) {
@@ -319,7 +319,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                 //finish();
             }else {
                 Toast.makeText(Main2Activity.this, "No Internet", Toast.LENGTH_SHORT).show();
-                CustomAlert.alertDialogShow(getApplicationContext(),"Please Check Internet!");
+                //CustomAlert.alertDialogShow(getApplicationContext(),"Please Check Internet!");
             }
 
     } else if (id == R.id.nav_library) {
@@ -329,7 +329,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                 //finish();
             }else {
                 Toast.makeText(Main2Activity.this, "No Internet", Toast.LENGTH_SHORT).show();
-                CustomAlert.alertDialogShow(getApplicationContext(),"Please Check Internet!");
+               // CustomAlert.alertDialogShow(getApplicationContext(),"Please Check Internet!");
             }
 
     } else if (id == R.id.nav_attendance) {
@@ -356,7 +356,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                 //finish();
             }else {
                 Toast.makeText(Main2Activity.this, "No Internet", Toast.LENGTH_SHORT).show();
-                CustomAlert.alertDialogShow(getApplicationContext(),"Please Check Internet!");
+               // CustomAlert.alertDialogShow(getApplicationContext(),"Please Check Internet!");
             }
 
     }
@@ -390,7 +390,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
 
             }else {
                 Toast.makeText(Main2Activity.this, "No Internet", Toast.LENGTH_SHORT).show();
-                CustomAlert.alertDialogShow(getApplicationContext(),"Please Check Internet!");
+               // CustomAlert.alertDialogShow(getApplicationContext(),"Please Check Internet!");
             }
 
         }else if (id == R.id.nav_logout) {
@@ -425,8 +425,8 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
 
 
             }else {
-                //Toast.makeText(Main2Activity.this, "No Internet", Toast.LENGTH_SHORT).show();
-                CustomAlert.alertDialogShow(getApplicationContext(),"Please Check Internet!");
+                Toast.makeText(Main2Activity.this, "No Internet", Toast.LENGTH_SHORT).show();
+//                CustomAlert.alertDialogShow(getApplicationContext(),"Please Check Internet!");
             }
 
         }

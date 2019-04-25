@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -35,6 +36,7 @@ public class ProjectActivity extends AppCompatActivity {
     ArrayList<ProjectListModel> ProjectList;
     private ProjectAdapter projectAdapter;
     TextView et_post;
+    CardView cardeview;
 
    public static HashMap<Integer, String> ProjectHashMap=new HashMap<Integer, String>();
 
@@ -44,8 +46,11 @@ public class ProjectActivity extends AppCompatActivity {
         setContentView(R.layout.activity_project);
 
         viewProjects = (ImageView)findViewById(R.id.viewProjects);
+        cardeview = findViewById(R.id.cardeview);
         if (AppPreference.getUser_Type(ProjectActivity.this).equals("4")) {
             viewProjects.setVisibility(View.GONE);
+            cardeview.setVisibility(View.GONE);
+
         }
 
         et_post=findViewById(R.id.et_post);

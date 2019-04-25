@@ -42,6 +42,10 @@ public class TeacherActivity extends AppCompatActivity {
 
         viewTeacher = (ImageView)findViewById(R.id.viewTeacher);
 
+        //***************************5=teacher****************************
+        if (AppPreference.getUser_Type(TeacherActivity.this).equals("5")){
+            viewTeacher.setVisibility(View.GONE);
+        }
 
         viewTeacher.setOnClickListener(new View.OnClickListener() {
             @Override

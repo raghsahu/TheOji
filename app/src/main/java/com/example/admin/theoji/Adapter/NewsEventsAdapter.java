@@ -24,12 +24,14 @@ import android.widget.Toast;
 
 import com.example.admin.theoji.Comment_View_Activity;
 import com.example.admin.theoji.Connection.HttpHandler;
+import com.example.admin.theoji.ModelClass.CommentModel;
 import com.example.admin.theoji.ModelClass.NewsEventModel;
 import com.example.admin.theoji.NewsActivity;
 import com.example.admin.theoji.R;
 import com.example.admin.theoji.Shared_prefrence.AppPreference;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -44,6 +46,7 @@ import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -57,14 +60,16 @@ public class NewsEventsAdapter extends RecyclerView.Adapter<NewsEventsAdapter.Vi
     private static final String TAG = "NewsEventsAdapter";
     private ArrayList<NewsEventModel> NewsEventsList;
     public Context context;
-    String resId = "";
+    View viewlike;
     String id;
     String PID;
+    ArrayList<CommentModel> CommentList = new ArrayList<>();
+    public static HashMap<Integer , String> CountCheckHashMap = new HashMap<>();
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView newsName, newsEmail, newsTittle, newsContent, newsDate,Click_all;
-        public ImageView  newsImg, btn1, btn2, btn3,img_close;
+        public ImageView  newsImg, btn1, btn2, btn3,img_close,dis_like;
         public CircleImageView profileImg;
         public LinearLayout et_comment;
         CardView cardeview;
@@ -72,6 +77,7 @@ public class NewsEventsAdapter extends RecyclerView.Adapter<NewsEventsAdapter.Vi
 
         public ViewHolder(View view) {
             super(view);
+            viewlike = view;
 
             newsName = (TextView) view.findViewById(R.id.txtname);
             newsEmail = (TextView) view.findViewById(R.id.txt2);
@@ -87,6 +93,7 @@ public class NewsEventsAdapter extends RecyclerView.Adapter<NewsEventsAdapter.Vi
             img_close = (ImageView) view.findViewById(R.id.image_close);
             et_comment = (LinearLayout) view.findViewById(R.id.ll_comment);
             cardeview = (CardView) view.findViewById(R.id.cardeview);
+            dis_like=(ImageView)view.findViewById(R.id.dis_btn);
 
 
         }
@@ -134,6 +141,7 @@ public class NewsEventsAdapter extends RecyclerView.Adapter<NewsEventsAdapter.Vi
         viewHolder.pos = position;
         viewHolder.newsImg.setTag(viewHolder);
         viewHolder.img_close.setTag(viewHolder);
+        viewHolder.dis_like.setTag(viewHolder);
         viewHolder.btn1.setTag(viewHolder);
         viewHolder.btn2.setTag(viewHolder);
         viewHolder.Click_all.setTag(viewHolder);
@@ -176,8 +184,21 @@ public class NewsEventsAdapter extends RecyclerView.Adapter<NewsEventsAdapter.Vi
         viewHolder.btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new GetLikeCount(view).execute();
+                int i = position;
+                PID =  NewsHashMap.get(i);
 
+                new LikeUnlikeExcuteTask(view , PID).execute();
+
+                viewHolder.dis_like.setVisibility(View.VISIBLE);
+                viewHolder.btn1.setVisibility(View.INVISIBLE);
+
+            }
+        });
+        viewHolder.dis_like.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewHolder.btn1.setVisibility(View.VISIBLE);
+                viewHolder.dis_like.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -273,70 +294,7 @@ public class NewsEventsAdapter extends RecyclerView.Adapter<NewsEventsAdapter.Vi
 
 
 //*********************************************************************
-    public class GetLikeCount extends AsyncTask<String, Void, String> {
-        String output = "";
 
-        private Object viewHolder;
-        private String server_url;
-        View v;
-        public GetLikeCount(View view) {
-            this.v = view;
-
-        }
-
-
-        @Override
-        protected void onPreExecute() {
-
-            super.onPreExecute();
-
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-
-            try {
-                server_url = "https://jntrcpl.com/theoji/index.php/Api/plike?id="+AppPreference.getUserid(v.getContext())
-                        +"&pid="+AppPreference.getPOSTID(v.getContext());
-
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            Log.e("sever_url>>>>>>>>>", server_url);
-            output = HttpHandler.makeServiceCall(server_url);
-            //   Log.e("getcomment_url", output);
-            System.out.println("getcomment_url" + output);
-            return output;
-        }
-
-
-        @Override
-        protected void onPostExecute(String output) {
-            if (output == null) {
-//                dialog.dismiss();
-            } else {
-                try {
-
-                    JSONObject jsonObject = new JSONObject(output);
-                    String like = jsonObject.getString("tlike");
-
-//                    TextView clike= v.findViewById(R.id.badge_count1);
-//                  clike.setText(like);
-
-                    Toast.makeText(v.getContext(),like,Toast.LENGTH_LONG).show();
-
-
-
-                }catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-            super.onPostExecute(output);
-        }
-
-    }
 //*********************************************************************
 public class deleteTask extends AsyncTask<String,Integer,String>{
 
@@ -465,4 +423,188 @@ public class deleteTask extends AsyncTask<String,Integer,String>{
     }
 
 
+    private class LikeUnlikeExcuteTask extends AsyncTask<String, Void, String> {
+        String output = "";
+
+        String PIDg;
+        private String server_url;
+        View v;
+
+
+        public LikeUnlikeExcuteTask(View view, String PID) {
+            this.v = view;
+            this.PIDg=PID;
+        }
+        @Override
+        protected void onPreExecute() {
+
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            try {
+                // https://jntrcpl.com/theoji/index.php/Api/plike?id=
+                server_url = "https://jntrcpl.com/theoji/index.php/Api/plike?id="+AppPreference.getUserid(v.getContext())
+                        +"&pid="+PIDg;
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            Log.e("sever_url>>>>>>>>>", server_url);
+            output = HttpHandler.makeServiceCall(server_url);
+            //   Log.e("getcomment_url", output);
+            System.out.println("getcomment_url" + output);
+            return output;
+        }
+
+
+        @Override
+        protected void onPostExecute(String output) {
+            if (output == null) {
+//                dialog.dismiss();
+            } else {
+                try {
+
+                    JSONObject jsonObject = new JSONObject(output);
+                    String like = jsonObject.getString("tlike");
+
+//                    TextView count1=viewlike.findViewById(R.id.badge_count1);
+//                    count1.setText(like);
+//                    Toast.makeText(v.getContext(),like,Toast.LENGTH_LONG).show();
+
+                    new CountStatusExcuteTask(v.getContext(),PIDg ).execute();
+
+                }catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+            super.onPostExecute(output);
+        }
+
+    }
+
+
+    public class CountStatusExcuteTask extends AsyncTask<String,Integer,String>{
+        Context context1;
+        String PIDg2;
+
+        public CountStatusExcuteTask(Context context, String PIDg) {
+            this.context1=context;
+            this.PIDg2=PIDg;
+        }
+
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            try {
+
+                URL url = new URL("https://jntrcpl.com/theoji/index.php/Api/like_check");
+
+                JSONObject postDataParams = new JSONObject();
+                String id= AppPreference.getUserid(context);
+
+                postDataParams.put("pid",PIDg2);
+                postDataParams.put("id",id);
+
+                Log.e("postDataParams", postDataParams.toString());
+
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setReadTimeout(15000 /* milliseconds*/);
+                conn.setConnectTimeout(15000  /*milliseconds*/);
+                conn.setRequestMethod("POST");
+                conn.setDoInput(true);
+                conn.setDoOutput(true);
+
+                OutputStream os = conn.getOutputStream();
+                BufferedWriter writer = new BufferedWriter(
+                        new OutputStreamWriter(os, "UTF-8"));
+                writer.write(getPostDataString(postDataParams));
+
+                writer.flush();
+                writer.close();
+                os.close();
+                int responseCode = conn.getResponseCode();
+
+                if (responseCode == HttpsURLConnection.HTTP_OK) {
+
+                    BufferedReader r = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    StringBuilder result = new StringBuilder();
+                    String line;
+                    while ((line = r.readLine()) != null) {
+                        result.append(line);
+                    }
+                    r.close();
+                    return result.toString();
+
+                } else {
+                    return new String("false : " + responseCode);
+                }
+            }
+            catch (Exception e) {
+                return new String("Exception: " + e.getMessage());
+            }
+
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+            if (result != null) {
+
+                try {
+                    JSONObject object = new JSONObject(result);
+
+                    String like_status = object.getString("plike_status");
+                    String Comment_count = object.getString("comment_count");
+                    String Like_count = object.getString("like_count");
+
+                    JSONArray Data_array = object.getJSONArray("comment");
+                    for (int i = 0; i < Data_array.length(); i++) {
+                        JSONObject c = Data_array.getJSONObject(i);
+
+                        String comment_id = c.getString("comment_id");
+                        String post_id = c.getString("post_id");
+                        String cdescription = c.getString("cdescription");
+                        String comment_date = c.getString("comment_date");
+                        String firstname = c.getString("firstname");
+                        String user_id = c.getString("user_id");
+
+                        CommentList.add(i, new CommentModel(post_id,firstname,cdescription,comment_date));
+                        CountCheckHashMap.put(i,post_id);
+                    }
+
+                    TextView count1=viewlike.findViewById(R.id.badge_count1);
+                    TextView count2=viewlike.findViewById(R.id.badge_count2);
+
+                    if (Like_count.equals("false")) {
+//                            Toast.makeText(context, "no like", Toast.LENGTH_SHORT).show();
+                        count1.setText(0);
+                    } else {
+                        count1.setText(Like_count);
+                        // Toast.makeText(context,"like"+Like_count,Toast.LENGTH_SHORT).show();
+                    }
+
+
+                    if (Comment_count.equals("false")) {
+                        count2.setText(String.valueOf(0));
+                        // Toast.makeText(context, "no comment", Toast.LENGTH_SHORT).show();
+
+                    } else {
+                        count2.setText(Comment_count);
+                        // Toast.makeText(context,"C-like"+Comment_count,Toast.LENGTH_SHORT).show();
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+//       super.onPostExecute(s);
+            }
+        }
+    }
 }

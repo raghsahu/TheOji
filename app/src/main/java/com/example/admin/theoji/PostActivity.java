@@ -44,7 +44,7 @@ public class PostActivity extends AppCompatActivity {
     ArrayList<PostListModel> PostList;
     private PostAdapter postAdapter;
     public static HashMap<Integer , String> postStringHashMap = new HashMap<>();
-    CardView add_post_icon;
+    CardView add_post_icon,cardview111;
     TextView et_post;
     LinearLayout ll_next_post;
 
@@ -58,11 +58,14 @@ public class PostActivity extends AppCompatActivity {
         add_post_icon=(CardView) findViewById(R.id.add_post_icon);
         ll_next_post=(LinearLayout)findViewById(R.id.le11);
         et_post=findViewById(R.id.et_post);
+        cardview111=findViewById(R.id.cardview111);
        // et_post.setEnabled(false);
 
 
         if (AppPreference.getUser_Type(PostActivity.this).equals("4")) {
             addPost.setVisibility(View.GONE);
+            cardview111.setVisibility(View.GONE);
+
         }
 
         addPost.setOnClickListener(new View.OnClickListener() {

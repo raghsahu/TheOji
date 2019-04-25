@@ -182,6 +182,15 @@
                             android:padding="15dp"
                             android:src="@drawable/like_icon"
                             android:background="@drawable/dot" />
+
+                        <ImageView
+                            android:visibility="gone"
+                            android:id="@+id/dis_btn"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:padding="15dp"
+                            android:src="@drawable/dislike_icon"
+                            android:background="@drawable/dot" />
                     </RelativeLayout>
                     <TextView
                         android:id="@+id/badge_count1"

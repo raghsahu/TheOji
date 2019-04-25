@@ -80,7 +80,7 @@ public class StudentListAdapter_Recycler extends RecyclerView.Adapter<StudentLis
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 int getPosition = (Integer) buttonView.getTag();
-                 Toast.makeText(context, ""+getPosition, Toast.LENGTH_SHORT).show();
+                // Toast.makeText(context, ""+getPosition, Toast.LENGTH_SHORT).show();
 
 //*****************************************************************
                 if (getPosition==0) {

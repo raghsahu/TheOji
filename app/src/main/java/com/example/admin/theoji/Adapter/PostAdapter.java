@@ -354,7 +354,7 @@ public class  PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 //                    count1.setText(like);
 //                    Toast.makeText(v.getContext(),like,Toast.LENGTH_LONG).show();
 
-                    new CountStatusExcuteTask(getContext(),PIDg ).execute();
+                    new CountStatusExcuteTask(v.getContext(),PIDg ).execute();
 
                 }catch (JSONException e) {
                     e.printStackTrace();

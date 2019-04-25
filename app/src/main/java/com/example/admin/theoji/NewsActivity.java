@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -35,6 +36,8 @@ public class NewsActivity extends AppCompatActivity {
     ArrayList<NewsEventModel> NewsEventList;
     private NewsEventsAdapter newseventsadapter;
     TextView add_post_icon;
+    CardView cardeview;
+
 
     public static HashMap<Integer, String> NewsHashMap=new HashMap<Integer, String>();
 
@@ -44,8 +47,10 @@ public class NewsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_news);
 
         addNews = (ImageView)findViewById(R.id.viewNews);
+        cardeview = findViewById(R.id.cardeview);
         if (AppPreference.getUser_Type(NewsActivity.this).equals("4")) {
             addNews.setVisibility(View.GONE);
+            cardeview.setVisibility(View.GONE);
         }
 
         add_post_icon=findViewById(R.id.et_post);
