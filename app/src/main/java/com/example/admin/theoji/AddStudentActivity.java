@@ -454,7 +454,7 @@ public class AddStudentActivity extends AppCompatActivity{
                  Student_mobile=student_mobile.getText().toString();
                 Student_Alternate_mobile=student_alternate_mobile.getText().toString();
                  Student_state=spin_state.getSelectedItem().toString();
-               Student_country=country.getSelectedItem().toString();
+              // Student_country=country.getSelectedItem().toString();
                 Student_cast=student_cast.getText().toString();
                 Student_rte_type=rteType.getSelectedItem().toString();
                  Student_bank_ifsc_code=student_bank_ifsc_code.getText().toString();
@@ -473,7 +473,7 @@ public class AddStudentActivity extends AppCompatActivity{
 
 
                 Student_session=std_session.getText().toString();
-                Student_admission_no=std_admission_no.getText().toString();
+               // Student_admission_no=std_admission_no.getText().toString();
                 Student_admission_date=std_admission_date.getText().toString();
                 Student_board_name=std_board_name.getSelectedItem().toString();
                 Student_about=std_about.getText().toString();
@@ -485,7 +485,7 @@ public class AddStudentActivity extends AppCompatActivity{
                     &&!Student_Bank_Account.isEmpty()&&!Student_Bank_Name.isEmpty()&&!Student_bank_ifsc_code.isEmpty()
                     &&!Student_sex.isEmpty()&&!Student_gardian_name.isEmpty() &&!Student_city.isEmpty() && !Student_pincode.isEmpty()
                     &&!Student_Address.isEmpty()&&!Student_mobile.isEmpty() &&!Student_Alternate_mobile.isEmpty()&&!Student_state.isEmpty()
-                    &&!Student_country.isEmpty() &&!Student_rte_type.isEmpty() &&!Student_sssmid.isEmpty()&& !Student_mother_name.isEmpty()
+                     &&!Student_rte_type.isEmpty() &&!Student_sssmid.isEmpty()&& !Student_mother_name.isEmpty()
                     && !School_code.isEmpty() && !Student_class_type.isEmpty() && !Student_section.isEmpty()&&!Student_session.isEmpty()
                     &&Student_admission_date.isEmpty() && !Student_board_name.isEmpty() &&!Student_about.isEmpty())
 
@@ -650,7 +650,7 @@ public class AddStudentActivity extends AppCompatActivity{
             postDataParams.put("Student_mobile",Student_mobile);
             postDataParams.put("Student_Alternate_mobile",Student_Alternate_mobile);
             postDataParams.put("Student_state",Student_state);
-            postDataParams.put("Student_country",Student_country);
+           // postDataParams.put("Student_country",Student_country);
             postDataParams.put("Student_cast",Student_cast);
             postDataParams.put("Student_rte_type",Student_rte_type);
             postDataParams.put("Student_bank_ifsc_code",Student_bank_ifsc_code);
@@ -660,7 +660,7 @@ public class AddStudentActivity extends AppCompatActivity{
             postDataParams.put("Student_class_type",Student_class_type);
             postDataParams.put("Student_section",Student_section);
             postDataParams.put("Student_session",Student_session);
-            postDataParams.put("Student_admission_no",Student_admission_no);
+          //  postDataParams.put("Student_admission_no",Student_admission_no);
             postDataParams.put("Student_admission_date",Student_admission_date);
             postDataParams.put("Student_board_name",Student_board_name);
             postDataParams.put("Student_about",Student_about);
