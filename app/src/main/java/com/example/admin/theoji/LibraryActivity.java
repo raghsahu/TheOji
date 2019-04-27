@@ -25,6 +25,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class LibraryActivity extends AppCompatActivity {
     ImageView viewlibrary;
@@ -32,6 +33,8 @@ public class LibraryActivity extends AppCompatActivity {
     String server_url;
     ArrayList<LibraryListModel> LibraryList;
     private LibraryAdapter libraryAdapter;
+
+    public static HashMap<Integer , String> LibraryHashMap = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,15 +136,13 @@ public class LibraryActivity extends AppCompatActivity {
                               if (postimg1.startsWith("|"))
                               {
                                   String postimg = postimg1.substring(1 , postimg1.length());
-//                                  LibraryList.add(0,new LibraryListModel());
+
                                   LibraryList.add(0, new LibraryListModel(post_id, name, email, date,title, content, userimg,postimg,reference_link));
                               }else{
                                   LibraryList.add(0, new LibraryListModel(post_id, name, email, date,title, content, userimg,postimg1,reference_link));
                               }
 
-
-
-//                AppPreference.setPostid(PostActivity.this,post_id);
+                            LibraryHashMap.put(i , post_id);
                         }
 
 
@@ -151,8 +152,6 @@ public class LibraryActivity extends AppCompatActivity {
                         recyclerlibrary.setItemAnimator(new DefaultItemAnimator());
                         recyclerlibrary.setAdapter(libraryAdapter);
 
-//                           Picasso.get().load("https://jntrcpl.com/theoji/uploads/"+postListModel.getPostimg()).into(viewHolder.);
-
 
                     }else {
 
@@ -161,7 +160,6 @@ public class LibraryActivity extends AppCompatActivity {
 
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    //  dialog.dismiss();
                 }
                 super.onPostExecute(output);
             }
