@@ -56,8 +56,6 @@ public class TeacherActivity extends AppCompatActivity {
             }
         });
 
-
-
         recyclerteacher = (RecyclerView)findViewById(R.id.recycler_view_teacher);
 
         int position=0;

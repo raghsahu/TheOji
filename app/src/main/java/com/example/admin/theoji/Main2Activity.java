@@ -139,13 +139,9 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
             nav_Menu.findItem(R.id.nav_student).setVisible(false);
             nav_Menu.findItem(R.id.nav_class).setVisible(false);
             nav_Menu.findItem(R.id.nav_teacher).setVisible(false);
-            nav_Menu.findItem(R.id.nav_chat).setVisible(false);
-
+           // nav_Menu.findItem(R.id.nav_chat).setVisible(false);
 
         }
-
-
-
     }
 
     @Override

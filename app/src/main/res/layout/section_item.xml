@@ -61,9 +61,10 @@
 
 
             <LinearLayout
+                android:weightSum="1"
                 android:id="@+id/le11"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:layout_weight="0.7"
@@ -71,26 +72,26 @@
 
                 <Button
                     android:id="@+id/section_update"
-                    android:layout_width="match_parent"
+                    android:layout_width="60dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:background="@color/colorPrimary"
                     android:text="Update"
                     android:textAllCaps="false"
                     android:textColor="#fff"
-                    android:layout_weight="0.33"
+                    android:layout_weight="0.50"
                     android:layout_marginRight="1dp"
                     />
                 <Button
                     android:id="@+id/class_delete"
-                    android:layout_width="match_parent"
+                    android:layout_width="60dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:background="@color/colorPrimary"
                     android:text="Delete"
                     android:textAllCaps="false"
                     android:textColor="#fff"
-                    android:layout_weight="0.33"
+                    android:layout_weight="0.50"
                     android:layout_marginLeft="1dp"
                     />
 

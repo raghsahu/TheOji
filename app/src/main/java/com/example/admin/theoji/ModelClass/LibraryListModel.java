@@ -9,8 +9,10 @@ public class LibraryListModel {
     private String date;
     private static String post_id;
     private String title;
+    private String reference_link;
 
-    public LibraryListModel(String post_id, String name, String email, String date, String title, String content, String userimg, String postimg) {
+    public LibraryListModel(String post_id, String name, String email, String date, String title, String content, String userimg, String postimg,
+                            String reference_link) {
         this.name = name;
         this.email = email;
         this.content=content;
@@ -19,6 +21,7 @@ public class LibraryListModel {
         this.userimg = userimg;
         this.date = date;
         this.title=title;
+        this.reference_link=reference_link;
 
     }
 
@@ -50,6 +53,14 @@ public class LibraryListModel {
 
     public String getTitle() {
         return title;
+    }
+
+    public String getReference_link() {
+        return reference_link;
+    }
+
+    public void setReference_link(String reference_link) {
+        this.reference_link = reference_link;
     }
 
     public void setTitle(String title) {

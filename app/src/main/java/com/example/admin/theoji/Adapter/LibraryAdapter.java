@@ -63,7 +63,7 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.ViewHold
         public ImageView img2;
         CircleImageView img_person;
         public ImageView btn1, btn2, btn3, dis_like;
-        public TextView txt1, txt2, txt3,txt_nm,txt_title;
+        public TextView txt1, txt2, txt3,txt_nm,txt_title, txt_referance;
         public  TextView count1,count2;
         public EditText etcomment;
         public LinearLayout et_comment;
@@ -80,6 +80,8 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.ViewHold
             txt2 = (TextView) viewlike.findViewById(R.id.txt2);
             txt3 = (TextView) viewlike.findViewById(R.id.txt3);
             txt_title = (TextView) view.findViewById(R.id.title);
+            txt_referance = (TextView) view.findViewById(R.id.referal_link);
+
             etcomment=(EditText)viewlike.findViewById(R.id.comment_post);
             recyclerView_comment=(RecyclerView)viewlike.findViewById(R.id.comment_view);
 
@@ -127,6 +129,8 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.ViewHold
         viewHolder.txt3.setText(libraryListModel.getDate());
         viewHolder.txt_title.setText(libraryListModel.getTitle());
         viewHolder.txt_nm.setText(libraryListModel.getContent());
+        viewHolder.txt_referance.setText(libraryListModel.getReference_link());
+
 //        Picasso.get().load("https://jntrcpl.com/theoji/uploads/apex_school.jpg").into(viewHolder.img2);
         viewHolder.img_person.setImageResource(R.drawable.person);
         Picasso.get().load("https://jntrcpl.com/theoji/uploads/"+libraryListModel.getUserimg()).into(viewHolder.img_person);
@@ -144,9 +148,22 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.ViewHold
         viewHolder.btn3.setTag(viewHolder);
         viewHolder.dis_like.setTag(viewHolder);
         viewHolder.etcomment.setTag(viewHolder);
+        viewHolder.txt_referance.setTag(viewHolder);
         viewHolder.pos = position;
 
         commentList = new ArrayList<>();
+
+        viewHolder.txt_referance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+//                PID = LibraryList.get(position).getPost_id();
+//                new GetLikeCount(view, PID).execute();
+
+
+            }
+        });
+
 
         viewHolder.btn1.setOnClickListener(new View.OnClickListener() {
             @Override

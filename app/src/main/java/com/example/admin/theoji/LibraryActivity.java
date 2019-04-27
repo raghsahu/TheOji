@@ -118,24 +118,25 @@ public class LibraryActivity extends AppCompatActivity {
                             JSONObject c = Data_array.getJSONObject(i);
 
                             String post_id = c.getString("post_id");
-//                        String author = c.getString("post_author");
+                           String author = c.getString("post_author");
                             String date = c.getString("post_date");
                             String title = c.getString("post_title");
                             String content = c.getString("post_content");
-//                        String posttype = c.getString("post_type");
-//                        String ref_id1 = c.getString("ref_id");
-//                        String like = c.getString("plike");
+                         String posttype = c.getString("post_type");
+                        String ref_id1 = c.getString("ref_id");
+                        String like = c.getString("plike");
                             String name = c.getString("username");
                             String email = c.getString("email");
+                            String reference_link = c.getString("reference_link");
                             String userimg = c.getString("umeta_value");
                             String postimg1 = c.getString("pmeta_value");
                               if (postimg1.startsWith("|"))
                               {
                                   String postimg = postimg1.substring(1 , postimg1.length());
 //                                  LibraryList.add(0,new LibraryListModel());
-                                  LibraryList.add(0, new LibraryListModel(post_id, name, email, date,title, content, userimg,postimg));
+                                  LibraryList.add(0, new LibraryListModel(post_id, name, email, date,title, content, userimg,postimg,reference_link));
                               }else{
-                                  LibraryList.add(0, new LibraryListModel(post_id, name, email, date,title, content, userimg,postimg1));
+                                  LibraryList.add(0, new LibraryListModel(post_id, name, email, date,title, content, userimg,postimg1,reference_link));
                               }
 
 

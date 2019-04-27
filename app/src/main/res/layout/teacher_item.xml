@@ -12,6 +12,12 @@
         android:layout_margin="2dp"
         app:cardCornerRadius="5dp">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:weightSum="1"
+            >
 
     <LinearLayout
         android:id="@+id/ln1"
@@ -156,8 +162,7 @@ android:layout_marginLeft="3dp"
                 android:id="@+id/txt_class"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
-android:layout_marginLeft="3dp"
+                android:layout_marginLeft="3dp"
                 android:typeface="serif"
                 android:textColor="#000"
                 android:textSize="14sp" />
@@ -179,38 +184,53 @@ android:layout_marginLeft="3dp"
                 android:id="@+id/tea_approve"
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
-
                 android:background="@color/colorPrimary"
                 android:text="Approve"
                 android:textAllCaps="false"
                 android:textColor="#fff"
-                android:layout_weight="0.33"
+                android:layout_weight="0.25"
                 />
             <Button
                 android:id="@+id/tea_edit"
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="1dp"
                 android:background="@color/colorPrimary"
                 android:text="Edit"
                 android:textAllCaps="false"
                 android:textColor="#fff"
-                android:layout_weight="0.33"
+                android:layout_weight="0.25"
                 />
             <Button
                 android:id="@+id/delete"
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="1dp"
                 android:background="@color/colorPrimary"
                 android:text="Delete"
                 android:textAllCaps="false"
                 android:textColor="#fff"
-                android:layout_weight="0.33"
+                android:layout_weight="0.25"
                 />
+
+            <Button
+                android:layout_marginTop="1dp"
+                android:id="@+id/tea_alot"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:text="Alot Class"
+                android:textAllCaps="false"
+                android:textColor="#fff"
+                android:layout_weight="0.25"
+                />
+
+        </LinearLayout>
 
 
         </LinearLayout>
+
+
 
 
         </LinearLayout>

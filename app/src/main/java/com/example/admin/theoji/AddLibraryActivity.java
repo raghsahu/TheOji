@@ -52,6 +52,7 @@ public class AddLibraryActivity extends AppCompatActivity {
 
     private String userChoosenTask;
     public static final int REQUEST_CAMERA = 0;
+    private static final int PICK_PDF_REQUEST = 101;
     private static final int CAMERA_CAPTURE_IMAGE_REQUEST_CODE = 100;
     public static final String KEY_IMAGE_STORAGE_PATH = "image_path";
     public static final int MEDIA_TYPE_IMAGE = 1;
@@ -63,6 +64,7 @@ public class AddLibraryActivity extends AppCompatActivity {
     private Boolean upflag = false;
     int Gallery_view = 2;
     String Title_library, Description_library,Reference_Link;
+    private  Uri filePath;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -99,7 +101,7 @@ public class AddLibraryActivity extends AppCompatActivity {
                     Reference_Link = reference_link.getText().toString();
 
                     new ImageUploadTask().execute();
-                  //  previewCapturedImage();
+                   // previewCapturedImage();
                 }
 
             }
@@ -108,7 +110,7 @@ public class AddLibraryActivity extends AppCompatActivity {
     }
 
     private void selectFile() {
-        final CharSequence[] items = {"Take Photo", "Choose from Library",
+        final CharSequence[] items = {"Take Photo", "Choose from Library", "Choose PDF/Docs File",
                 "Cancel"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(AddLibraryActivity.this);
@@ -134,7 +136,13 @@ public class AddLibraryActivity extends AppCompatActivity {
                     if (result)
                         galleryIntent();
 
-                } else if (items[item].equals("Cancel")) {
+                } else if (items[item].equals("Choose PDF/Docs File")) {
+                    userChoosenTask = "Choose PDF/Docs File";
+                    if (result)
+                        docs_pdfIntent();
+                }
+
+                else if (items[item].equals("Cancel")) {
                     dialog.dismiss();
                 }
             }
@@ -149,6 +157,18 @@ public class AddLibraryActivity extends AppCompatActivity {
         // Start new activity with the LOAD_IMAGE_RESULTS to handle back the results when image is picked from the Image Gallery.
         startActivityForResult(i, Gallery_view);
     }
+    private void docs_pdfIntent() {
+
+//        Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//        // Start new activity with the LOAD_IMAGE_RESULTS to handle back the results when image is picked from the Image Gallery.
+//        startActivityForResult(i, Gallery_view);
+
+        Intent intent = new Intent();
+        intent.setType("application/pdf");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Pdf"), PICK_PDF_REQUEST);
+    }
+
 
     private void cameraIntent() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -198,13 +218,13 @@ public class AddLibraryActivity extends AppCompatActivity {
 
             postimage.setImageBitmap(bitmap);
             File imgFile = new File(imageStoragePath);
-/*
+
             if (imgFile.exists()) {
                 //  imgPolicyNo.setImageURI(Uri.fromFile(imgFile));
                 //  show(imgFile);
-                new ImageUploadTask(imgFile).execute();
+               // new ImageUploadTask(imgFile).execute();
                 //  Toast.makeText(ClaimActivity.this,"data:="+imgFile,Toast.LENGTH_LONG).show();
-            }*/
+            }
 
         } catch (NullPointerException e) {
             e.printStackTrace();
@@ -226,6 +246,9 @@ public class AddLibraryActivity extends AppCompatActivity {
                     }
                 }).show();
     }
+
+    //*******************************
+
 
     class ImageUploadTask extends AsyncTask<Void, Void, String> {
 
@@ -251,16 +274,18 @@ public class AddLibraryActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(Void... params) {
+            File imgFile = new File(imageStoragePath);
+
             try {
 
                 org.apache.http.entity.mime.MultipartEntity entity = new MultipartEntity(
                         HttpMultipartMode.BROWSER_COMPATIBLE);
 
                 String id= AppPreference.getUserid(AddLibraryActivity.this);
-               // entity.addPart("file", new FileBody(Image));
+                entity.addPart("file", new FileBody(imgFile));
                 entity.addPart("Library_title", new StringBody(Title_library));
                 entity.addPart("Library_description", new StringBody(Description_library));
-               // entity.addPart("Library_Reference_Link", new StringBody(Reference_Link));
+                entity.addPart("reference_link", new StringBody(Reference_Link));
                 entity.addPart("id",new StringBody(id));
 
                 result = Utilities.postEntityAndFindJson("https://jntrcpl.com/theoji/index.php/Api/library",entity);
@@ -367,6 +392,11 @@ public class AddLibraryActivity extends AppCompatActivity {
             postimage.setImageBitmap(BitmapFactory.decodeFile(imageStoragePath));
             upflag = true;
             cursor.close();
+        }
+
+        if (requestCode == PICK_PDF_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            filePath = data.getData();
+            imageStoragePath = filePath.getPath();
         }
 
     }

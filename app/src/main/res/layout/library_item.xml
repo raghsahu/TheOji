@@ -152,6 +152,20 @@
                     android:textStyle="normal"
                     android:textColor="#000"
                     android:text="Description" />
+
+                <TextView
+                    android:id="@+id/referal_link"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:textSize="12sp"
+                    android:layout_marginLeft="5dp"
+                    android:typeface="serif"
+                    android:textStyle="normal"
+                    android:textColor="#000"
+                    android:textColorLink="#fff"
+                    android:linksClickable="true"
+                    android:text="Reference Link" />
             </LinearLayout>
         </LinearLayout>
 

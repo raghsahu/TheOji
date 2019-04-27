@@ -39,7 +39,7 @@ import javax.net.ssl.HttpsURLConnection;
 public class AddTeacher extends AppCompatActivity {
     LinearLayout layout;
     Button btn_submit;
-    EditText teacher_name, teacher_email, teacher_mobile,teacher_pw,teacher_alotclass,teacher_address;
+    EditText teacher_name, teacher_email, teacher_mobile,teacher_pw,teacher_address;
 
     String user_id="";
 
@@ -64,7 +64,7 @@ public class AddTeacher extends AppCompatActivity {
         teacher_email = (EditText) findViewById(R.id.teacher_email);
         teacher_mobile = (EditText) findViewById(R.id.teacher_mobile);
         teacher_pw = (EditText) findViewById(R.id.teacher_pw);
-        teacher_alotclass = (EditText) findViewById(R.id.teacher_class);
+       // teacher_alotclass = (EditText) findViewById(R.id.teacher_class);
         teacher_address = (EditText) findViewById(R.id.teacher_address);
 
         btn_submit  = (Button)findViewById(R.id.btn_submit);
@@ -79,7 +79,7 @@ public class AddTeacher extends AppCompatActivity {
                         String pass = teacher_pw.getText().toString();
                         String mobile = teacher_mobile.getText().toString();
                         String email = teacher_email.getText().toString();
-                        String alotclass = teacher_alotclass.getText().toString();
+                      //  String alotclass = teacher_alotclass.getText().toString();
                         String address = teacher_address.getText().toString();
 
 
@@ -162,7 +162,7 @@ public class AddTeacher extends AppCompatActivity {
             postDataParams.put("Teacher_email",teacher_email.getText().toString());
             postDataParams.put("Teacher_mobile",teacher_mobile.getText().toString());
             postDataParams.put("Teacher_password",teacher_pw.getText().toString());
-            postDataParams.put("Teacher_alot_class",teacher_alotclass.getText().toString());
+           // postDataParams.put("Teacher_alot_class",teacher_alotclass.getText().toString());
             postDataParams.put("Teacher_address",teacher_address.getText().toString());
             postDataParams.put("id",id);
 
@@ -237,7 +237,7 @@ public class AddTeacher extends AppCompatActivity {
         String Teacher_name = teacher_name.getText().toString();
         String pass = teacher_pw.getText().toString();
         String mobile = teacher_mobile.getText().toString();
-        String alotclass = teacher_alotclass.getText().toString();
+       // String alotclass = teacher_alotclass.getText().toString();
         String address = teacher_address.getText().toString();
         String email = teacher_email.getText().toString();
 
@@ -285,13 +285,13 @@ public class AddTeacher extends AppCompatActivity {
             valid = true;
             teacher_address.setError(null);
         }
-        if (alotclass.isEmpty()) {
-            valid = false;
-            teacher_alotclass.setError("Please enter teacher Alot class!");
-        } else {
-            valid = true;
-            teacher_alotclass.setError(null);
-        }
+//        if (alotclass.isEmpty()) {
+//            valid = false;
+//            teacher_alotclass.setError("Please enter teacher Alot class!");
+//        } else {
+//            valid = true;
+//            teacher_alotclass.setError(null);
+//        }
 
         return valid;
 
