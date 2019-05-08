@@ -173,8 +173,13 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.ViewHold
 //                t2.setText(Html.fromHtml("<a href=\"https://www.infocentroid.com\">Developed by InfoCentroid</a>"));
 //                t2.setMovementMethod(LinkMovementMethod.getInstance());
                   String Url_link=libraryListModel.getReference_link();
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://"+Url_link));
-                context.startActivity(browserIntent);
+                  if (Url_link !=null){
+                      Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://"+Url_link));
+                      context.startActivity(browserIntent);
+                  }else {
+                      Toast.makeText(context, "No link Available", Toast.LENGTH_SHORT).show();
+                  }
+
                 Toast.makeText(context, "url "+Url_link, Toast.LENGTH_SHORT).show();
             }
         });

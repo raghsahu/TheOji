@@ -36,7 +36,6 @@ public class HttpHandler {
         String response = null;
         try {
             if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
-//                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 HttpsURLConnection conn = (HttpsURLConnection)url.openConnection();
                 SSLContext sslcontext = SSLContext.getInstance("TLSv1");
 //                SSLContext sslContext = SSLContext.getInstance("TLSv1.2");

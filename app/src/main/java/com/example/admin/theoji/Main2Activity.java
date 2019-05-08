@@ -114,7 +114,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
 //                    .load("https://jntrcpl.com/theoji/uploads/"+AppPreference.getProfileImage(Main2Activity.this))
 //                    .into(Main2Activity.this.Profile_img);
             Picasso.get()
-                    .load("https://jntrcpl.com/theoji/uploads/IMG_20190330_1400452.jpg")
+                    .load("https://jntrcpl.com/theoji/uploads/"+AppPreference.getProfileImage(Main2Activity.this))
                     .into(Main2Activity.this.Profile_img);
         }else {
             Picasso.get()

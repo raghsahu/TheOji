@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -30,6 +31,8 @@ import android.widget.Toast;
 
 import com.example.admin.theoji.Connection.Connectivity;
 import com.example.admin.theoji.Connection.HttpHandler;
+import com.example.admin.theoji.Connection.ImprovedSSLSocketFactory;
+import com.example.admin.theoji.Connection.NoSSLv3SocketFactory;
 import com.example.admin.theoji.Shared_prefrence.AppPreference;
 import com.example.admin.theoji.Shared_prefrence.SessionManager;
 import com.example.admin.theoji.Utils.CustomAlert;
@@ -46,12 +49,16 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLEngine;
+import javax.net.ssl.SSLSocketFactory;
 
 public class LoginActivity extends AppCompatActivity {
     LinearLayout layout;
@@ -385,12 +392,12 @@ public class LoginActivity extends AppCompatActivity {
                 dialog.dismiss();
 
                 try {
-             //  Toast.makeText(LoginActivity.this, "result is" + result, Toast.LENGTH_SHORT).show();
+               Toast.makeText(LoginActivity.this, "result is " + result, Toast.LENGTH_SHORT).show();
 
 
-                    JSONObject responce = new JSONObject(result);
-                    String res = responce.getString("responce");
-                    String profileimage = responce.getString("profileimage");
+                    JSONObject object = new JSONObject(result);
+                    String res = object.getString("responce");
+                    String profileimage = object.getString("profileimage");
 
                     JSONObject data= new JSONObject(result).getJSONObject("data");
                      user_id=data.getString("user_id");
@@ -473,15 +480,36 @@ public class LoginActivity extends AppCompatActivity {
             postDataParams.put("Mobileno",mobile_no.getText().toString());
             postDataParams.put("user_id",Stude_ID);
 
-
             Log.e("postDataParams", postDataParams.toString());
 
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setReadTimeout(15000 /* milliseconds*/);
-            conn.setConnectTimeout(15000  /*milliseconds*/);
-            conn.setRequestMethod("POST");
-            conn.setDoInput(true);
-            conn.setDoOutput(true);
+
+            if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
+
+                SSLContext sslcontext = SSLContext.getInstance("TLSv1");
+               // SSLContext sslContext = SSLContext.getInstance("TLSv1.2");
+                sslcontext.init(null, null, null);
+                SSLEngine engine = sslcontext.createSSLEngine();
+
+                sslcontext.init(null,null,null);
+                SSLSocketFactory NoSSLv3Factory = new NoSSLv3SocketFactory(sslcontext.getSocketFactory());
+
+               // conn.setDefaultSSLSocketFactory(new ImprovedSSLSocketFactory());
+                conn.setReadTimeout(15000 /* milliseconds*/);
+                conn.setConnectTimeout(15000  /*milliseconds*/);
+                conn.setRequestMethod("POST");
+                conn.setDoInput(true);
+                conn.setDoOutput(true);
+
+        }
+        else {
+                conn.setReadTimeout(15000 /* milliseconds*/);
+                conn.setConnectTimeout(15000  /*milliseconds*/);
+                conn.setRequestMethod("POST");
+                conn.setDoInput(true);
+                conn.setDoOutput(true);
+            }
+
 
             OutputStream os = conn.getOutputStream();
             BufferedWriter writer = new BufferedWriter(

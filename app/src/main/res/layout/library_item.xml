@@ -165,7 +165,7 @@
                     android:textColor="#000"
                     android:textColorLink="#fff"
                     android:linksClickable="true"
-                    android:text="Reference Link" />
+                    android:text="" />
             </LinearLayout>
         </LinearLayout>
 
