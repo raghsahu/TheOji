@@ -101,30 +101,30 @@
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
 
-                <!--<LinearLayout-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:orientation="horizontal"-->
-                    <!--android:layout_marginBottom="10dp"-->
-                    <!--android:weightSum="1">-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="10dp"
+                    android:weightSum="1">
 
-                    <!--<TextView-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_weight="0.8"-->
-                        <!--android:text="Students"-->
-                        <!--android:textColor="#FF3360DC"-->
-                        <!--android:textSize="15dp"-->
-                        <!--android:textStyle="normal" />-->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.8"
+                        android:text="Students"
+                        android:textColor="#FF3360DC"
+                        android:textSize="15dp"
+                        android:textStyle="normal" />
 
-                    <!--<Spinner-->
-                        <!--android:id="@+id/class_students"-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_weight="0.2">-->
+                    <Spinner
+                        android:id="@+id/class_students"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.2">
 
-                    <!--</Spinner>-->
-                <!--</LinearLayout>-->
+                    </Spinner>
+                </LinearLayout>
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"

@@ -46,8 +46,6 @@ import java.util.Iterator;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import static com.example.admin.theoji.Adapter.StudentListAdapter.multiselected;
-
 public class AddPayFeesActivity extends AppCompatActivity {
 
     Spinner spin_class,spin_class1;

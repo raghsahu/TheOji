@@ -482,7 +482,7 @@ public class LoginActivity extends AppCompatActivity {
 
             Log.e("postDataParams", postDataParams.toString());
 
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
 
             if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
 
@@ -494,47 +494,76 @@ public class LoginActivity extends AppCompatActivity {
                 sslcontext.init(null,null,null);
                 SSLSocketFactory NoSSLv3Factory = new NoSSLv3SocketFactory(sslcontext.getSocketFactory());
 
-               // conn.setDefaultSSLSocketFactory(new ImprovedSSLSocketFactory());
+                HttpsURLConnection conn = (HttpsURLConnection)url.openConnection();
+                conn.setDefaultSSLSocketFactory(new ImprovedSSLSocketFactory());
                 conn.setReadTimeout(15000 /* milliseconds*/);
                 conn.setConnectTimeout(15000  /*milliseconds*/);
                 conn.setRequestMethod("POST");
                 conn.setDoInput(true);
                 conn.setDoOutput(true);
+
+                OutputStream os = conn.getOutputStream();
+                BufferedWriter writer = new BufferedWriter(
+                        new OutputStreamWriter(os, "UTF-8"));
+                writer.write(getPostDataString(postDataParams));
+
+                writer.flush();
+                writer.close();
+                os.close();
+                int responseCode = conn.getResponseCode();
+
+                if (responseCode == HttpsURLConnection.HTTP_OK) {
+
+                    BufferedReader r = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    StringBuilder result = new StringBuilder();
+                    String line;
+                    while ((line = r.readLine()) != null) {
+                        result.append(line);
+                    }
+                    r.close();
+                    return result.toString();
+
+                } else {
+                    return new String("false : " + responseCode);
+                }
 
         }
         else {
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setReadTimeout(15000 /* milliseconds*/);
                 conn.setConnectTimeout(15000  /*milliseconds*/);
                 conn.setRequestMethod("POST");
                 conn.setDoInput(true);
                 conn.setDoOutput(true);
-            }
 
+                OutputStream os = conn.getOutputStream();
+                BufferedWriter writer = new BufferedWriter(
+                        new OutputStreamWriter(os, "UTF-8"));
+                writer.write(getPostDataString(postDataParams));
 
-            OutputStream os = conn.getOutputStream();
-            BufferedWriter writer = new BufferedWriter(
-                    new OutputStreamWriter(os, "UTF-8"));
-            writer.write(getPostDataString(postDataParams));
+                writer.flush();
+                writer.close();
+                os.close();
+                int responseCode = conn.getResponseCode();
 
-            writer.flush();
-            writer.close();
-            os.close();
-            int responseCode = conn.getResponseCode();
+                if (responseCode == HttpsURLConnection.HTTP_OK) {
 
-            if (responseCode == HttpsURLConnection.HTTP_OK) {
+                    BufferedReader r = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    StringBuilder result = new StringBuilder();
+                    String line;
+                    while ((line = r.readLine()) != null) {
+                        result.append(line);
+                    }
+                    r.close();
+                    return result.toString();
 
-                BufferedReader r = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                StringBuilder result = new StringBuilder();
-                String line;
-                while ((line = r.readLine()) != null) {
-                    result.append(line);
+                } else {
+                    return new String("false : " + responseCode);
                 }
-                r.close();
-                return result.toString();
-
-            } else {
-                return new String("false : " + responseCode);
             }
+
+
+
         }
         catch (Exception e) {
             return new String("Exception: " + e.getMessage());
