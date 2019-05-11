@@ -82,6 +82,7 @@ public class AddHomeWork extends AppCompatActivity {
 //    private ArrayList<String> classList;
 //    String Class;
 
+
     Spinner spin_student;
     ArrayList<StudentModel> studentList=new ArrayList<StudentModel>();
      StudentListAdapter studentListAdapter;
@@ -121,7 +122,6 @@ public class AddHomeWork extends AppCompatActivity {
         String Spin_Student,Spin_Section;
 
     public static HashMap<Integer , String> StudentSpinHashMap = new HashMap<>();
-
 
 
     @Override
@@ -299,9 +299,18 @@ public class AddHomeWork extends AppCompatActivity {
 //                    Log.d("itr " ,itr.next());
 //
 //                }
+                StringBuilder commaSepValueBuilder = new StringBuilder();
+                for(int y=0;y<dupMultiselecte.size();y++){
+                    if(y>0)
+                        commaSepValueBuilder.append(dupMultiselecte.iterator().next());
+                       // commaSepValueBuilder +=',';
+                    if ( y != dupMultiselecte.size()-1) {
+                        commaSepValueBuilder.append(",");
+                    }
 
-                String string = String.join(", ", dupMultiselecte);
-                  Toast.makeText(AddHomeWork.this, "it+ "+string, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddHomeWork.this, "ll+ "+commaSepValueBuilder.toString(), Toast.LENGTH_SHORT).show();
+                }
+
                 //*****************************************
               //  Toast.makeText(AddHomeWork.this, ""+Spin_Student, Toast.LENGTH_SHORT).show();
 
