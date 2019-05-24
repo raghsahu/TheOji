@@ -26,35 +26,11 @@
                 android:id="@+id/le1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.2"
+                android:layout_weight="0.3"
                 android:gravity="center"
                 android:layout_marginTop="10dp"
                 android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-
-                        android:text="Date-  "
-                        android:textStyle="bold"
-                        android:textColor="#000"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/txt_date"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:typeface="serif"
-                        android:textColor="#000"
-                        android:textSize="14sp" />
-                </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -75,129 +51,71 @@
                         android:id="@+id/txt_class_sch"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:typeface="serif"
+                        android:textColor="#000"
+                        android:textSize="14sp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:text="Annual Fees-  "
+                        android:textStyle="bold"
+                        android:textColor="#000"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/txt_annual_fees"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="#000"
+                        android:textSize="14sp"
+                        android:typeface="serif" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:text="Update Date-  "
+                        android:textStyle="bold"
+                        android:textColor="#000"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/update_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="#000"
+                        android:textSize="14sp"
+                        android:typeface="serif" />
+
+                    <TextView
+                        android:id="@+id/txt_update_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:textColor="#000"
                         android:textSize="14sp"
                         android:typeface="serif" />
                 </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="3dp"
-                    android:gravity="center"
-                    android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
 
-                        android:text="Section- "
-                        android:textStyle="bold"
-                        android:textColor="#000"
-                        android:textSize="14sp" />
-                    <TextView
-                        android:id="@+id/section"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:typeface="serif"
-                        android:textColor="#000"
-                        android:textSize="14sp" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:gravity="center"
-                    android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-
-                        android:text="Teacher- "
-                        android:textStyle="bold"
-                        android:textColor="#000"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/txt_teacher"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:typeface="serif"
-                        android:textColor="#000"
-                        android:textSize="14sp" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-
-                        android:text="Present- "
-                        android:textStyle="bold"
-                        android:textColor="#000"
-                        android:textSize="14sp" />
-                    <TextView
-                        android:id="@+id/txt_present"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:typeface="serif"
-                        android:textColor="#000"
-                        android:textSize="14sp" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-
-                        android:text="Absent- "
-                        android:textStyle="bold"
-                        android:textColor="#000"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/txt_absent"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:typeface="serif"
-                        android:textColor="#000"
-                        android:textSize="14sp" />
-                </LinearLayout>
-                <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <TextView
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:text="Remark- "
-                android:textStyle="bold"
-                android:textColor="#000"
-                android:textSize="14sp" />
-
-                <TextView
-                android:id="@+id/txt_remark"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:typeface="serif"
-                android:textColor="#000"
-                android:textSize="14sp" />
-                </LinearLayout>
 
             </LinearLayout>
 
@@ -206,36 +124,37 @@
                 android:id="@+id/le11"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:gravity="center"
-                android:orientation="vertical"
-                android:layout_weight="0.8"
-                android:weightSum="1"
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:layout_weight="0.7"
                 >
 
                 <Button
-                    android:id="@+id/present_btn"
+                    android:id="@+id/class_edit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:background="@color/colorPrimary"
-                    android:text="Present List"
-                    android:layout_margin="5dp"
+                    android:text="Edit"
                     android:textAllCaps="false"
                     android:textColor="#fff"
-                    android:layout_weight="0.5"
+                    android:layout_weight="0.33"
+                    android:layout_marginRight="1dp"
+                    />
+                <Button
+                    android:id="@+id/class_delete"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/colorPrimary"
+                    android:text="Delete"
+                    android:textAllCaps="false"
+                    android:textColor="#fff"
+                    android:layout_weight="0.33"
+                    android:layout_marginLeft="1dp"
                     />
 
-                <Button
-                    android:layout_margin="5dp"
-                    android:id="@+id/absent_btm"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#E24848"
-                    android:text="Absent List"
-                    android:textAllCaps="false"
-                    android:textColor="#fff"
-                    android:layout_weight="0.5"
-                    />
 
             </LinearLayout>
 

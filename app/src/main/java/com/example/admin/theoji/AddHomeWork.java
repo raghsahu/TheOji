@@ -299,17 +299,37 @@ public class AddHomeWork extends AppCompatActivity {
 //                    Log.d("itr " ,itr.next());
 //
 //                }
-                StringBuilder commaSepValueBuilder = new StringBuilder();
-                for(int y=0;y<dupMultiselecte.size();y++){
-                    if(y>0)
-                        commaSepValueBuilder.append(dupMultiselecte.iterator().next());
-                       // commaSepValueBuilder +=',';
-                    if ( y != dupMultiselecte.size()-1) {
-                        commaSepValueBuilder.append(",");
-                    }
 
-                    Toast.makeText(AddHomeWork.this, "ll+ "+commaSepValueBuilder.toString(), Toast.LENGTH_SHORT).show();
-                }
+                    String result = null;
+                    if(dupMultiselecte != null) {
+                        StringBuilder sb = new StringBuilder();
+                        Iterator<String> it = dupMultiselecte.iterator();
+                        if(it.hasNext()) {
+                            sb.append(it.next());
+                        }
+                        while(it.hasNext()) {
+                            sb.append(",").append(it.next());
+                        }
+                        result = sb.toString();
+                    }
+                Spin_Student=result;
+                Toast.makeText(AddHomeWork.this, "mm "+Spin_Student, Toast.LENGTH_SHORT).show();
+
+
+
+
+                //*******************************************************
+//                StringBuilder commaSepValueBuilder = new StringBuilder();
+//                for(int y=0;y<dupMultiselecte.size();y++){
+//                    if(y>0)
+//                        commaSepValueBuilder.append(dupMultiselecte.iterator().next());
+//                       // commaSepValueBuilder +=',';
+//                    if (y != dupMultiselecte.size()+2) {
+//                        commaSepValueBuilder.append(",");
+//                    }
+//
+//                    Toast.makeText(AddHomeWork.this, "ll+ "+commaSepValueBuilder.toString(), Toast.LENGTH_SHORT).show();
+//                }
 
                 //*****************************************
               //  Toast.makeText(AddHomeWork.this, ""+Spin_Student, Toast.LENGTH_SHORT).show();
@@ -610,7 +630,7 @@ public class AddHomeWork extends AppCompatActivity {
                 entity.addPart("Homework_title", new StringBody(Title_homework));
                 entity.addPart("Homework_date", new StringBody(Date_homework));
                 entity.addPart("Homework_description", new StringBody(Description_homework));
-                entity.addPart("Homework_participent", new StringBody(Participent_homework));
+               // entity.addPart("Homework_participent", new StringBody(Participent_homework));
                 entity.addPart("section", new StringBody(Spin_Section));
                 entity.addPart("id",new StringBody(id));
 

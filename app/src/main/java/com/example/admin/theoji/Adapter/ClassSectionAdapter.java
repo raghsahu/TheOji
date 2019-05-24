@@ -1,8 +1,10 @@
 package com.example.admin.theoji.Adapter;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.widget.CardView;
@@ -41,6 +43,7 @@ import java.util.Iterator;
 import javax.net.ssl.HttpsURLConnection;
 
 import static com.example.admin.theoji.ShowClassActivity.classSectionHashMap;
+import static com.example.admin.theoji.Student_fees_submit_detals.PayFeesDetailHasMap;
 
 public class ClassSectionAdapter extends RecyclerView.Adapter<ClassSectionAdapter.ViewHolder> {
 
@@ -129,10 +132,34 @@ public class ClassSectionAdapter extends RecyclerView.Adapter<ClassSectionAdapte
             @Override
             public void onClick(View view) {
 
-                int i = position;
-                Class_ID=classSectionHashMap.get(i).getClass_id();
-                Toast.makeText(context, "delC_Id"+Class_ID, Toast.LENGTH_SHORT).show();
-                new deleteTask(view.getContext(),Class_ID).execute();
+                final AlertDialog.Builder dialog = new AlertDialog.Builder(context).setTitle("The Oji")
+                        .setMessage("Are you sure, you want to delete this post");
+
+                dialog.setNegativeButton("no", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+                dialog.setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        exitLauncher();
+                    }
+
+                    private void exitLauncher() {
+
+                        int i = position;
+                        Class_ID=classSectionHashMap.get(i).getClass_id();
+                        Toast.makeText(context, "delC_Id"+Class_ID, Toast.LENGTH_SHORT).show();
+                        new deleteTask(context,Class_ID).execute();
+
+                    }
+                });
+                final AlertDialog alert = dialog.create();
+                alert.show();
+
 
             }
         });

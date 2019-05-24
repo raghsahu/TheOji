@@ -115,7 +115,7 @@ public class AddTeacher extends AppCompatActivity {
                 dialog.dismiss();
 
                 try {
-//                Toast.makeText(LoginActivity.this, "result is" + result, Toast.LENGTH_SHORT).show();
+               Toast.makeText(AddTeacher.this, "result is" + result, Toast.LENGTH_SHORT).show();
 
 
                     JSONObject responce = new JSONObject(result);

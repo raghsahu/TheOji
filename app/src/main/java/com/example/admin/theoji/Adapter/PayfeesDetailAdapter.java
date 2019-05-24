@@ -1,8 +1,10 @@
 package com.example.admin.theoji.Adapter;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.widget.CardView;
@@ -16,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.admin.theoji.ModelClass.PayfeesDetailListModel;
+import com.example.admin.theoji.PayFeesActivity;
 import com.example.admin.theoji.R;
 import com.example.admin.theoji.Student_fees_submit_detals;
 import com.example.admin.theoji.TeacherActivity;
@@ -36,6 +39,8 @@ import java.util.Iterator;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import static com.androidquery.util.AQUtility.getContext;
+import static com.example.admin.theoji.PostActivity.postStringHashMap;
 import static com.example.admin.theoji.Student_fees_submit_detals.PayFeesDetailHasMap;
 
 public class PayfeesDetailAdapter extends RecyclerView.Adapter<PayfeesDetailAdapter.ViewHolder> {
@@ -99,11 +104,34 @@ public class PayfeesDetailAdapter extends RecyclerView.Adapter<PayfeesDetailAdap
             @Override
             public void onClick(View view) {
 
-                int i=position;
-                PayId= String.valueOf(PayFeesDetailHasMap.get(i).getF_id());
+                final AlertDialog.Builder dialog = new AlertDialog.Builder(context).setTitle("The Oji")
+                        .setMessage("Are you sure, you want to delete this post");
 
-                new PayfeedeleteTask(view.getContext(),PayId).execute();
-                Toast.makeText(context, "PayID "+PayId, Toast.LENGTH_SHORT).show();
+                dialog.setNegativeButton("no", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+                dialog.setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        exitLauncher();
+                    }
+
+                    private void exitLauncher() {
+                        int i=position;
+                        PayId= String.valueOf(PayFeesDetailHasMap.get(i).getF_id());
+
+                        new PayfeedeleteTask(context,PayId).execute();
+                        Toast.makeText(context, "PayID "+PayId, Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+                final AlertDialog alert = dialog.create();
+                alert.show();
+
             }
         });
 
@@ -194,7 +222,7 @@ public class PayfeesDetailAdapter extends RecyclerView.Adapter<PayfeesDetailAdap
                     if (res.equals("true")) {
 
                         Toast.makeText(context, "delete success", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(context, Student_fees_submit_detals.class);
+                        Intent intent = new Intent(context, PayFeesActivity.class);
                         context.startActivity(intent);
                         ((Activity)context).finish();
 

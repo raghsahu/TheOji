@@ -56,7 +56,7 @@ public class PayFeesActivity  extends AppCompatActivity {
 
    public static HashMap<Integer,PayfeesListModel>PayFeesHasMap=new HashMap<>();
      String ClassID;
-    Button find_seach;
+    Button find_seach,annual_fees;
     int btnInt=0;
      String SectionID;
 
@@ -69,6 +69,7 @@ public class PayFeesActivity  extends AppCompatActivity {
         spin_class=(Spinner)findViewById(R.id.search_class1);
         spin_section = (Spinner)findViewById(R.id.search_section1);
         find_seach=findViewById(R.id.find_seach);
+        annual_fees=findViewById(R.id.annual_fees);
 
         if (AppPreference.getUser_Type(PayFeesActivity.this).equals("4")) {
             viewpayfees.setVisibility(View.GONE);
@@ -95,6 +96,16 @@ public class PayFeesActivity  extends AppCompatActivity {
         }
 
         //**************************selected item********************
+
+        find_seach.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            Intent intent=new Intent(PayFeesActivity.this,AnnualFees_List.class);
+            startActivity(intent);
+            }
+        });
+
+        //********************************************************************
         spin_class.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
