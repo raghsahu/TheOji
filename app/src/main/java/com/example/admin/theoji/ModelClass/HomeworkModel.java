@@ -12,10 +12,11 @@ public class HomeworkModel {
     private String actvitydate;
     private String imagename;
     private String firstname;
+    private String student_alot;
 
 
     public HomeworkModel(String post_id, String post_date, String post_title, String post_content, String email, String umeta_value,
-                          String studentclass, String actvitydate, String imagename, String firstname) {
+                         String studentclass, String actvitydate, String imagename, String firstname, String student_alot) {
         this.post_id=post_id;
         this.post_date=post_date;
         this.post_title=post_title;
@@ -27,6 +28,7 @@ public class HomeworkModel {
         this.actvitydate=actvitydate;
         this.imagename=imagename;
         this.firstname=firstname;
+        this.student_alot=student_alot;
 
 
     }
@@ -51,6 +53,14 @@ public class HomeworkModel {
 
     public String getStudentclass() {
         return studentclass;
+    }
+
+    public String getStudent_alot() {
+        return student_alot;
+    }
+
+    public void setStudent_alot(String student_alot) {
+        this.student_alot = student_alot;
     }
 
     public String getActvitydate() {

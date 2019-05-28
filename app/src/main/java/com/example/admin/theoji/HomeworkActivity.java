@@ -42,6 +42,8 @@ public class HomeworkActivity extends AppCompatActivity {
 
         viewhomeWork = (ImageView)findViewById(R.id.viewhomeWork);
 
+        Toast.makeText(this, "user_id "+AppPreference.getUserid(HomeworkActivity.this), Toast.LENGTH_SHORT).show();
+
         if (AppPreference.getUser_Type(HomeworkActivity.this).equals("4")) {
             viewhomeWork.setVisibility(View.GONE);
         }
@@ -114,18 +116,23 @@ public class HomeworkActivity extends AppCompatActivity {
 
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-                        String post_id = jsonObject1.getString("post_id");
-                        String post_author = jsonObject1.getString("post_author");
-                        String post_date = jsonObject1.getString("post_date");
-                        String post_title = jsonObject1.getString("post_title");
-                        String post_content = jsonObject1.getString("post_content");
-                        String email = jsonObject1.getString("email");
-                        String post_type = jsonObject1.getString("post_type");
-                        String umeta_value = jsonObject1.getString("umeta_value");
-                        String ref_id = jsonObject1.getString("ref_id");
-                        String plike = jsonObject1.getString("plike");
-                        String firstname = jsonObject1.getString("firstname");
-                        String pmeta_value = jsonObject1.getString("pmeta_value");
+
+                        String student_alot = jsonObject1.getString("student_alot");
+                        JSONObject jsonObject=jsonObject1.getJSONObject("user");
+
+
+                        String post_id = jsonObject.getString("post_id");
+                        String post_author = jsonObject.getString("post_author");
+                        String post_date = jsonObject.getString("post_date");
+                        String post_title = jsonObject.getString("post_title");
+                        String post_content = jsonObject.getString("post_content");
+                        String email = jsonObject.getString("email");
+                        String post_type = jsonObject.getString("post_type");
+                        String umeta_value = jsonObject.getString("umeta_value");
+                        String ref_id = jsonObject.getString("ref_id");
+                        String plike = jsonObject.getString("plike");
+                        String firstname = jsonObject.getString("firstname");
+                        String pmeta_value = jsonObject.getString("pmeta_value");
 
 
                         String[] seperateData = pmeta_value.split(Pattern.quote(","));
@@ -136,8 +143,8 @@ public class HomeworkActivity extends AppCompatActivity {
 //
 
 
-                            HomeworkList.add(0, new HomeworkModel(post_id, post_date, post_title, post_content,email,umeta_value,
-                                    studentclass,actvitydate,imagename,firstname));
+                            HomeworkList.add(i, new HomeworkModel(post_id, post_date, post_title, post_content,email,umeta_value,
+                                    studentclass,actvitydate,imagename,firstname,student_alot));
 
                         HomeworkHashMap.put(i , post_id);
                         }

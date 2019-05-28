@@ -131,7 +131,7 @@
                 >
 
                 <Button
-                    android:id="@+id/class_edit"
+                    android:id="@+id/btn_class_fee_edit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
@@ -143,7 +143,7 @@
                     android:layout_marginRight="1dp"
                     />
                 <Button
-                    android:id="@+id/class_delete"
+                    android:id="@+id/btn_annual_delete"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"

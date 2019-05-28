@@ -75,7 +75,7 @@ public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.ViewHo
         public ImageView img2;
         public CircleImageView img_person;
         public ImageView btn1, btn2, btn3, dis_like, img_close;
-        public TextView txt1, txt2, txt3,txt_nm,txt_title,txt_st_class,txt_acti_date;
+        public TextView txt1, txt2, txt3,txt_nm,txt_title,txt_st_class,txt_acti_date,std_alot;
         public  TextView count1,count2;
         TextView Click_all;
        // public EditText etcomment;
@@ -97,6 +97,7 @@ public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.ViewHo
             Click_all = (TextView) view.findViewById(R.id.commentall);
            txt_acti_date = (TextView) view.findViewById(R.id.date);
            txt_st_class = (TextView) view.findViewById(R.id.std_class);
+            std_alot = (TextView) view.findViewById(R.id.std_alot);
 
             recyclerView_comment=(RecyclerView)viewlike.findViewById(R.id.comment_view);
 
@@ -144,6 +145,7 @@ public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.ViewHo
        // viewHolder.txt_participent.setText(homeworkModel.getParticipant());
         viewHolder.txt_st_class.setText(homeworkModel.getStudentclass());
         viewHolder.txt_acti_date.setText(homeworkModel.getActvitydate());
+        viewHolder.std_alot.setText(homeworkModel.getStudent_alot());
 
         viewHolder.img_person.setImageResource(R.drawable.person);
        Picasso.get().load("https://jntrcpl.com/theoji/uploads/"+homeworkModel.getUmeta_value()).into(viewHolder.img_person);

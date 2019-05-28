@@ -32,6 +32,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.regex.Pattern;
 
 public class PayFeesActivity  extends AppCompatActivity {
     ImageView viewpayfees;
@@ -88,8 +89,9 @@ public class PayFeesActivity  extends AppCompatActivity {
         int position=0;
         PayfeesList = new ArrayList<>();
         //******************************filter student************************
-        new GetPayfeesList().execute();
+
         if (Connectivity.isNetworkAvailable(PayFeesActivity.this)){
+            new GetPayfeesList().execute();
             new spinnerClassExecuteTask().execute();
         }else {
             Toast.makeText(this, "No Internet", Toast.LENGTH_SHORT).show();
@@ -97,7 +99,7 @@ public class PayFeesActivity  extends AppCompatActivity {
 
         //**************************selected item********************
 
-        find_seach.setOnClickListener(new View.OnClickListener() {
+        annual_fees.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
             Intent intent=new Intent(PayFeesActivity.this,AnnualFees_List.class);
@@ -280,7 +282,10 @@ public class PayFeesActivity  extends AppCompatActivity {
                             String total_pay = c.getString("total_pay");
                             String due_payment = c.getString("due_payment");
                             String st_class = c.getString("class");
-                            String last_pay_date = c.getString("last_pay_date");
+                            String last_pay_date1 = c.getString("last_pay_date");
+
+                            String[] seperateData = last_pay_date1.split(Pattern.quote(","));
+                            String  last_pay_date = seperateData[0];
 
                             PayfeesList.add(i, new PayfeesListModel(f_id, admission_no,firstname, sf_annualfess,
                                    total_pay,due_payment,st_class,last_pay_date));

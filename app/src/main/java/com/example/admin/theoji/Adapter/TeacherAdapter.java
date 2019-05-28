@@ -55,7 +55,7 @@ public class TeacherAdapter  extends RecyclerView.Adapter<TeacherAdapter.ViewHol
     public Context context;
     View viewlike;
      String id;
-    String TeacherID;
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -106,7 +106,7 @@ public class TeacherAdapter  extends RecyclerView.Adapter<TeacherAdapter.ViewHol
         viewHolder.txt2.setText(teacherListModel.getFirstname());
         viewHolder.txt3.setText(teacherListModel.getMobileno());
         viewHolder.txt4.setText(teacherListModel.getAddress());
-        viewHolder.txt_nm.setText(teacherListModel.getUmeta_value());
+       // viewHolder.txt_nm.setText(teacherListModel.getUmeta_value());
 
         viewHolder.cardeview.setTag(viewHolder);
         viewHolder.btn_teacher_delet.setTag(viewHolder);
@@ -144,7 +144,7 @@ public class TeacherAdapter  extends RecyclerView.Adapter<TeacherAdapter.ViewHol
 
                     private void exitLauncher() {
                         int i=position;
-                        TeacherID = TeacherHashMap.get(i).getUser_id();
+                        String TeacherID = TeacherHashMap.get(i).getUser_id();
 
                         new deleteTask(view.getContext(),TeacherID).execute();
                         Toast.makeText(context, "tID"+TeacherID, Toast.LENGTH_SHORT).show();
@@ -161,10 +161,10 @@ public class TeacherAdapter  extends RecyclerView.Adapter<TeacherAdapter.ViewHol
             @Override
             public void onClick(View view) {
                 int i=position;
-                TeacherID = TeacherHashMap.get(i).getUser_id();
+               String TeacherID = TeacherHashMap.get(i).getUser_id();
 
                 Intent intent = new Intent(context, Teacher_Edit_Activity.class);
-                //intent.putExtra("uid",TeacherID);
+                intent.putExtra("TId",TeacherID);
                 context.startActivity(intent);
                 ((Activity)context).finish();
               //  Toast.makeText(context, "tID"+TeacherID, Toast.LENGTH_SHORT).show();
@@ -175,10 +175,10 @@ public class TeacherAdapter  extends RecyclerView.Adapter<TeacherAdapter.ViewHol
             @Override
             public void onClick(View view) {
                 int i=position;
-                TeacherID = TeacherHashMap.get(i).getUser_id();
+               String Teacher_ID = TeacherHashMap.get(i).getUser_id();
 
-                new TeacherApprove(view.getContext(),TeacherID).execute();
-                Toast.makeText(context, "tID"+TeacherID, Toast.LENGTH_SHORT).show();
+                new TeacherApprove(view.getContext(),Teacher_ID,position,viewHolder ).execute();
+                Toast.makeText(context, "tID "+Teacher_ID, Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -316,10 +316,14 @@ public class TeacherAdapter  extends RecyclerView.Adapter<TeacherAdapter.ViewHol
     ProgressDialog dialog;
     Context context;
     String TeachID2;
+    int Position;
+    ViewHolder viewHolder;
 
-        public TeacherApprove(Context context, String teacherID) {
-            this.context=context;
+        public TeacherApprove(Context context, String teacherID, int position, ViewHolder viewHolder) {
+            this.context= context;
             this.TeachID2=teacherID;
+            this.Position=position;
+            this.viewHolder=viewHolder;
         }
 
     protected void onPreExecute() {
@@ -337,7 +341,7 @@ public class TeacherAdapter  extends RecyclerView.Adapter<TeacherAdapter.ViewHol
             URL url = new URL("https://jntrcpl.com/theoji/index.php/Api/confirm_student");
 
             JSONObject postDataParams = new JSONObject();
-            id= AppPreference.getUserid(context);
+           // id= AppPreference.getUserid(context);
 
             postDataParams.put("id",TeachID2);
 
@@ -383,7 +387,7 @@ public class TeacherAdapter  extends RecyclerView.Adapter<TeacherAdapter.ViewHol
     @Override
     protected void onPostExecute(String result) {
 
-        // Toast.makeText(context, "delete"+result, Toast.LENGTH_SHORT).show();
+         Toast.makeText(context, "res "+result, Toast.LENGTH_SHORT).show();
 
         if (result != null) {
             dialog.dismiss();
@@ -395,16 +399,19 @@ public class TeacherAdapter  extends RecyclerView.Adapter<TeacherAdapter.ViewHol
                 if (res.equals("true")) {
                     Toast.makeText(context, "approve success", Toast.LENGTH_SHORT).show();
 
-                    Button  btn1 = (Button) viewlike.findViewById(R.id.tea_approve);
-                    btn1.setText("Approved");
-                    btn1.setBackgroundColor(Color.GREEN);
+//                    Button  btn1 = (Button) viewlike.findViewById(R.id.tea_approve);
+//                    btn1.setText("Approved");
+//                    btn1.setBackgroundColor(Color.GREEN);
+
+                    viewHolder.teacher_approve.setText("Approved");
+                    viewHolder.teacher_approve.setBackgroundColor(Color.GREEN);
 
 
 
                 } else {
                     Toast.makeText(context, "Some Problem not approve", Toast.LENGTH_SHORT).show();
-                    Button  btn1 = (Button) viewlike.findViewById(R.id.tea_approve);
-                    btn1.setText("Approve");btn1.setBackgroundColor(Color.RED);
+//                    Button  btn1 = (Button) viewlike.findViewById(R.id.tea_approve);
+//                    btn1.setText("Approve");btn1.setBackgroundColor(Color.RED);
 
                 }
             } catch (JSONException e) {

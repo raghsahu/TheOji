@@ -6,26 +6,26 @@ public class TeacherListModel {
     private String firstname;
     private String address;
     private String mobileno;
-    private String umeta_value;
+   // private String umeta_value;
 
-    public TeacherListModel(String user_id, String email, String firstname, String address, String mobileno, String umeta_value) {
+    public TeacherListModel(String user_id, String email, String firstname, String address, String mobileno) {
 
         this.user_id=user_id;
         this.email=email;
         this.firstname=firstname;
         this.address=address;
         this.mobileno=mobileno;
-        this.umeta_value=umeta_value;
+       // this.umeta_value=umeta_value;
 
     }
 
-    public String getUmeta_value() {
-        return umeta_value;
-    }
-
-    public void setUmeta_value(String umeta_value) {
-        this.umeta_value = umeta_value;
-    }
+//    public String getUmeta_value() {
+//        return umeta_value;
+//    }
+//
+//    public void setUmeta_value(String umeta_value) {
+//        this.umeta_value = umeta_value;
+//    }
 
     public String getMobileno() {
         return mobileno;

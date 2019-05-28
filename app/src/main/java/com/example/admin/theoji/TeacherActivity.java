@@ -125,10 +125,11 @@ public class TeacherActivity extends AppCompatActivity {
                             String firstname = c.getString("firstname");
                             String address = c.getString("address");
                         String mobileno = c.getString("mobileno");
-                        String umeta_value = c.getString("umeta_value");
+                       // String umeta_value = c.getString("umeta_value");
+                       // String umeta_value = c.getString("1");
 
-                            TeacherList.add(0, new TeacherListModel(user_id, email, firstname, address,mobileno, umeta_value));
-                           TeacherHashMap.put(i, new TeacherListModel(user_id, email, firstname, address,mobileno, umeta_value));
+                            TeacherList.add(i, new TeacherListModel(user_id, email, firstname, address,mobileno));
+                           TeacherHashMap.put(i, new TeacherListModel(user_id, email, firstname, address,mobileno));
                         }
 
 
