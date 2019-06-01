@@ -1,5 +1,6 @@
 package com.example.admin.theoji.Adapter;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -19,6 +20,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.admin.theoji.AnnualFees_List;
 import com.example.admin.theoji.Connection.Connectivity;
 import com.example.admin.theoji.Connection.HttpHandler;
 import com.example.admin.theoji.ModelClass.AnnualListModel;
@@ -152,13 +154,6 @@ public class AnnualListAdapter  extends RecyclerView.Adapter<AnnualListAdapter.V
                 dialog.show();
 
 
-
-
-//                Intent intent = new Intent(context, Student_fees_submit_detals.class);
-//                intent.putExtra("PayId",PID);
-//                context.startActivity(intent);
-//                Toast.makeText(context, "id"+PID, Toast.LENGTH_SHORT).show();
-//                // mContext.finish();
             }
         });
 
@@ -372,6 +367,9 @@ public class AnnualListAdapter  extends RecyclerView.Adapter<AnnualListAdapter.V
                     } else {
                         dialog_custom.dismiss();
                         Toast.makeText(context, "success", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(context, AnnualFees_List.class);
+                        context.startActivity(intent);
+                        ((Activity)context).finish();
 
                     }
 

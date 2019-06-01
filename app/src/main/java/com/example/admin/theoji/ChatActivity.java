@@ -380,7 +380,6 @@ public class ChatActivity extends AppCompatActivity {
                         recyclerchat.setItemAnimator(new DefaultItemAnimator());
                         recyclerchat.setAdapter(student_chat_adapter);
 
-                       // reloadAllData();
 
                     }else {
                         studentList.clear();
@@ -399,6 +398,5 @@ public class ChatActivity extends AppCompatActivity {
         }
     }
 
-    private void reloadAllData() {
-    }
+
 }

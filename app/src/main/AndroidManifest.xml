@@ -20,7 +20,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:windowSoftInputMode="stateHidden">
-        <activity android:name=".AnnualFees_List"></activity>
+        <activity android:name=".Add_Performance"></activity>
+        <activity android:name=".Performance_Activity" />
+        <activity android:name=".AnnualFees_List" />
         <activity android:name=".Student_get_Attendence" />
         <activity android:name=".Teacher_Edit_Activity" />
         <activity android:name=".P_A_Details_Activity" />

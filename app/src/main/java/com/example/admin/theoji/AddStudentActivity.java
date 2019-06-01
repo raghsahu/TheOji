@@ -487,7 +487,7 @@ public class AddStudentActivity extends AppCompatActivity{
                     &&!Student_Address.isEmpty()&&!Student_mobile.isEmpty() &&!Student_Alternate_mobile.isEmpty()&&!Student_state.isEmpty()
                      &&!Student_rte_type.isEmpty() &&!Student_sssmid.isEmpty()&& !Student_mother_name.isEmpty()
                     && !School_code.isEmpty() && !Student_class_type.isEmpty() && !Student_section.isEmpty()&&!Student_session.isEmpty()
-                    &&Student_admission_date.isEmpty() && !Student_board_name.isEmpty() &&!Student_about.isEmpty())
+                    && !Student_admission_date.isEmpty() && !Student_board_name.isEmpty() &&!Student_about.isEmpty())
 
                     {
                         new StudentCreatExecuteTask().execute();
