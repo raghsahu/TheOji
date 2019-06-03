@@ -135,6 +135,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Class"
+                    android:gravity="center"
                     android:textColor="#000"
                     android:textSize="14sp" />
 
@@ -213,11 +214,12 @@
 
         </LinearLayout>
         </LinearLayout>
+    <LinearLayout
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="2dp">
 
-
-
-
-
+    </LinearLayout>
 
 
         <android.support.v7.widget.RecyclerView

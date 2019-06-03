@@ -1,5 +1,6 @@
 package com.example.admin.theoji;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -173,7 +175,7 @@ public class Performance_Activity extends AppCompatActivity {
                     {
                         student_perform_List.clear();
 
-                        recyclercPerformance.setAdapter(null);
+                        //recyclercPerformance.setAdapter(null);
                         student_perform_adapter.notifyDataSetChanged();
                     }
                 }catch (Exception e)
@@ -327,11 +329,13 @@ private class spinnerClassExecuteTask extends AsyncTask<String, Integer,String> 
     }
 //**************************************************************************
     private class Stud_performaceTask extends AsyncTask<String, Integer,String> {
-
+    ProgressDialog dialog;
     String output = "";
 
     @Override
     protected void onPreExecute() {
+        dialog = new ProgressDialog(Performance_Activity.this);
+        dialog.show();
 
         super.onPreExecute();
     }
@@ -340,7 +344,7 @@ private class spinnerClassExecuteTask extends AsyncTask<String, Integer,String> 
     protected String doInBackground(String... params) {
 
         if (btnInt==1){
-            sever_url = "https://jntrcpl.com/theoji/index.php/Api/get_chat_user?school_id="+
+            sever_url = "https://jntrcpl.com/theoji/index.php/Api/get_update_performance?school_id="+
                     AppPreference.getUserid(Performance_Activity.this)+"&class="+
                     ClassID+"&section="+SectionID;
         }
@@ -352,6 +356,7 @@ private class spinnerClassExecuteTask extends AsyncTask<String, Integer,String> 
         output = HttpHandler.makeServiceCall(sever_url);
 
         System.out.println("getcomment_url" + output);
+        Log.e("Get_post",sever_url);
         return output;
     }
 
@@ -359,15 +364,16 @@ private class spinnerClassExecuteTask extends AsyncTask<String, Integer,String> 
     protected void onPostExecute(String output) {
         if (output == null) {
         } else {
+            if (output != null) {
+                dialog.dismiss();
             try {
 
 //                    Toast.makeText(RegistrationActivity.this, "result is" + output, Toast.LENGTH_SHORT).show();
                 JSONObject object = new JSONObject(output);
                // String res=object.getString("responce");
 
-                if (!output.isEmpty()) {
-
                     JSONArray jsonArray = object.getJSONArray("data");
+
 
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject1 = jsonArray.getJSONObject(i);
@@ -401,19 +407,19 @@ private class spinnerClassExecuteTask extends AsyncTask<String, Integer,String> 
                     recyclercPerformance.setAdapter(student_perform_adapter);
 
 
-                }else {
-                    student_perform_List.clear();
-                    student_perform_adapter.notifyDataSetChanged();
-                    recyclercPerformance.removeAllViews();
-                    recyclercPerformance.setAdapter(student_perform_adapter);
-
-                    Toast.makeText(Performance_Activity.this, "no student found", Toast.LENGTH_SHORT).show();
-                }
-
                 super.onPostExecute(output);
             } catch (JSONException e) {
                 e.printStackTrace();
+
+                student_perform_List.clear();
+                student_perform_adapter.notifyDataSetChanged();
+                recyclercPerformance.removeAllViews();
+                recyclercPerformance.setAdapter(student_perform_adapter);
+
+                Toast.makeText(Performance_Activity.this, "no student found", Toast.LENGTH_SHORT).show();
+
             }
+        }
         }
     }
 }
