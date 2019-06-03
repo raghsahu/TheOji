@@ -398,7 +398,7 @@ private class spinnerClassExecuteTask extends AsyncTask<String, Integer,String> 
 
                         student_perform_List.add(new Student_Perform_Model(performance_id, user_id,January,February,March,April,May
                         ,June,July,August,September,October,November,December,firstname,umeta_value));
-                        student_perform_HashMap.put(i , user_id);
+                        student_perform_HashMap.put(i , performance_id);
                     }
                     student_perform_adapter = new Student_Perform_Adapter(Performance_Activity.this, student_perform_List);
                     RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Performance_Activity.this);
